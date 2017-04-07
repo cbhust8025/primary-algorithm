@@ -1,4 +1,4 @@
-# linear list -- 线性表
+# Linear List -- 线性表
 
 ### 引用： http://baike.baidu.com/link?url=qhH7tM3ni8XahfYyrC1BJIrSnpYm0or6WAPYJnNjXH6H1-RCCihHNB_UwH340pExKsnx-J11pZRw73PDXseETptTdlE6StwVtk1osYVMOMMQyTlhAHDck_fwstwPoMJQ   百度百科（线性表）
 # 定义
