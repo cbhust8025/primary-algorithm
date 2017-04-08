@@ -29,7 +29,7 @@
     <li>Next(L, i):取i的后继元素。</li>
     <li>Locate(L, x): 函数值为元素x在L中的位置。</li>
     <li>Insert(L, i, x): 在表L中位置i处插入元素x，将原占据位置i的元素及后面的元素都想后推一个位置。</li>
-    <li>Delete(L, p): 从表L中删除位置p处的元素。</li>
+    <li>Delete(L, p): 从表L中删除位置p处的元素。</li>
     <li>IsEmpty(L):如果表L为空表（长度为0）则返回true，否贼返回false。</li>
     <li>Clear(L):清楚所有元素。</li>
     <li>Init(L):初始化线性表为空，同MakeEmpty()。</li>
