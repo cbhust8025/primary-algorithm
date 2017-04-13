@@ -58,25 +58,6 @@
 #include<stdlib.h>
 #include <iomanip>
 using namespace std;
-/*
-乘积最大
-时间限制：C/C++语言 3MS；其他语言 2003MS
-内存限制：C/C++语言 65536KB；其他语言 589824KB
-题目描述：
-有一个整数n，将n分解成若干个不同自然数之和，问如何分解能使这些数的乘积最大，输出这个乘积m
-输入
-一个整数，不超过50
-输出
-一个整数
-
-样例输入
-15
-样例输出
-144
-*/
-#define min(a,b) ((a>b)?(b):(a))
-#define max(a,b) ((a>b)?(a):(b))
-
 int maxNum(int k) {
 	if (k <= 2)
 	{
@@ -131,7 +112,7 @@ int main() {
 		cout << i<<":"<<res << endl;
 	}
 	
-	system("pause");
+	//system("pause");
 	return 0;
 }
 ```
