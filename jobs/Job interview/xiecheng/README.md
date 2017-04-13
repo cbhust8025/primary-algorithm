@@ -49,3 +49,71 @@
 ```
 4
 ```
+
+```C++
+//携程第一题ac解
+#include <iostream> 
+#include<vector>
+#include <math.h>
+#include<stdlib.h>
+#include <iomanip>
+using namespace std;
+int maxNum(int k) {
+	if (k <= 2)
+	{
+		return k;
+	}
+	if (k == 3)
+	{
+		return 2;
+	}
+	if (k == 4)
+	{
+		return 3;
+	}
+	int i = 0;
+	int res = 1;
+	int in = 2;
+	vector<int> arr(30,0);
+	while (k >= in)
+	{
+		arr[i++] = in;
+		k -= in;
+		in++;
+	}
+	if (k>0)
+	{
+		if (k == arr[i - 1])
+		{
+			arr[i - 1]+=1;
+			k--;
+		}
+		for(int j = 0;j < k;j++)
+		{
+			arr[i - 1 - j]+=1;
+		}
+	}
+	for (int j = 0;j < arr.size();j++)
+	{
+		if (arr[j] != 0)
+		{
+			res *= arr[j];
+		}
+	}
+	return res;
+}
+int main() {
+	int res;
+	int k;
+	//cin >> k;
+	for (int i = 1;i < 20;i++)
+	{
+		res = maxNum(i);
+		cout << i<<":"<<res << endl;
+	}
+	
+	//system("pause");
+	return 0;
+}
+```
+
