@@ -4,12 +4,12 @@
 <p>由于使用语言的限制，仅给出C++、python两个版本的代码，以C++中经典算法为主线，以各种数据结构实现为基础进行完善。</p>
 <p>从2017.04.06开始，希望自己能坚持！</p>
 <p>2017/04/06 定下第一个小目标：每天能坚持上传两个算法，给出详细的代码解释。</p>
-<p>2017/04/07 完成了线性表的描述。</p>
-<p>2017/04/08 完成了线性表的接口定义。</p>
-<p>2017/04/10 增添了C++ primer一些关于类和容器的学习笔记。</p>
-<p>2017/04/11 完成华为实习生面试，增添了一些记录。</p>
-<p>2017/04/12 完成对C++ primer的多态部分的学习，并进行了一些tips的跟进。</p>
-<p>2017/04/13 完成腾讯实习生面试，增添了一些记录。</p>
+<p>2017/04/07 完成了<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/simple%20data%20structure/linear%20list>线性表</a>的描述。</p>
+<p>2017/04/08 完成了<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/simple%20data%20structure/linear%20list>线性表</a>的接口定义。</p>
+<p>2017/04/10 增添了C++ primer一些关于<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/C-%20basic%20concept/Container>容器</a>和类的学习笔记。</p>
+<p>2017/04/11 完成<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/Job%20interview/huawei>华为实习生面试</a>，增添了一些记录。</p>
+<p>2017/04/12 完成对C++ primer的多态部分的学习，并进行了一些<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/C-%20tips>tips</a>的跟进。</p>
+<p>2017/04/13 完成<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/Job%20interview/Tencent>腾讯实习生面试</a>，增添了一些记录。</p>
 <p>2017/04/14 完成腾讯实习生二面，并进行了相应的记录，学习了图论相关知识。</p>
 <p>2017/04/15 完成了<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/quick_sort>快速排序</a>极其优化的知识整理。</p>
 <p>简单数据结构
