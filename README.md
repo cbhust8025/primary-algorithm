@@ -11,7 +11,7 @@
 <p>2017/04/12 完成对C++ primer的多态部分的学习，并进行了一些tips的跟进。</p>
 <p>2017/04/13 完成腾讯实习生面试，增添了一些记录。</p>
 <p>2017/04/14 完成腾讯实习生二面，并进行了相应的记录，学习了图论相关知识。</p>
-<p>2017/04/15 完成了[快速排序极其优化]()知识的整理。</p>
+<p>2017/04/15 完成了<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/quick_sort>快速排序</a>极其优化的知识整理。</p>
 <p>简单数据结构
     <ul>
         <li>线性表</li>
