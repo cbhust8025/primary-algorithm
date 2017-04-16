@@ -15,7 +15,7 @@
 <p>2017/04/16 完成<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/Job%20interview/Tencent>腾讯实习生HR面</a>，并进行了相应的记录，晚上进行美图考试并整理了<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/Job%20interview/meitu>试题</a>。</p>
 <p>简单数据结构
     <ul>
-        <li>线性表</li>
+        <li>线性表(已实现)</li>
         <li>栈</li>
         <li>队列</li>
     </ul>
