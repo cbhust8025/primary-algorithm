@@ -1,3 +1,4 @@
+```C++
 #pragma once
 //
 // Created by CB on 04/18-2007
@@ -126,6 +127,6 @@ namespace StringHelper
 		return res;
 	}
 }
-
+```
 
 
