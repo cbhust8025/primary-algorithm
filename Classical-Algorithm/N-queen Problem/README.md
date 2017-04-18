@@ -65,6 +65,27 @@ void queen(vector<int> qFlag, vector<vector<int>> &output, int row)
 ```
 * 非递归实现
 ```C++
+#include<iostream>
+#include<vector>
+#include<string>
+#include"VectorHelper.h"
+using namespace std;
+#define N 5
+
+bool CanPlaceQueen(vector<int> qFlag, int row, int col)
+{
+	//对于row行，col列能否放置皇后进行判定，如果能则返回true
+	for (int i = 0;i < row;i++)//当前位置是row行，则之前肯定已经有[0,...,row-1]行放置了皇后，对于每一个皇后一一进行判定
+	{
+		//如果两个皇后列数相等， 则直接判定不能放置，返回false
+		//如果两个皇后列数差绝对值等于行数差绝对值，则这两个皇后在同一斜线上，也判定为不能放置，返回false
+		if (qFlag[i] == col || (abs(row - i) == abs(col - qFlag[i])))
+			return false;
+	}
+	//对于已经放置的row个皇后，如果都不冲突，则当前[row,col]可以放置皇后，返回true
+	return true;
+}
+
 void queenNR(vector<int> qFlag, vector<vector<int>> &output)
 {
 	//N皇后问题，非递归实现
@@ -72,20 +93,20 @@ void queenNR(vector<int> qFlag, vector<vector<int>> &output)
 	//output 为X*N维向量， 每一行对应一种解，X未知。
 	int row = 0;//从第一行开始找
 	qFlag[row] = 0;//将第一行第一列放皇后，为后续的棋子选合适的位置
- 	while (row > -1)
+	while (row > -1)
 	{
 		if (row < N && qFlag[row] < N)
 		{//如果行数，以及列数都满足要求，则可以继续找，否则达到最后一行， 或者达到某行的最后一列
 			if (CanPlaceQueen(qFlag, row, qFlag[row]))
 			{//如果当前行列可以放皇后，则放置皇后，从下一行第一列开始找
 				row++;
-				if(row<N)
+				if (row<N)
 				{
 					qFlag[row] = 0;
 				}
 			}
 			else
-			//如果当前行列不能放置皇后，则继续找下一列
+				//如果当前行列不能放置皇后，则继续找下一列
 			{
 				qFlag[row]++;
 			}
@@ -99,11 +120,11 @@ void queenNR(vector<int> qFlag, vector<vector<int>> &output)
 			//如果row>=N会执行下面代码，因为虽然找到了N皇后问题的一个解，但是要找的是所有解，需要回溯，从当前放置皇后的下一列继续探测  
 			//如果flag[row]>=N也会执行下面两行代码，就是说在当前行没有找到可以放置皇后的位置，于是回溯，从上一行皇后位置的下一列继续探测
 			row--;//回溯至前一行
+			if (row == -1)break;
 			qFlag[row]++;//继续试探下一列
 		}
 	}
 }
-
 int main()
 {
 	vector<int> qFlag(N, -1);
