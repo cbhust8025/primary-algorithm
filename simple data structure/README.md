@@ -6,3 +6,16 @@
     <li>使用注意事项</li>
 </ul>
 </p>
+
+### 如何提取float的前N位小数
+```C++
+float ttt = 100.20146513;
+float cd = ttt - int(ttt);//去掉小数点之前的数
+int N = 3;
+for (int i = 0;i < N;i++)
+{
+	cd *= 10;
+	cout << (int) cd << " ";
+	cd = cd - (int)cd;
+}
+```
