@@ -32,7 +32,7 @@
 <p>基础算法，列出想到的算法分类（持续更新--0406）
     <ul>
         <li>查找</li>
-        <li>排序</li>
+        <li>排序（已更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/quick_sort>快速排序</a>）</li>
         <li>动态规划</li>
         <li>递归</li>
         <li>回溯（已更新<a href= https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/N-queen%20Problem>N皇后</a>问题）</li>
