@@ -15,7 +15,7 @@
 <p>2017/04/16 完成<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/Job%20interview/Tencent>腾讯实习生HR面</a>，并进行了相应的记录，晚上进行美图考试并整理了<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/Job%20interview/meitu>试题</a>。</p>
 <p>2017/04/17 针对《深度探索C++对象模型》书籍进行学习，记录了若干tips。</p>
 <p>2017/04/18 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新了<a href= https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/N-queen%20Problem>N皇后</a>问题的详解</p>
-<p>2017/04/19 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。进行了一些<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/C-%20tips>tips</a>的跟进。</p>
+<p>2017/04/18 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
@@ -25,17 +25,20 @@
 </p>
 <p>复杂数据结构
     <ul>
-        <li>树</li>
+        <li>优先队列</li>
+        <li>树</li>
         <li>图</li>
     </ul>
 </p>
 <p>基础算法，列出想到的算法分类（持续更新--0406）
     <ul>
         <li>查找</li>
-        <li>排序（已更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/quick_sort>快速排序</a>）</li>
+        <li>排序</li>
         <li>动态规划</li>
         <li>递归</li>
-        <li>回溯（已更新<a href= https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/N-queen%20Problem>N皇后</a>问题）</li>
+        <li>分治</li>
+        <li>贪心</li>
+        <li>启发式</li>
         <li>持续更新中...</li>
     </ul>
 </p>
