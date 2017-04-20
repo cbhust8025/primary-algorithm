@@ -16,6 +16,8 @@
 <p>2017/04/17 针对《深度探索C++对象模型》书籍进行学习，记录了若干tips。</p>
 <p>2017/04/18 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新了<a href= https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/N-queen%20Problem>N皇后</a>问题的详解</p>
 <p>2017/04/18 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
+<p>2017/04/19 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新了携程最后一大题--<a href=https://github.com/cbhust8025/primary-algorithm/blob/newbranch/jobs/Job%20interview/xiecheng/README.md>股票</a> AC解</p>
+<p>2017/04/20 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。添加另一回溯经典案例--<a href=https://github.com/cbhust8025/primary-algorithm/tree/newbranch/Classical-Algorithm/Sudoku>数独</a>的详解。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
@@ -34,6 +36,7 @@
     <ul>
         <li>查找</li>
         <li>排序</li>
+        <li>回溯</li>
         <li>动态规划</li>
         <li>递归</li>
         <li>分治</li>

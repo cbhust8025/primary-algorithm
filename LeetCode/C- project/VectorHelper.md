@@ -331,5 +331,187 @@ namespace VectorHelper
 		else
 			return begin + 1;
 	}
+	bool judgeSudoku(vector<vector<char>>& board, int row, int col)
+	{
+		if (row < 0 || row > 8 || col < 0 || col > 8)
+			return false;
+		for (int i = 0;i < board.size();i++)
+		{
+			if (i != col && board[row][i] == board[row][col])
+			{
+				return false;
+			}
+		}
+		for (int i = 0;i < board.size();i++)
+		{
+			if (i != row && board[i][col] == board[row][col])
+			{
+				return false;
+			}
+		}
+		int r = 3 * (row / 3);
+		int c = 3 * (col / 3);
+		for(int i = 0;i<3;i++)
+		{
+			for (int j = 0;j < 3;j++)
+			{
+				if (r + i == row && c + j == col)
+					continue;
+				if (board[r + i][c + j] == board[row][col])
+					return false;
+			}
+		}
+		return true;
+	}
+
+	bool isValidSudoku(vector<vector<char>>& board) {
+		/*   Accepted
+		36. Valid Sudoku Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 113428
+		Total Submissions: 325981
+		Difficulty: Medium
+		Contributor: LeetCode
+		Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.
+
+		The Sudoku board could be partially filled, where empty cells are filled with the character '.'.
+
+
+		A partially filled sudoku which is valid.
+
+		Note:
+		A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated.
+
+		input:
+		[".87654321","2........","3........","4........","5........","6........","7........","8........","9........"]
+		*/
+		for (int i = 0;i < board.size();i++)
+		{
+			printVector(board[i]);
+		}
+		for (int i = 0;i < board.size();i++)
+		{
+			for (int j = 0;j < board[0].size();j++)
+			{
+				if (board[i][j] == '.')
+					continue;
+				if (!judgeSudoku(board, i, j))
+					return false;
+			}
+		}
+		return true;
+	}
+
+
+
+	vector<char> CanPlaceNumber(vector<vector<char>> &board, int row, int col)
+	{//搜集当前格子所能放置的所有数字，并存入vector<int> 中返回
+		vector<char> res;
+		char ci[9]{ '1','2','3','4','5','6','7','8','9' };
+		for (int i = 0;i < 9;i++)
+		{
+			board[row][col] = ci[i];
+			if (judgeSudoku(board, row, col))
+				res.push_back(ci[i]);
+		}
+		board[row][col] = '.';
+		return res;
+	}
+
+	
+	bool SolveSudoku(vector<vector<char>>& board, int row, int col) {
+		//数独解法，初步采用回溯的算法来进行解决
+		//从row,col行对后面的格子进行操作
+		//回溯算法核心在二：
+		//1、第一点在何时进行追溯：找到一个未赋值的格子进行赋值，若赋值满足数独定义，则进行追溯
+		//2、第二点在于回溯前后的操作，回溯回来之后必须将追溯前的操作进行重置。
+		system("cls");
+		for (int m = 0;m < board.size();m++)
+		{
+			printVector(board[m]);
+		}
+		//Sleep(500);
+		int i = row;
+		int j = col;
+		if (board[i][j] != '.')
+		{
+			if (j < 8)
+			{
+				if (SolveSudoku(board, i, j + 1))//如果当前数独满足要求，则进行下一次追溯
+					return true;
+			}
+			else if (i < 8)
+			{
+				if (SolveSudoku(board, i + 1, 0))//如果当前数独满足要求，则进行下一次追溯
+					return true;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		else
+		{
+			vector<char> canC = CanPlaceNumber(board, i, j);
+			if ((i != 8 || j != 8) && canC.empty())
+				return false;
+			for (int k = 0;k < canC.size();k++)
+			{//尝试赋1-9 9个数字
+				board[i][j] = canC[k];
+				if (j < 8)
+				{
+					if (SolveSudoku(board, i, j + 1))//如果当前数独满足要求，则进行下一次追溯
+						return true;
+				}
+				else if (i < 8)
+				{
+					if (SolveSudoku(board, i + 1, 0))//如果当前数独满足要求，则进行下一次追溯
+						return true;
+				}
+				else
+				{
+					return true;
+				}
+				board[i][j] = '.';
+			}
+		}
+		return false;
+	}
+
+	void solveSudoku(vector<vector<char>>& board) {
+		/*  Accepted
+		37. Sudoku Solver Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 70812
+		Total Submissions: 243243
+		Difficulty: Hard
+		Contributor: LeetCode
+		Write a program to solve a Sudoku puzzle by filling the empty cells.
+
+		Empty cells are indicated by the character '.'.
+
+		You may assume that there will be only one unique solution.
+
+
+		A sudoku puzzle...
+
+
+		...and its solution numbers marked in red.
+
+		input:
+			vector<vector<char>> vvc{
+			{ '5','3','.','.','7','.','.','.','.' },
+			{ '6','.','.','1','9','5','.','.','.' },
+			{ '.','9','8','.','.','.','.','6','.' },
+			{ '8','.','.','.','6','.','.','.','3' },
+			{ '4','.','.','8','.','3','.','.','1' },
+			{ '7','.','.','.','2','.','.','.','6' },
+			{ '.','6','.','.','.','.','2','8','.' },
+			{ '.','.','.','4','1','9','.','.','5' },
+			{ '.','.','.','.','8','.','.','7','9' }
+		};
+		*/
+		SolveSudoku(board, 0, 0);
+	}
 }
 ```
