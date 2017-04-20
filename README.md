@@ -17,7 +17,7 @@
 <p>2017/04/18 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新了<a href= https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/N-queen%20Problem>N皇后</a>问题的详解</p>
 <p>2017/04/18 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>2017/04/19 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新了携程最后一大题--<a href=https://github.com/cbhust8025/primary-algorithm/blob/newbranch/jobs/Job%20interview/xiecheng/README.md>股票</a> AC解</p>
-<p>2017/04/20 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。添加另一回溯经典案例--<a href=https://github.com/cbhust8025/primary-algorithm/tree/newbranch/Classical-Algorithm/Sudoku>数独</a>的详解。</p>
+<p>2017/04/20 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。添加另一回溯经典案例--<a href=https://github.com/cbhust8025/primary-algorithm/tree/newbranch/Classical-Algorithm/Sudoku>数独</a>的详解。添加了多态中的<a href=https://github.com/cbhust8025/primary-algorithm/blob/newbranch/jobs/C-%20basic%20concept/polymorphic/README.md>重写、重载及隐藏</a>概念的辨析。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
@@ -27,9 +27,9 @@
 </p>
 <p>复杂数据结构
     <ul>
-        <li>优先队列</li>
-        <li>树</li>
-        <li>图</li>
+    <li>优先队列</li>
+    <li>树</li>
+    <li>图</li>
     </ul>
 </p>
 <p>基础算法，列出想到的算法分类（持续更新--0419）
