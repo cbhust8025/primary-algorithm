@@ -153,8 +153,10 @@ int main() {
 
 ```C++
 //股票交易AC解
-#include"VectorHelper.h"
+#include<vector>
+#include<iostream>
 #include<algorithm>
+using namespace std;
 int main()
 {
 	int n;
