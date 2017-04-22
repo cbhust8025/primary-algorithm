@@ -161,6 +161,47 @@ namespace StringHelper
 		}
 		return  max;
 	}
+	string countAndSay(int n) {
+		/* Accepted
+		38. Count and Say Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 128288
+		Total Submissions: 382187
+		Difficulty: Easy
+		Contributor: LeetCode
+		The count-and-say sequence is the sequence of integers beginning as follows:
+		1, 11, 21, 1211, 111221, ...
+
+		1 is read off as "one 1" or 11.
+		11 is read off as "two 1s" or 21.
+		21 is read off as "one 2, then one 1" or 1211.
+		Given an integer n, generate the nth sequence.
+
+		Note: The sequence of integers will be represented as a string.
+		*/
+		//统计n-1时候字符的字符情况 n=1时返回1,n=2时因为n=1是1所以统计到了11
+		if (n == 1)
+			return "1";
+		string ss = countAndSay(n - 1) + "*";
+		string res = "";
+		int count = 1;
+		for (int i = 0;i < ss.size() -1 ;i++)
+		{
+			if (ss[i] == ss[i + 1])
+			{
+				count++;
+			}
+			else
+			{
+				char c = '0' + count;
+				res.push_back(c);
+				res.push_back(ss[i]);
+				count = 1;
+			}
+		}
+		reverse(res.begin(), res.end());
+		return res;
+	}
 }
 ```
 
