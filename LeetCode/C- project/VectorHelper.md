@@ -513,5 +513,366 @@ namespace VectorHelper
 		*/
 		SolveSudoku(board, 0, 0);
 	}
+	void CombinationSum(set<vector<int>>& res, vector<int>& path, vector<int>& candidates, int target)
+	{//回溯法
+		if (target == 0)
+		{//如果target等于0，表示当前的path满足要求，压入res中，并进行回溯
+			vector<int> temp(path);
+			sort(temp.begin(), temp.end());
+			res.insert(temp);
+			return;
+		}
+		if (target < 0)
+		{//如果target<0,表示当前的path不满足要求，直接回溯
+			return;
+		}
+		//target> 0 ，表示还需要追溯，所以需要从candidates第一个元素进行追溯。
+		for (int i = 0;i < candidates.size();i++)
+		{//对每个元素进行试探，假设当前元素可以满足要求，所以需要压入path中，然后进行追溯
+			path.push_back(candidates[i]);
+			CombinationSum(res, path, candidates, target - candidates[i]);
+			//回溯之后，将之前已经判断过的元素弹出（也就是很重要的重置操作），进行下一次的试探。
+			path.pop_back();
+		}
+		//全部试探完毕，返回 or 回溯
+		return;
+	}
+
+	vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+		/* Accepted
+		39. Combination Sum Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 149292
+		Total Submissions: 401665
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a set of candidate numbers (C) (without duplicates) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+
+		The same repeated number may be chosen from C unlimited number of times.
+
+		Note:
+		All numbers (including target) will be positive integers.
+		The solution set must not contain duplicate combinations.
+		For example, given candidate set [2, 3, 6, 7] and target 7,
+		A solution set is:
+		[
+		[7],
+		[2, 2, 3]
+		]
+		*/
+		//由于需要对每个数重复使用，并且每次进行的操作大部分是相同的，初步采用回溯的算法进行解决
+		//回溯两要素：
+		//1、何时追溯：依次对candidates中的每个元素进行试探，试探一个就行追溯
+		//2、何时回溯：当进入函数之后，target<= 0时进行回溯
+		//回溯核心：每次回溯完后对之前进行的操作重置。
+		vector<vector<int>> res;
+		vector<int> path;
+		set<vector<int>> sr;
+		CombinationSum(sr, path, candidates, target);
+		for (auto it = sr.begin();it != sr.end();it++)
+		{
+			res.push_back(*it);
+		}
+		return res;
+	}
+
+	void CombinationSum2(set<vector<int>>& res, vector<int>& path, vector<int>::iterator start, vector<int>::iterator end, int target)
+	{//回溯法
+		if (target == 0)
+		{//如果target等于0，表示当前的path满足要求，压入res中，并进行回溯
+			vector<int> temp(path);
+			sort(temp.begin(), temp.end());
+			res.insert(temp);
+			return;
+		}
+		if (target < 0 || start == end)
+		{//如果target<0,表示当前的path不满足要求，直接回溯
+			//如果start== end，表示元素已用完，还未满足要求，则直接回溯
+			return;
+		}
+		//target> 0 ，表示还需要追溯，所以需要从candidates第一个元素进行追溯。
+		while(start!=end)
+		{//对candidates[start,end)每个元素进行试探，假设当前元素可以满足要求，所以需要压入path中，然后进行追溯
+			path.push_back(*start);
+			CombinationSum2(res, path, start + 1, end, target - *start);
+			//回溯之后，将之前已经判断过的元素弹出（也就是很重要的重置操作），进行下一次的试探。
+			path.pop_back();
+			start++;
+		}
+		//全部试探完毕，返回 or 回溯
+		return;
+	}
+
+	vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+		/* Accepted
+		40. Combination Sum II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 107670
+		Total Submissions: 331764
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+
+		Each number in C may only be used once in the combination.
+
+		Note:
+		All numbers (including target) will be positive integers.
+		The solution set must not contain duplicate combinations.
+		For example, given candidate set [10, 1, 2, 7, 6, 1, 5] and target 8,
+		A solution set is:
+		[
+		[1, 7],
+		[1, 2, 5],
+		[2, 6],
+		[1, 1, 6]
+		]
+		*/
+		//解法同T39,在candidates上进行修正，每次尝试过当前数字后，每次追溯时candidates长度减一。
+		vector<vector<int>> res;
+		vector<int> path;
+		set<vector<int>> sr;
+		CombinationSum2(sr, path, candidates.begin(), candidates.end(), target);
+		for (auto it = sr.begin();it != sr.end();it++)
+		{
+			res.push_back(*it);
+		}
+		return res;
+	}
+
+
+	void CombinationSum3(set<vector<int>>& res, vector<int>& path, vector<int>::iterator start, vector<int>::iterator end, int target, int length)
+	{//回溯法
+		if (target == 0 && length == 0)
+		{//如果target等于0并且恰好用完可用次数，表示当前的path满足要求，压入res中，并进行回溯
+			vector<int> temp(path);
+			sort(temp.begin(), temp.end());
+			res.insert(temp);
+			return;
+		}
+		if (target < 0 || start == end || length == 0)
+		{//如果target<0,表示当前的path不满足要求，直接回溯
+		 //如果start== end，表示元素已用完，还未满足要求，则直接回溯
+		//如果length == 0，则表示可用次数已用完，还未满足要求，则直接进行回溯
+			return;
+		}
+		//target> 0 ，表示还需要追溯，所以需要从candidates第一个元素进行追溯。
+		while (start != end)
+		{//对candidates[start,end)每个元素进行试探，假设当前元素可以满足要求，所以需要压入path中，然后进行追溯
+			path.push_back(*start);
+			CombinationSum3(res, path, start + 1, end, target - *start,length -1);
+			//回溯之后，将之前已经判断过的元素弹出（也就是很重要的重置操作），进行下一次的试探。
+			path.pop_back();
+			start++;
+		}
+		//全部试探完毕，返回 or 回溯
+		return;
+	}
+	vector<vector<int>> combinationSum3(int k, int n) {
+		/* Accepted
+		216. Combination Sum III Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 62890
+		Total Submissions: 144363
+		Difficulty: Medium
+		Contributor: LeetCode
+		Find all possible combinations of k numbers that add up to a number n, given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.
+
+
+		Example 1:
+
+		Input: k = 3, n = 7
+
+		Output:
+
+		[[1,2,4]]
+
+		Example 2:
+
+		Input: k = 3, n = 9
+
+		Output:
+
+		[[1,2,6], [1,3,5], [2,3,4]]
+		Credits:
+		Special thanks to @mithmatt for adding this problem and creating all test cases.
+
+		Subscribe to see which companies asked this question.
+		*/
+		//同理，回溯算法解之，此时尝试数组固定为[1,...,9]。回溯限定条件变为长度，每次追溯长度减1，长度为0或者大于target时停止回溯。
+		vector<vector<int>> res;
+		vector<int> path;
+		set<vector<int>> sr;
+		vector<int> candidates{ 1,2,3,4,5,6,7,8,9 };
+		CombinationSum3(sr, path, candidates.begin(), candidates.end(), n, k);
+		for (auto it = sr.begin();it != sr.end();it++)
+		{
+			res.push_back(*it);
+		}
+		return res;
+	}
+
+	int combinationSum4(vector<int>& nums, int target) {
+		/* Accepted
+		377. Combination Sum IV Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 32163
+		Total Submissions: 77168
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given an integer array with all positive numbers and no duplicates, find the number of possible combinations that add up to a positive integer target.
+
+		Example:
+
+		nums = [1, 2, 3]
+		target = 4
+
+		The possible combination ways are:
+		(1, 1, 1, 1)
+		(1, 1, 2)
+		(1, 2, 1)
+		(1, 3)
+		(2, 1, 1)
+		(2, 2)
+		(3, 1)
+
+		Note that different sequences are counted as different combinations.
+
+		Therefore the output is 7.
+		Follow up:
+		What if negative numbers are allowed in the given array?
+		How does it change the problem?
+		What limitation we need to add to the question to allow negative numbers?
+		*/
+		//数量巨大，考虑使用dp方法求解，类似跳台阶。
+		//nums[1,2,3]代表的是每次跳台阶，可以跳多少阶台阶
+		//target，代表目标的台阶数
+		//dp[i] 0<=i<=target 代表跳到第i阶台阶所有的情况或者组合。
+		int n = nums.size();
+		vector<int> dp(target + 1, 0);
+		dp[0] = 1;
+		for (int i = 1;i <= target;i++)
+		{
+			for (int j = 0;j < n;j++)
+			{
+				if (i - nums[j] >= 0)
+				{
+					dp[i] += dp[i - nums[j]];
+				}
+			}
+		}
+		return dp[target];
+	}
+
+	int firstMissingPositive(vector<int>& nums) {
+		/*  Accepted
+		41. First Missing Positive Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 93945
+		Total Submissions: 372192
+		Difficulty: Hard
+		Contributor: LeetCode
+		Given an unsorted integer array, find the first missing positive integer.
+
+		For example,
+		Given [1,2,0] return 3,
+		and [3,4,-1,1] return 2.
+
+		Your algorithm should run in O(n) time and uses constant space.
+		*/
+		if (nums.empty())
+		{//如果传入的空数组，则直接返回1。
+			return 1;
+		}
+		//将每个小于nums.size()的正数放到自己合适的位置，由于超出size()的数以及负数都是无效的数，对于我们寻找所想要的missing positive interger 没有任何作用，所以一视同仁。
+		for (int i = 0;i < nums.size();i++)
+		{
+			//若nums[i]为有效数，则将其放到其适合的位置，然后判断交换过来的数是否依旧是合适的数，直到nums[i]存放的数为无效数为止。
+			while (nums[i] > 0 && nums[i] <= nums.size() && nums[nums[i] - 1] != nums[i])
+			{
+				swap(nums[i], nums[nums[i] - 1]);
+			}
+		}
+		for (int i = 0;i < nums.size();i++)
+		{//从头找不符合情况的数，第一个不符合要求的即为所求。
+			if (nums[i] != i + 1)
+			{
+				return i + 1;
+			}
+		}
+		//整个数组都符合要求，则下一个数必然缺失。
+		return nums.size() + 1;
+	}
+
+	int missingNumber(vector<int>& nums) {
+		/*
+		268. Missing Number Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 106840
+		Total Submissions: 243115
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.
+
+		For example,
+		Given nums = [0, 1, 3] return 2.
+
+		Note:
+		Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
+		*/
+		if (nums.empty())
+		{//如果传入的空数组，则直接返回1。
+			return 0;
+		}
+		for (int i = 0;i < nums.size();i++)
+		{
+			while (nums[i] != nums.size() && nums[nums[i]] != nums[i])
+			{
+				swap(nums[i], nums[nums[i]]);
+			}
+		}
+		for (int i = 0;i < nums.size();i++)
+		{//从头找不符合情况的数，第一个不符合要求的即为所求。
+			if (nums[i] != i)
+			{
+				return i;
+			}
+		}
+		//整个数组都符合要求，则下一个数必然缺失。
+		return nums.size();
+	}
+	int findDuplicate(vector<int>& nums) {
+		/* Accepted
+		287. Find the Duplicate Number Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 63211
+		Total Submissions: 148350
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.
+
+		Note:
+		You must not modify the array (assume the array is read only).
+		You must use only constant, O(1) extra space.
+		Your runtime complexity should be less than O(n2).
+		There is only one duplicate number in the array, but it could be repeated more than once.	
+		*/
+		//使用下标-对应值的映射方式进行构造链式结构，如果有重复的数字，意味着此条链状结构有环，则实际上此问题是进行寻找环状结构的入口。
+		//使用快慢指针进行找链表的环状结构。
+		int slow = 0;
+		int fast = 0;//快慢指针在同一起点，快指针一次走两步，慢指针一次走一步
+		do
+		{
+			slow = nums[slow];//走一步
+			fast = nums[nums[fast]];//走两步
+		} while (slow != fast);
+		int target = 0;
+		//由于fast与slow相遇后，说明fast走了两倍的slow的路程，如果让target从0出发，slow从当前位置出发，再走一个slow的距离，恰好在起点相遇；
+		while (target != slow)
+		{
+			target = nums[target];
+			slow = nums[slow];
+		}
+		return target;
+	}
 }
 ```
