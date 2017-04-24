@@ -56,7 +56,8 @@ void queen(vector<int> qFlag, vector<vector<int>> &output, int row)
 			{
 				qFlag[row] = i;//当前位置放置皇后，修改第row行对应的flag为放置的列数。
 				queen(qFlag, output, row + 1);//往下一行继续搜寻
-				qFlag[row] = -1;//回溯法核心，在每次探索完之后，重置回溯之前的修改。
+				//qFlag[row] = -1;//回溯法核心，在每次探索完之后，重置回溯之前的修改。
+				//此行可以进行注释省略，主要原因是当前行的修改，对于回溯之后的情况没有任何影响，所以不需要进行重置，等待前一行的继续追溯，然后修改。
 			}
 		}
 	}
