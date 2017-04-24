@@ -66,7 +66,30 @@ namespace mathHelper
 			return INT_MAX;
 		return res;
 	}
-	
+	int countBitDiff(int m, int n) {
+		/* Accepted
+		时间限制：1秒 空间限制：32768K 热度指数：7774
+		算法知识视频讲解
+		题目描述
+		世界上有10种人，一种懂二进制，一种不懂。那么你知道两个int32整数m和n的二进制表达，有多少个位(bit)不同么？
+		输入例子:
+		1999 2299
+
+		输出例子:
+		7
+		*/
+		int count = 0;
+		while (m != 0 || n != 0)
+		{
+			if ((m & 0x1) != (n & 0x1))
+			{
+				count++;
+			}
+			m >>= 1;
+			n >>= 1;
+		}
+		return count;
+	}
 }
 ```
 
