@@ -20,7 +20,7 @@
 <p>2017/04/20 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。添加另一回溯经典案例--<a href=https://github.com/cbhust8025/primary-algorithm/tree/newbranch/Classical-Algorithm/Sudoku>数独</a>的详解。添加了多态中的<a href=https://github.com/cbhust8025/primary-algorithm/blob/newbranch/jobs/C-%20basic%20concept/polymorphic/README.md>重写、重载及隐藏</a>概念的辨析。</p>
 <p>2017/04/22 刷题leetcode一道，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新了滴滴出行的<a href=https://github.com/cbhust8025/primary-algorithm/tree/newbranch/jobs/Job%20interview/didi>笔试</a>以及部分题解。
 <p>2017/04/24 刷题leetcode若干道，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。
-<p><a href=https://github.com/cbhust8025/primary-algorithm/blob/master/jobs/Job%20interview/didi/README.md>滴滴出行面试</a>。</p>
+<p><a href=https://github.com/cbhust8025/primary-algorithm/blob/master/jobs/Job%20interview/didi/README.md>滴滴出行面试</a>。阿里笔试相关。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
