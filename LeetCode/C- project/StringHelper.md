@@ -202,6 +202,76 @@ namespace StringHelper
 		reverse(res.begin(), res.end());
 		return res;
 	}
+	
+	string multiply(string num1, string num2) {
+		/* Accepted
+		43. Multiply Strings Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 96975
+		Total Submissions: 365748
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2.
+
+		Note:
+
+		The length of both num1 and num2 is < 110.
+		Both num1 and num2 contains only digits 0-9.
+		Both num1 and num2 does not contain any leading zero.
+		You must not use any built-in BigInteger library or convert the inputs to integer directly.
+		*/
+		//大数乘法，两个数以字符串形式存在，字符串第一个数字不会是0，且字符串只会包含0-9十个字符。
+		//如果有个字符串为空，则直接返回空字符串
+		if (num1.empty() || num2.empty())
+			return "";
+		//如果有字符串为"0"，则直接返回"0"
+		if (num1 == "0" || num2 == "0")
+			return "0";
+		//将两个字符串逆序，从个位开始进行乘积
+		reverse(num1.begin(), num1.end());
+		reverse(num2.begin(), num2.end());
+		//长度m的字符串乘以长度为n的字符串，乘积的长度最长为m+n
+		string res;
+		for (int i = 0;i < num1.size() + num2.size();i++)
+		{
+			res.push_back('0');
+		}
+		for (int i = 0;i < num1.size();i++)
+		{//每次从第一个字符串拿出一位数，乘以第二个字符串,然后存入结果字符串中
+			int CarryBit = 0;//初始化进位为0
+			int j = 0;
+			for (;j < num2.size();j++)
+			{//num1[i] 依次乘以num2[j]，注意进位和保存结果到res中，i也即当前的计算结果保存的偏移值。
+				int r = (res[i+j] - '0') + (num1[i] - '0') * (num2[j] - '0') + CarryBit;//计算两个字符串中两个字符的乘积并累加到res的对应位上,注意加上进位
+				//对乘积进行对10取余为计算结果，取商为进位，分别保存
+				CarryBit = r / 10;
+				res[i + j] = '0' + r % 10;
+			}
+			while (j<res.size() && CarryBit != 0)
+			{
+				int r = (res[i + j] - '0') + CarryBit;
+				if (r < 10)
+				{
+					res[i + j] = '0' + r;
+					break;
+				}
+				else
+				{
+					CarryBit = r / 10;
+					res[i + j] = '0' + r % 10;
+					j++;
+				}
+			}
+			cout << res << endl;
+		}
+		while (res[res.size() - 1] == '0')
+		{
+			res.pop_back();
+		}
+		reverse(res.begin(), res.end());
+		
+		return res;
+	}
 }
 ```
 
