@@ -5,8 +5,16 @@
 //
 #include<iostream>
 #include<cassert>
+#include<string>
 #include<ctime>
+#include<map>
+#include<set>
+#include<list>
+#include<queue>
 #include<vector>
+#include<iomanip> 
+#include<functional>
+#include<windows.h>
 #include"ListHelper.h"
 //#include<string>
 using namespace std;
@@ -31,12 +39,29 @@ namespace VectorHelper
 		return vi;
 	}
 
-	//打印链表
-	void printVector(const vector<int>& vi)
+
+	//模板，打印Vector
+	template <typename T>
+	void printVector(const vector<T>& vi)
 	{
-		for (int i = 0;i < vi.size();i++)
+		for (auto it = vi.begin();it != vi.end();it++)
 		{
-			cout << vi[i] << "->";
+			cout << setw(3) << *it << " ";
+		}
+		cout << "NULL" << endl;
+		return;
+	}
+
+	template <typename T>
+	void printMatrix(const vector<vector<T>>& vi)
+	{
+		for (auto it = vi.begin();it != vi.end();it++)
+		{
+			for (auto it2 = (*it).begin();it2 != (*it).end();it2++)
+			{
+				cout << setw(3) << *it2 << " ";
+			}
+			cout << endl;
 		}
 		cout << "NULL" << endl;
 		return;
@@ -148,7 +173,7 @@ namespace VectorHelper
 			*(it - 1) = *(it - 2);
 			*(it - 2) = temp;
 		}
-		else if(j == nums.size())
+		else if (j == nums.size())
 		{
 			reverse(nums.begin(), nums.end());
 		}
@@ -331,6 +356,7 @@ namespace VectorHelper
 		else
 			return begin + 1;
 	}
+
 	bool judgeSudoku(vector<vector<char>>& board, int row, int col)
 	{
 		if (row < 0 || row > 8 || col < 0 || col > 8)
@@ -513,6 +539,7 @@ namespace VectorHelper
 		*/
 		SolveSudoku(board, 0, 0);
 	}
+
 	void CombinationSum(set<vector<int>>& res, vector<int>& path, vector<int>& candidates, int target)
 	{//回溯法
 		if (target == 0)
@@ -873,6 +900,577 @@ namespace VectorHelper
 			slow = nums[slow];
 		}
 		return target;
+	}
+
+	int trap(vector<int>& height) {
+		/* Accepted
+		42. Trapping Rain Water Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 107191
+		Total Submissions: 297341
+		Difficulty: Hard
+		Contributor: LeetCode
+		Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
+
+		For example,
+		Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6.
+
+
+		The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped. Thanks Marcos for contributing this image!
+		*/
+		// 找寻最高的一根柱子，从两边往中间进行搜寻，水位肯定是与当前遇到的最高柱子（小于最高高度）持平。依次来逐渐计算总容量。
+		if (height.size() <= 1)
+			return 0;
+		int max = 0;
+		int index = -1;
+		for (int i = 0;i < height.size();i++)
+		{
+			if (height[i] > max)
+			{
+				max = height[i];
+				index = i;
+			}
+		}
+		cout << max << " " << index << endl;
+		int iVolume = 0;
+		int lmax = 0;
+		for (int i = 0;i < index;i++)
+		{
+			if (height[i] > lmax)
+			{
+				lmax = height[i];
+			}
+			else if (height[i] < lmax)
+			{
+				iVolume += lmax - height[i];
+			}
+		}
+		int rmax = 0;
+		for (int i = height.size() - 1;i > index;i--)
+		{
+			if (height[i] > rmax)
+			{
+				rmax = height[i];
+			}
+			else if (height[i] < rmax)
+			{
+				iVolume += rmax - height[i];
+			}
+		}
+		return iVolume;
+	}
+
+	void MatrixTranspose(vector<vector<int>>& Matrix, vector<vector<int>>& TMatrix)
+	{
+		if (Matrix.empty())
+		{
+			return;
+		}
+		for (int i = 0;i < Matrix[0].size();i++)
+		{
+			vector<int> temp;
+			for (int j = 0;j < Matrix.size();j++)
+			{
+				temp.push_back(Matrix[j][i]);
+			}
+			TMatrix.push_back(temp);
+		}
+		return;
+	}
+
+	
+	int trapRainWater(vector<vector<int>>& heightMap) {
+		/*
+		407. Trapping Rain Water II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 8132
+		Total Submissions: 22562
+		Difficulty: Hard
+		Contributor: LeetCode
+		Given an m x n matrix of positive integers representing the height of each unit cell in a 2D elevation map, compute the volume of water it is able to trap after raining.
+
+		Note:
+		Both m and n are less than 110. The height of each unit cell is greater than 0 and is less than 20,000.
+
+		Example:
+
+		Given the following 3x6 height map:
+		[
+		[1,4,3,1,3,2],
+		[3,2,1,3,2,4],
+		[2,3,3,2,3,1]
+		]
+
+		Return 4.
+
+		The above image represents the elevation map [[1,4,3,1,3,2],[3,2,1,3,2,4],[2,3,3,2,3,1]] before the rain.
+		###https://leetcode.com/problems/trapping-rain-water-ii/#/description
+
+		After the rain, water are trapped between the blocks. The total volume of water trapped is 4.
+		*/
+		return 0;
+		
+	}
+
+	int upper_bound(vector<int> vi, int target)
+	{
+		if (vi.empty() || vi[0] > target)
+		{
+			return 0;
+		}
+		if (vi[vi.size() - 1] < target)
+			return vi.size();
+		//二分查找target,从vi[begin,...,end]找(前闭后闭)
+		//mid = begin+(end - begin)/2 比较target/vi[mid]
+		//若target > vi[mid],则begin = mid + 1;
+		//若target < vi[mid],则end = mid - 1;
+		//若相等，则返回mid+1。
+		int begin = 0;
+		int end = vi.size() - 1;
+		int mid;
+		while (begin <= end)
+		{
+			mid = begin + (end - begin) / 2;
+			if (target == vi[mid])
+				return mid + 1;
+			else if (target > vi[mid])
+				begin = mid + 1;
+			else if (target < vi[mid])
+				end = mid - 1;
+		}
+		return end + 1;
+	}
+
+	int jump(vector<int>& nums) {
+		/*
+		45. Jump Game II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 89045
+		Total Submissions: 341099
+		Difficulty: Hard
+		Contributor: LeetCode
+		Given an array of non-negative integers, you are initially positioned at the first index of the array.
+
+		Each element in the array represents your maximum jump length at that position.
+
+		Your goal is to reach the last index in the minimum number of jumps.
+
+		For example:
+		Given array A = [2,3,1,1,4]
+
+		The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
+
+		Note:
+		You can assume that you can always reach the last index.
+		*/
+		//
+		int count = 0, icPosition = 0, ipPosition = 0, i = 0;
+		printVector(nums);
+		while (icPosition < nums.size() - 1)
+		{//如果当前位置没达到目的地，则继续跳
+			ipPosition = icPosition;//保存下我当前位置，或者保存当前位置对应跳的最远距离。
+			while (i <= ipPosition)//对跳到当前位置之后能够遍历并且在前一个位置未能遍历到的位置进行判定，看是否能跳的更远。取最远的位置。
+			{
+				icPosition = max(icPosition, i + nums[i]);
+				i++;
+			}
+			//每次跳完了之后，计数器加一表示跳了一步。
+			count++;
+			cout << icPosition << " ";
+		}
+		cout << endl;
+		return count;
+	}
+
+	void getAllPermution(vector<vector<int>>& res, vector<int>& nums, int begin, int end)
+	{//对nums[begin, end]求其所有的排列，并将其排列结果存入res
+		if (begin == end)
+		{//如果两者相等，表示已经找到一种排列， 将此时的nums存入结果中，进行回溯。
+			res.push_back(nums);
+			return;
+		}
+		//如果begin<end,则从将begin对应的数和后面的数一一调换，进行追溯begin+1,end
+		for (int i = begin;i <= end;i++)
+			//i:[begin, end]，包含begin的原因是，需要找到当前数不变，后面所有数的全排列情况。
+			//包含end的原因，是当前数要和后面的每一个数都进行调换，所以需要包含end。
+		{
+			swap(nums[begin], nums[i]);//调换完，进行追溯
+			getAllPermution(res, nums, begin + 1, end);
+			swap(nums[begin], nums[i]);//回溯完后重置操作
+		}
+		return;
+	}
+
+	vector<vector<int>> permute(vector<int>& nums) {
+		/*  Accepted
+		46. Permutations Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 157526
+		Total Submissions: 373953
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a collection of distinct numbers, return all possible permutations.
+
+		For example,
+		[1,2,3] have the following permutations:
+		[
+		[1,2,3],
+		[1,3,2],
+		[2,1,3],
+		[2,3,1],
+		[3,1,2],
+		[3,2,1]
+		]
+		*/
+		//获得所给数组的全排列，利用回溯算法求之。
+		vector<vector<int>> res;
+		getAllPermution(res, nums, 0, nums.size() - 1);
+		return res;
+	}
+
+	void getAllUniPermution(set<vector<int>>& res, vector<int>& nums, int begin, int end)
+	{//对nums[begin, end]求其所有的排列，并将其排列结果存入res
+		if (begin == end)
+		{//如果两者相等，表示已经找到一种排列， 将此时的nums存入结果中，进行回溯。
+			res.insert(nums);
+			return;
+		}
+		//如果begin<end,则从将begin对应的数和后面的数一一调换，进行追溯begin+1,end
+		for (int i = begin;i <= end;i++)
+			//i:[begin, end]，包含begin的原因是，需要找到当前数不变，后面所有数的全排列情况。
+			//包含end的原因，是当前数要和后面的每一个数都进行调换，所以需要包含end。
+		{
+			swap(nums[begin], nums[i]);//调换完，进行追溯
+			getAllUniPermution(res, nums, begin + 1, end);
+			swap(nums[begin], nums[i]);//回溯完后重置操作
+		}
+		return;
+	}
+
+	vector<vector<int>> permuteUnique(vector<int>& nums) {
+		/*   Accepted
+		47. Permutations II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 113222
+		Total Submissions: 354917
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+
+		For example,
+		[1,1,2] have the following unique permutations:
+		[
+		[1,1,2],
+		[1,2,1],
+		[2,1,1]
+		]
+		*/
+		set<vector<int>> res;
+		getAllUniPermution(res, nums, 0, nums.size() - 1);
+		vector<vector<int>> r;
+		for (auto it = res.begin();it != res.end();it++)
+		{
+			r.push_back(*it);
+		}
+		return r;
+ 	}
+
+	void swapForRotate(vector<vector<int>>& matrix, pair<int, int> leftup, pair<int, int> rightup, pair<int, int> rightdown, pair<int, int> leftdown)
+	{
+		int temp = matrix[leftup.first][leftup.second];
+		matrix[leftup.first][leftup.second] = matrix[leftdown.first][leftdown.second];
+		matrix[leftdown.first][leftdown.second] = matrix[rightdown.first][rightdown.second];
+		matrix[rightdown.first][rightdown.second] = matrix[rightup.first][rightup.second];
+		matrix[rightup.first][rightup.second] = temp;
+		return;
+	}
+
+	void rotate(vector<vector<int>>& matrix) {
+		/*   Accepted
+		48. Rotate Image Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 107541
+		Total Submissions: 283412
+		Difficulty: Medium
+		Contributor: LeetCode
+		You are given an n x n 2D matrix representing an image.
+
+		Rotate the image by 90 degrees (clockwise).
+
+		Follow up:
+		Could you do this in-place?
+		*/
+		//printMatrix(matrix);
+		int n = matrix.size();
+		for (int i = 0;i < n / 2;i++)
+		{
+			for (int j = i;j < n - 1 - i;j++)
+				swapForRotate(matrix, pair<int, int>(i, j), pair<int, int>(j, n - 1 - i), pair<int, int>(n - 1 - i, n - 1 - j), pair<int, int>(n - 1 - j, i));
+		}
+		//printMatrix(matrix);
+		return;
+	}
+
+	vector<vector<string>> groupAnagrams(vector<string>& strs) {
+		/* Accepted
+		49. Group Anagrams Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 127422
+		Total Submissions: 382873
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given an array of strings, group anagrams together.
+
+		For example, given: ["eat", "tea", "tan", "ate", "nat", "bat"],
+		Return:
+
+		[
+		["ate", "eat","tea"],
+		["nat","tan"],
+		["bat"]
+		]
+		Note: All inputs will be in lower-case.
+		*/
+		map<string, vector<string>> mapsv;
+		for (int i = 0;i < strs.size();i++)
+		{
+			string temp = strs[i];
+			sort(temp.begin(), temp.end());
+			if (mapsv.find(temp) == mapsv.end())
+			{
+				mapsv[temp] = vector<string>(1,strs[i]);
+			}
+			else
+			{
+				mapsv[temp].push_back(strs[i]);
+			}
+		}
+		vector<vector<string>> res;
+		for (auto it = mapsv.begin();it != mapsv.end();it++)
+		{
+			res.push_back((*it).second);
+		}
+		return res;
+	}
+
+	bool CanPlaceQueen(vector<int> qFlag, int row, int col)
+	{
+		//对于row行，col列能否放置皇后进行判定，如果能则返回true
+		for (int i = 0;i < row;i++)//当前位置是row行，则之前肯定已经有[0,...,row-1]行放置了皇后，对于每一个皇后一一进行判定
+		{
+			//如果两个皇后列数相等， 则直接判定不能放置，返回false
+			//如果两个皇后列数差绝对值等于行数差绝对值，则这两个皇后在同一斜线上，也判定为不能放置，返回false
+			if (qFlag[i] == col || (abs(row - i) == abs(col - qFlag[i])))
+				return false;
+		}
+		//对于已经放置的row个皇后，如果都不冲突，则当前[row,col]可以放置皇后，返回true
+		return true;
+	}
+
+	void queen(vector<int> qFlag, vector<vector<int>> &output, int row, int n)
+	{
+		//N皇后问题，递归实现
+		//row[0,...,N-1]表示从第一行到第N行，
+		//qFlag为N维向量，索引对应行数[0,...,N-1]，存储的值是皇后放置的列数[0,...,N-1]。
+		//output 为X*N维向量， 每一行对应一种解，X未知。
+		if (row == n)
+		{
+			output.push_back(qFlag);//row == N ，表示已经前面N层都放置好了皇后，输出当前解，然后回溯。
+		}
+		else
+		{
+			for (int i = 0;i < n;i++)
+			{
+				if (CanPlaceQueen(qFlag, row, i))//如果当前位置可以放置皇后，则放置皇后并修改flag。
+				{
+					qFlag[row] = i;//当前位置放置皇后，修改第row行对应的flag为放置的列数。
+					queen(qFlag, output, row + 1, n);//往下一行继续搜寻
+												  //qFlag[row] = -1;//回溯法核心，在每次探索完之后，重置追溯前的修改。
+												  //此种情况下，可以不用进行重置操作，主要原因是当前行修改的值对回溯之后的情况没有任何影响。
+				}
+			}
+		}
+		return;
+	}
+	vector<string> viTovsQueen(vector<int> vi)
+	{
+		vector<string> res;
+		for (int i = 0;i < vi.size();i++)
+		{
+			string temp(vi.size(), '.');
+			temp[vi[i]] = 'Q';
+			res.push_back(temp);
+		}
+		return res;
+	}
+	vector<vector<string>> solveNQueens(int n) {
+		/*  Accepted
+		51. N-Queens Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 75862
+		Total Submissions: 252807
+		Difficulty: Hard
+		Contributor: LeetCode
+		The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.
+
+
+
+		Given an integer n, return all distinct solutions to the n-queens puzzle.
+
+		Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space respectively.
+
+		For example,
+		There exist two distinct solutions to the 4-queens puzzle:
+
+		[
+		[".Q..",  // Solution 1
+		"...Q",
+		"Q...",
+		"..Q."],
+
+		["..Q.",  // Solution 2
+		"Q...",
+		"...Q",
+		".Q.."]
+		]
+		*/
+		vector<int> qFlag(n, -1);
+		vector<vector<int>> res;
+		queen(qFlag, res, 0, n);
+		vector<vector<string>> vvs;
+		for (int i = 0;i < res.size();i++)
+		{
+			vvs.push_back(viTovsQueen(res[i]));
+		}
+		return vvs;
+	}
+
+	int totalNQueens(int n) {
+		/* Accepted
+		52. N-Queens II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 60267
+		Total Submissions: 137622
+		Difficulty: Hard
+		Contributor: LeetCode
+		Follow up for N-Queens problem.
+
+		Now, instead outputting board configurations, return the total number of distinct solutions.
+		*/
+		vector<int> qFlag(n, -1);
+		vector<vector<int>> res;
+		queen(qFlag, res, 0, n);
+		return res.size();
+	}
+
+	int maxSubArray(vector<int>& nums) {
+		/* Accepted
+		53. Maximum Subarray Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 186647
+		Total Submissions: 475818
+		Difficulty: Easy
+		Contributor: LeetCode
+		Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
+
+		For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
+		the contiguous subarray [4,-1,2,1] has the largest sum = 6.
+
+		click to show more practice.
+
+		More practice:
+		If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
+		*/
+		//经典DP问题，从第一个元素依次往后找并加到当前子序列和中
+		//若子序列和小于等于0，则表示子序列不应加入当前元素，将子序列进行重置，并将之前计算的子序列和与已知最大的子序列和比较，并存入
+		//若子序列和大于0，说明可加入子序列中，并继续向后找。
+		if (nums.empty())
+			return 0;
+		int MaxSum = nums[0];
+		int subMaxSum = nums[0];
+		for (int i = 1;i < nums.size();i++)
+		{//从第一个元素找到最后一个元素，不遗漏。
+			if (subMaxSum < 0)
+				//如果之前的子序列和小于0，那么将成为后面的子序列的负担
+				//则将子序列清空，将当前元素当做新子序列的第一个元素
+				subMaxSum = nums[i];
+			else
+				//如果之前的子序列不小于0，则可以继续维持子序列，将当前元素添加到当前子序列中，进行求和
+				subMaxSum += nums[i];
+			MaxSum = max(MaxSum, subMaxSum);//每次修改子序列和的同时，保存最大值
+		}
+		return MaxSum;
+	}
+
+	vector<int> PeelMatrix(vector<vector<int>>& matrix)
+	{
+		vector<int> res;
+		int m = matrix.size();
+		int n = matrix[0].size();
+		res.insert(res.end(), matrix[0].begin(), matrix[0].end());
+		matrix.erase(matrix.begin());
+		for (int i = 0;i < m - 1;i++)
+		{
+			res.insert(res.end(), matrix[i].back());
+			matrix[i].pop_back();
+		}
+		vector<int> temp = matrix.back();
+		matrix.pop_back();
+		reverse(temp.begin(), temp.end());
+		res.insert(res.end(), temp.begin(), temp.end());
+		for (int i = m - 3;i >= 0;i--)
+		{
+			res.insert(res.end(), matrix[i].front());
+			matrix[i].erase(matrix[i].begin());
+		}
+		return res;
+	}
+
+	vector<int> spiralOrder(vector<vector<int>>& matrix) {
+		/*  Accepted
+		54. Spiral Matrix Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 94997
+		Total Submissions: 375443
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.
+
+		For example,
+		Given the following matrix:
+
+		[
+		[ 1, 2, 3 ],
+		[ 4, 5, 6 ],
+		[ 7, 8, 9 ]
+		]
+		You should return [1,2,3,6,9,8,7,4,5].
+		*/
+		//螺旋展示矩形，并将结果保存至一维向量
+		vector<int> res;
+		if (matrix.empty())
+			return res;
+		while (!matrix.empty() && matrix.size() != 1 && matrix[0].size() != 1 && matrix[0].size() != 0)
+		{
+			vector<int> temp = PeelMatrix(matrix);
+			res.insert(res.end(), temp.begin(), temp.end());
+		}
+		if (matrix.empty())
+		{
+			return res;
+		}
+		else if (matrix.size() == 1)
+		{
+			res.insert(res.end(), matrix[0].begin(), matrix[0].end());
+		}
+		else if(matrix[0].size() == 1)
+		{
+			for (int i = 0;i < matrix.size();i++)
+			{
+				res.push_back(matrix[i][0]);
+			}
+		}
+		return res;
 	}
 }
 ```
