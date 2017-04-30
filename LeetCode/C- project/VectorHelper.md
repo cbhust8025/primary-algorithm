@@ -1473,4 +1473,5 @@ namespace VectorHelper
 		return res;
 	}
 }
+
 ```

@@ -22,6 +22,7 @@
 <p>2017/04/24 刷题leetcode若干道，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。
 <p>2017/04/26 <a href=https://github.com/cbhust8025/primary-algorithm/blob/master/jobs/Job%20interview/didi/README.md>滴滴出行面试</a>。<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/Job%20interview/ALiBaBa>阿里笔试</a>相关。</p>
 <p>2017/04/27 刷题leetcode一道，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a></p>
+<p>2017/04/30 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>

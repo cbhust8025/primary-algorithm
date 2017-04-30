@@ -90,6 +90,38 @@ namespace mathHelper
 		}
 		return count;
 	}
+	double myPow(double x, int n) {
+		/* Accepted
+		50. Pow(x, n) Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 144598
+		Total Submissions: 542549
+		Difficulty: Medium
+		Contributor: LeetCode
+		Implement pow(x, n).
+
+		Subscribe to see which companies asked this question.
+		*/
+		if (n == 0)
+			//x^0 = 1
+			return 1.0;
+		if (n == 1)
+			return x;
+		if (n == -1)
+			return 1.0 / x;
+		if (n == INT_MIN)
+			return 1.0 / (myPow(x, INT_MAX)*x);//特殊情况3的处理办法
+		if (n % 2 == 0)
+		{
+			double temp = myPow(x, n / 2);
+			return temp*temp;
+		}
+		else
+		{
+			double temp = myPow(x, (n - 1) / 2);
+			return temp*temp*x;
+		}
+	}
 }
 ```
 
