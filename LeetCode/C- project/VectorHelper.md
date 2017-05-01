@@ -1472,6 +1472,210 @@ namespace VectorHelper
 		}
 		return res;
 	}
+	bool canJump(vector<int>& nums) {
+		/*   Accepted
+		55. Jump Game Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 117124
+		Total Submissions: 399039
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given an array of non-negative integers, you are initially positioned at the first index of the array.
+
+		Each element in the array represents your maximum jump length at that position.
+
+		Determine if you are able to reach the last index.
+
+		For example:
+		A = [2,3,1,1,4], return true.
+
+		A = [3,2,1,0,4], return false.
+		*/
+		//贪心算法可解，每次从当前位置往能跳到的最远距离进行跳，如果最后位置在这个最远距离之内，则表示可以到达，返回true，反之false.
+		int icPosition = 0;//保存当前可到达的最远位置
+		int ipPosition = 0;//保存当前位置所能跳的最大步数。
+		int i = 0;//指向当前位置
+		while (i < nums.size())
+		{
+			ipPosition = icPosition;//保存下上次找到的最远位置
+			while (i <= ipPosition)
+			{
+				if(nums[i] != 0)
+					icPosition = max(icPosition, i + nums[i]);//贪婪思想更新最远位置
+				i++;//一步一步向后找，直到找到之前位置所能到达的最远位置。
+			}
+			
+			//每次跳之前判定条件，如果最后一个位置在最远位置范围内，则返回ture。
+			if (icPosition >= nums.size() - 1)
+			{
+				return true;
+			}
+			//如果找到的下次最远位置出可跳步数为0，则直接返回false.
+			if (icPosition == ipPosition)
+				return false;
+		}
+		return false;
+	}
+	//Definition for an interval.
+		struct Interval {
+		int start;
+		int end;
+		Interval() : start(0), end(0) {}
+		Interval(int s, int e) : start(s), end(e) {}
+	};
+	vector<Interval> merge(vector<Interval>& intervals) {
+		/*  Accepted
+		56. Merge Intervals Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 118385
+		Total Submissions: 404383
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a collection of intervals, merge all overlapping intervals.
+
+		For example,
+		Given [1,3],[2,6],[8,10],[15,18],
+		return [1,6],[8,10],[15,18].
+		*/
+		vector<Interval> vIres;
+		if (intervals.empty())
+		{
+			return vIres;
+		}
+		sort(intervals.begin(), intervals.end(), [](Interval& a, Interval& b) {return a.start < b.start;});
+		Interval temp(intervals[0]);
+		for (int i = 1;i < intervals.size();i++)
+		{
+			if (intervals[i].start > temp.end)
+			{
+				vIres.push_back(temp);
+				temp = intervals[i];
+			}
+			else
+			{
+				temp.start = min(intervals[i].start, temp.start);
+				temp.end = max(intervals[i].end, temp.end);
+			}
+		}
+		vIres.push_back(temp);
+		return vIres;
+	}
+
+	vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
+		/*   Accepted
+		57. Insert Interval Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 89861
+		Total Submissions: 332670
+		Difficulty: Hard
+		Contributor: LeetCode
+		Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).
+
+		You may assume that the intervals were initially sorted according to their start times.
+
+		Example 1:
+		Given intervals [1,3],[6,9], insert and merge [2,5] in as [1,5],[6,9].
+
+		Example 2:
+		Given [1,2],[3,5],[6,7],[8,10],[12,16], insert and merge [4,9] in as [1,2],[3,10],[12,16].
+
+		This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10].
+		*/
+		/**
+		* Definition for an interval.
+		* struct Interval {
+		*     int start;
+		*     int end;
+		*     Interval() : start(0), end(0) {}
+		*     Interval(int s, int e) : start(s), end(e) {}
+		* };
+		*/
+		vector<Interval> vIres;
+		if (intervals.empty())
+		{
+			vIres.push_back(newInterval);
+			return vIres;
+		}
+		Interval temp;
+		bool flag = false;
+		for (int i = 0;i < intervals.size();i++)
+		{
+			if (intervals[i].end < newInterval.start)
+			{
+				vIres.push_back(intervals[i]);
+			}
+			else if (intervals[i].start > newInterval.end)
+			{
+				if (flag == false)
+				{
+					vIres.push_back(newInterval);
+					flag = true;
+				}
+				vIres.push_back(intervals[i]);
+			}
+			else
+			{
+				newInterval.start = min(newInterval.start, intervals[i].start);
+				newInterval.end = max(newInterval.end, intervals[i].end);
+			}
+		}
+		if (flag == false)
+		{
+			vIres.push_back(newInterval);
+		}
+		return vIres;
+	}
+
+	vector<vector<int>> generateMatrix(int n) {
+		/*
+		59. Spiral Matrix II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 77213
+		Total Submissions: 198994
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given an integer n, generate a square matrix filled with elements from 1 to n2 in spiral order.
+
+		For example,
+		Given n = 3,
+
+		You should return the following matrix:
+		[
+		[ 1, 2, 3 ],
+		[ 8, 9, 4 ],
+		[ 7, 6, 5 ]
+		]
+		*/
+		vector<vector<int>> vvi(n, vector<int>(n, 0));
+		int i = 1;//[1,..,2n]个数
+		int j = 0;//[0,...,n/2]行
+		for (;j < n / 2;j++)
+		{
+			for (int k = j;k < n - j - 1;k++)
+			{
+				vvi[j][k] = i++;
+			}
+			for (int k = j;k < n - j - 1;k++)
+			{
+				vvi[k][n - j - 1] = i++;
+			}
+			for (int k = j;k < n - j - 1;k++)
+			{
+				vvi[n - j - 1][n - k - 1] = i++;
+			}
+			for (int k = j;k < n - j - 1;k++)
+			{
+				vvi[n - k - 1][j] = i++;
+			}
+		}
+		if (n % 2 != 0)
+		{
+			vvi[n / 2][n / 2] = i;
+		}
+		printMatrix(vvi);
+		return vvi;
+	}
+
 }
 
 ```

@@ -272,6 +272,87 @@ namespace StringHelper
 		
 		return res;
 	}
+	int lengthOfLastWord(string s) {
+		/*   Accepted
+		58. Length of Last Word Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 138976
+		Total Submissions: 440687
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string.
+
+		If the last word does not exist, return 0.
+
+		Note: A word is defined as a character sequence consists of non-space characters only.
+
+		For example,
+		Given s = "Hello World",
+		return 5.
+		*/
+		int length = 0;
+		while (s[s.size() - 1] == ' ')
+		{
+			s.pop_back();
+		}
+		for (int i = 0;i < s.size();i++)
+		{
+			if (s[i] != ' ')
+				length++;
+			else if(i != s.size() - 1)
+				length = 0;
+		}
+		return length;
+	}
+
+	string getPermutation(int n, int k) {
+		/*
+		60. Permutation Sequence Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 79223
+		Total Submissions: 284901
+		Difficulty: Medium
+		Contributor: LeetCode
+		The set [1,2,3,…,n] contains a total of n! unique permutations.
+
+		By listing and labeling all of the permutations in order,
+		We get the following sequence (ie, for n = 3):
+
+		"123"
+		"132"
+		"213"
+		"231"
+		"312"
+		"321"
+		Given n and k, return the kth permutation sequence.
+
+		Note: Given n will be between 1 and 9 inclusive.
+		*/
+		string sRes;
+		if (n < 1 && n > 9)
+			return sRes;
+		vector<int> vi;
+		int fac = 1;
+		for (int i = 1;i <= n;i++)
+		{
+			vi.push_back(i);
+			fac *= i;
+		}
+		fac /= n;
+		int round = n - 1;
+		k--;
+		while (round >= 0)
+		{
+			int index = k / fac;
+			k %= fac;
+			sRes.push_back(vi[index] + '0');
+			vi.erase(vi.begin() + index);
+			if (round)
+				fac /= round;
+			round--;
+		}
+		return sRes;
+	}
 }
 ```
 
