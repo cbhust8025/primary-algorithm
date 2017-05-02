@@ -264,5 +264,40 @@ namespace ListHelper
 		ListNode* res = translateVector(vi);
 		return res;
 	}
+	ListNode* rotateRight(ListNode* head, int k) {
+		/*  Accepted
+		61. Rotate List Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 103157
+		Total Submissions: 425476
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a list, rotate the list to the right by k places, where k is non-negative.
+
+		For example:
+		Given 1->2->3->4->5->NULL and k = 2,
+		return 4->5->1->2->3->NULL.
+		*/
+		if (!head || k == 0)
+			return head;
+		ListNode* p = head;
+		ListNode* q = head;
+		int length = 1;
+		while (q->next)
+		{
+			length++;
+			q = q->next;
+		}
+		q->next = head;
+		k %= length;
+		while (length - k > 0)
+		{
+			q = head;
+			head = head->next;
+			k++;
+		}
+		q->next = NULL;
+		return head;
+	}
 }
 ```

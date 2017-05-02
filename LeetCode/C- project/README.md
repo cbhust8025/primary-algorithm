@@ -21,8 +21,31 @@
 * 39). Combination Sum Add to List
 * 40). Combination Sum II Add to List
 * 41). First Missing Positive Add to List
+* 42). Trapping Rain Water Add to List
+* 43). Multiply Strings Add to List
+* 45). Jump Game II Add to List
+* 46). Permutations Add to List
+* 47). Permutations II Add to List
+* 48). Rotate Image Add to List
+* 49). Group Anagrams Add to List
+* 50). Pow(x, n) Add to List
+* 51). N-Queens Add to List
+* 52). N-Queens II Add to List
+* 53). Maximum Subarray Add to List
+* 54). Spiral Matrix Add to List
+* 55). Jump Game Add to List
+* 56). Merge Intervals Add to List
+* 57). Insert Interval Add to List
+* 58). Length of Last Word Add to List
+* 59). Spiral Matrix II Add to List
+* 60). Permutation Sequence Add to List
+* 61). Rotate List Add to List
+* 62). Unique Paths Add to List
+* 63). Unique Paths II Add to List
+* 64). Minimum Path Sum Add to List
+* 66). Plus One Add to List
 * 216). Combination Sum III Add to List
 * 268). Missing Number Add to List
 * 287). Find the Duplicate Number Add to List
 * 377). Combination Sum IV Add to List
-* 待续~2017/04/24
+* 待续~2017/05/02
