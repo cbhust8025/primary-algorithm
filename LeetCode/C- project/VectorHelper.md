@@ -1675,7 +1675,162 @@ namespace VectorHelper
 		printMatrix(vvi);
 		return vvi;
 	}
+	int uniquePaths(int m, int n) {
+		/*  Accepted
+		62. Unique Paths Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 132269
+		Total Submissions: 328958
+		Difficulty: Medium
+		Contributor: LeetCode
+		A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
 
+		The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+
+		How many possible unique paths are there?
+
+
+		Above is a 3 x 7 grid. How many possible unique paths are there?
+
+		Note: m and n will be at most 100.
+		*/
+		//动态规划可解，初始化一个m*n的矩阵，表示路径数，dp[i][j]代表从(0,0)到(i,j)的所有不同路径数
+		//动态规划核心：递推关系式
+		//if(i == 0 || j == 0)dp[0][j+1] = dp[0][j] + 1 || dp[i+1][0] = dp[i][0] + 1;
+		//else dp[i+1][j+1] = dp[i][j+1] + dp[i+1][j]
+		vector<vector<int>> dp(m, vector<int>(n, 1));
+		VectorHelper::printMatrix(dp);
+		for (int i = 1;i < m;i++)
+		{
+			for (int j = 1;j < n;j++)
+			{
+				dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+			}
+		}
+		VectorHelper::printMatrix(dp);
+		return dp[m - 1][n - 1];
+	}
+
+	int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+		/*  Accepted
+		63. Unique Paths II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 98127
+		Total Submissions: 313189
+		Difficulty: Medium
+		Contributor: LeetCode
+		Follow up for "Unique Paths":
+
+		Now consider if some obstacles are added to the grids. How many unique paths would there be?
+
+		An obstacle and empty space is marked as 1 and 0 respectively in the grid.
+
+		For example,
+		There is one obstacle in the middle of a 3x3 grid as illustrated below.
+
+		[
+		[0,0,0],
+		[0,1,0],
+		[0,0,0]
+		]
+		The total number of unique paths is 2.
+
+		Note: m and n will be at most 100.
+		*/
+		//动态规划解决，注意当前位置为障碍，注意能到达当前位置的位置可能为障碍，注意初始位置可能为障碍.
+		if (obstacleGrid[0][0] == 1)
+			return 0;
+		int m = obstacleGrid.size();
+		int n = obstacleGrid[0].size();
+		vector<vector<int>> dp(m, vector<int>(n, 1));
+		for (int i = 1;i < m;i++)
+		{
+			dp[i][0] = dp[i - 1][0] * (1 - obstacleGrid[i][0]);
+		}
+		for (int j = 1;j < n;j++)
+		{
+			dp[0][j] = dp[0][j - 1] * (1 - obstacleGrid[0][j]);
+		}
+		for (int i = 1;i < m;i++)
+		{
+			for (int j = 1;j < n;j++)
+			{
+				dp[i][j] = (dp[i - 1][j] * (1- obstacleGrid[i - 1][j]) + dp[i][j - 1] * (1 - obstacleGrid[i][j - 1]))*(1 - obstacleGrid[i][j]);
+			}
+		}
+		printMatrix(dp);
+		return dp[m - 1][n - 1];
+	}
+
+	int minPathSum(vector<vector<int>>& grid) {
+		/*
+		64. Minimum Path Sum Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 107009
+		Total Submissions: 282651
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right 
+		which minimizes the sum of all numbers along its path.
+
+		Note: You can only move either down or right at any point in time.
+		*/
+		if (grid.empty())
+			return 0;
+		int m = grid.size();
+		int n = grid[0].size();
+		vector<vector<int>> dp(m, vector<int>(n, 0));
+		dp[0][0] = grid[0][0];
+		for (int i = 1;i < m;i++)
+		{
+			dp[i][0] = dp[i - 1][0] + grid[i][0];
+		}
+		for (int j = 1;j < n;j++)
+		{
+			dp[0][j] = dp[0][j - 1] + grid[0][j];
+		}
+		for (int i = 1;i < m;i++)
+		{
+			for (int j = 1;j < n;j++)
+			{
+				dp[i][j] = grid[i][j] + min(dp[i][j - 1], dp[i - 1][j]);
+			}
+		}
+		return dp[m - 1][n - 1];
+	}
+	vector<int> plusOne(vector<int>& digits) {
+		/*
+		66. Plus One Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 161750
+		Total Submissions: 427131
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given a non-negative integer represented as a non-empty array of digits, plus one to the integer.
+
+		You may assume the integer do not contain any leading zero, except the number 0 itself.
+
+		The digits are stored such that the most significant digit is at the head of the list.
+
+		Subscribe to see which companies asked this question.
+		*/
+		//一个非负整数数组表示一个大数(最高位在最前面)，对这个数进行+1运算。
+		//依次处理进位即可
+		vector<int> viRes;
+		int CarryBit = 0;
+		for (int i = digits.size() - 1;i >= 0;i--)
+		{
+			if (i == digits.size() - 1)
+				digits[i] += 1;
+			int r = digits[i] + CarryBit;
+			viRes.push_back(r % 10);
+			CarryBit = r / 10;
+		}
+		if (CarryBit != 0)
+			viRes.push_back(1);
+		reverse(viRes.begin(), viRes.end());
+		return viRes;
+	}
 }
 
 ```
