@@ -24,6 +24,7 @@
 <p>2017/04/27 刷题leetcode一道，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a></p>
 <p>2017/04/30 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>2017/05/01 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
+<p>2017/05/02 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
