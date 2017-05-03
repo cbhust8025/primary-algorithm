@@ -122,6 +122,53 @@ namespace mathHelper
 			return temp*temp*x;
 		}
 	}
+	int mySqrt(int x) {
+		/*  Accepted
+		69. Sqrt(x) Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 147332
+		Total Submissions: 536548
+		Difficulty: Easy
+		Contributor: LeetCode
+		Implement int sqrt(int x).
+
+		Compute and return the square root of x.
+		*/
+		//牛顿法求解
+		//（res+x/res）/2 >= sqrt(x)
+		//逼近求解
+		long long res = x;
+		while (res * res > x)
+			res = (res + x / res) / 2;
+		return res;
+	}
+
+	bool isPerfectSquare(int num) {
+		/*  Accepted
+		367. Valid Perfect Square Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 38909
+		Total Submissions: 102714
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given a positive integer num, write a function which returns True if num is a perfect square else False.
+
+		Note: Do not use any built-in library function such as sqrt.
+
+		Example 1:
+
+		Input: 16
+		Returns: True
+		Example 2:
+
+		Input: 14
+		Returns: False
+		Credits:
+		Special thanks to @elmirap for adding this problem and creating all test cases.
+		*/
+		int sNum = mySqrt(num);
+		return (sNum * sNum == num) ? true : false;
+	}
 }
 ```
 
