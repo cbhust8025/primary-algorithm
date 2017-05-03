@@ -1831,6 +1831,138 @@ namespace VectorHelper
 		reverse(viRes.begin(), viRes.end());
 		return viRes;
 	}
+	void setZeroes(vector<vector<int>>& matrix) {
+		/*  Accepted
+		73. Set Matrix Zeroes Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 98374
+		Total Submissions: 276754
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.
+
+		click to show follow up.
+
+		Follow up:
+		Did you use extra space?
+		A straight forward solution using O(mn) space is probably a bad idea.
+		A simple improvement uses O(m + n) space, but still not the best solution.
+		Could you devise a constant space solution?
+		*/
+		int m = matrix.size();
+		int n = matrix[0].size();
+		bool zeroFlag = false;
+		for (int i = 0;i < m;i++)
+		{
+			if (matrix[i][0] == 0)
+				zeroFlag = true;
+			for(int j = 1; j<n;j++)
+				if (matrix[i][j] == 0)
+				{
+					matrix[i][0] = 0;
+					matrix[0][j] = 0;
+				}
+		}
+		for (int i = m - 1;i >= 0;i--)
+		{
+			for (int j = 1;j < n;j++)
+			{
+				if (matrix[0][j] == 0 || matrix[i][0] == 0)
+					matrix[i][j] = 0;
+			}
+			if (zeroFlag)
+				matrix[i][0] = 0;
+		}
+	}
+
+	bool searchMatrix(vector<vector<int>>& matrix, int target) {
+		/*  Accepted
+		74. Search a 2D Matrix Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 118619
+		Total Submissions: 336466
+		Difficulty: Medium
+		Contributor: LeetCode
+		Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+
+		Integers in each row are sorted from left to right.
+		The first integer of each row is greater than the last integer of the previous row.
+		For example,
+
+		Consider the following matrix:
+
+		[
+		  [1,   3,  5,  7],
+		  [10, 11, 16, 20],
+		  [23, 30, 34, 50]
+		]
+		Given target = 3, return true.
+
+		Subscribe to see which companies asked this question.
+
+		Show Tags
+		Show Similar Problems
+		*/
+		if (matrix.empty() || matrix[0].empty())
+			return false;
+		for (int i = 0;i < matrix.size();i++)
+		{
+			if (matrix[i][0] > target)
+				break;
+			for (int j = 0;j < matrix[0].size();j++)
+			{
+				if (matrix[i][j] > target)
+					break;
+				if (matrix[i][j] == target)
+					return true;
+			}
+		}
+		return false;
+	}
+
+	bool searchMatrix(vector<vector<int>>& matrix, int target) {
+		/*  Accepted
+		240. Search a 2D Matrix II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 72711
+		Total Submissions: 190754
+		Difficulty: Medium
+		Contributor: LeetCode
+		Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+
+		Integers in each row are sorted in ascending from left to right.
+		Integers in each column are sorted in ascending from top to bottom.
+		For example,
+
+		Consider the following matrix:
+
+		[
+		  [1,   4,  7, 11, 15],
+		  [2,   5,  8, 12, 19],
+		  [3,   6,  9, 16, 22],
+		  [10, 13, 14, 17, 24],
+		  [18, 21, 23, 26, 30]
+		]
+		Given target = 5, return true.
+
+		Given target = 20, return false.
+		*/
+		if (matrix.empty() || matrix[0].empty())
+			return false;
+		for (int i = 0;i < matrix.size();i++)
+		{
+			if (matrix[i][0] > target)
+				break;
+			for (int j = 0;j < matrix[0].size();j++)
+			{
+				if (matrix[i][j] > target)
+					break;
+				if (matrix[i][j] == target)
+					return true;
+			}
+		}
+		return false;
+	}
 }
 
 ```

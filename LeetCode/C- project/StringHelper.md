@@ -353,6 +353,98 @@ namespace StringHelper
 		}
 		return sRes;
 	}
+	string addBinary(string a, string b) {
+		/*   Accepted
+		67. Add Binary Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 136371
+		Total Submissions: 432573
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given two binary strings, return their sum (also a binary string).
+
+		For example,
+		a = "11"
+		b = "1"
+		Return "100".
+		*/
+		if (a.empty() || b.empty())
+			return a + b;
+		string res;
+		int CarryBit = 0;
+		reverse(a.begin(), a.end());
+		reverse(b.begin(), b.end());
+		while (a.size() != b.size())
+			if (a.size() > b.size())
+				b.push_back('0');
+			else
+				a.push_back('0');
+		for (int i = 0;i < a.size();i++)
+		{
+			int r = int(a[i] - '0') + int(b[i] - '0') + CarryBit;
+			res.push_back((r % 2) + '0');
+			CarryBit = r / 2;
+		}
+		if (CarryBit != 0)
+			res.push_back('1');
+		reverse(res.begin(), res.end());
+		return res;
+	}
+
+	string simplifyPath(string path) {
+		/*  Accepted
+		71. Simplify Path Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 82147
+		Total Submissions: 332474
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given an absolute path for a file (Unix-style), simplify it.
+
+		For example,
+		path = "/home/", => "/home"
+		path = "/a/./b/../../c/", => "/c"
+		click to show corner cases.
+
+		Corner Cases:
+		Did you consider the case where path = "/../"?
+		In this case, you should return "/".
+		Another corner case is the path might contain multiple slashes '/' together, such as "/home//foo/".
+		In this case, you should ignore redundant slashes and return "/home/foo".
+		*/
+		stack<string> ss;
+		for (int i = 0;i < path.size();)
+		{
+			//每次找到一个单词后，过滤掉所有的'/'
+			while (i < path.size() && path[i] == '/')
+				i++;
+			//找到第一个不是'/'的字符之后，将当前的字符串保存下来。
+			string s;
+			//一直向后搜寻直到'/'结束
+			while (i < path.size() && path[i] != '/')
+			{
+				s.push_back(path[i]);
+				i++;
+			}
+			//如果栈不为空，且当前字符串为".."，则需进行弹出栈顶元素
+			if (s == ".." && !ss.empty())
+				ss.pop();
+			//将所有满足要求的字符串压入栈
+			else if (s != ".." && s != "." && s != "")
+				ss.push(s);
+		}
+		//结束后，如果栈为空，则表示目录为空，则返回"/"目录
+		if (ss.empty())
+			return "/";
+		string sRes = "";
+		while (!ss.empty())
+		{
+			sRes = "/" + ss.top() + sRes;
+			ss.pop();
+		}
+		return sRes;
+	}
+
 }
 ```
 
