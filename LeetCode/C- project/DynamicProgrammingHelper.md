@@ -7,6 +7,180 @@
 
 namespace DynamicProgrammingHelper 
 {
+	int combinationSum4(vector<int>& nums, int target) {
+		/* Accepted
+		377. Combination Sum IV Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 32163
+		Total Submissions: 77168
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given an integer array with all positive numbers and no duplicates, find the number of possible combinations that add up to a positive integer target.
+
+		Example:
+
+		nums = [1, 2, 3]
+		target = 4
+
+		The possible combination ways are:
+		(1, 1, 1, 1)
+		(1, 1, 2)
+		(1, 2, 1)
+		(1, 3)
+		(2, 1, 1)
+		(2, 2)
+		(3, 1)
+
+		Note that different sequences are counted as different combinations.
+
+		Therefore the output is 7.
+		Follow up:
+		What if negative numbers are allowed in the given array?
+		How does it change the problem?
+		What limitation we need to add to the question to allow negative numbers?
+		*/
+		//数量巨大，考虑使用dp方法求解，类似跳台阶。
+		//nums[1,2,3]代表的是每次跳台阶，可以跳多少阶台阶
+		//target，代表目标的台阶数
+		//dp[i] 0<=i<=target 代表跳到第i阶台阶所有的情况或者组合。
+		int n = nums.size();
+		vector<int> dp(target + 1, 0);
+		dp[0] = 1;
+		for (int i = 1;i <= target;i++)
+		{
+			for (int j = 0;j < n;j++)
+			{
+				if (i - nums[j] >= 0)
+				{
+					dp[i] += dp[i - nums[j]];
+				}
+			}
+		}
+		return dp[target];
+	}
+	int maxSubArray(vector<int>& nums) {
+		/* Accepted
+		53. Maximum Subarray Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 186647
+		Total Submissions: 475818
+		Difficulty: Easy
+		Contributor: LeetCode
+		Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
+
+		For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
+		the contiguous subarray [4,-1,2,1] has the largest sum = 6.
+
+		click to show more practice.
+
+		More practice:
+		If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
+		*/
+		//经典DP问题，从第一个元素依次往后找并加到当前子序列和中
+		//若子序列和小于等于0，则表示子序列不应加入当前元素，将子序列进行重置，并将之前计算的子序列和与已知最大的子序列和比较，并存入
+		//若子序列和大于0，说明可加入子序列中，并继续向后找。
+		if (nums.empty())
+			return 0;
+		int MaxSum = nums[0];
+		int subMaxSum = nums[0];
+		for (int i = 1;i < nums.size();i++)
+		{//从第一个元素找到最后一个元素，不遗漏。
+			if (subMaxSum < 0)
+				//如果之前的子序列和小于0，那么将成为后面的子序列的负担
+				//则将子序列清空，将当前元素当做新子序列的第一个元素
+				subMaxSum = nums[i];
+			else
+				//如果之前的子序列不小于0，则可以继续维持子序列，将当前元素添加到当前子序列中，进行求和
+				subMaxSum += nums[i];
+			MaxSum = max(MaxSum, subMaxSum);//每次修改子序列和的同时，保存最大值
+		}
+		return MaxSum;
+	}
+	int uniquePaths(int m, int n) {
+		/*  Accepted
+		62. Unique Paths Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 132269
+		Total Submissions: 328958
+		Difficulty: Medium
+		Contributor: LeetCode
+		A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+
+		The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+
+		How many possible unique paths are there?
+
+
+		Above is a 3 x 7 grid. How many possible unique paths are there?
+
+		Note: m and n will be at most 100.
+		*/
+		//动态规划可解，初始化一个m*n的矩阵，表示路径数，dp[i][j]代表从(0,0)到(i,j)的所有不同路径数
+		//动态规划核心：递推关系式
+		//if(i == 0 || j == 0)dp[0][j+1] = dp[0][j] + 1 || dp[i+1][0] = dp[i][0] + 1;
+		//else dp[i+1][j+1] = dp[i][j+1] + dp[i+1][j]
+		vector<vector<int>> dp(m, vector<int>(n, 1));
+		VectorHelper::printMatrix(dp);
+		for (int i = 1;i < m;i++)
+		{
+			for (int j = 1;j < n;j++)
+			{
+				dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+			}
+		}
+		VectorHelper::printMatrix(dp);
+		return dp[m - 1][n - 1];
+	}
+	int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+		/*  Accepted
+		63. Unique Paths II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 98127
+		Total Submissions: 313189
+		Difficulty: Medium
+		Contributor: LeetCode
+		Follow up for "Unique Paths":
+
+		Now consider if some obstacles are added to the grids. How many unique paths would there be?
+
+		An obstacle and empty space is marked as 1 and 0 respectively in the grid.
+
+		For example,
+		There is one obstacle in the middle of a 3x3 grid as illustrated below.
+
+		[
+		[0,0,0],
+		[0,1,0],
+		[0,0,0]
+		]
+		The total number of unique paths is 2.
+
+		Note: m and n will be at most 100.
+		*/
+		//动态规划解决，注意当前位置为障碍，注意能到达当前位置的位置可能为障碍，注意初始位置可能为障碍.
+		if (obstacleGrid[0][0] == 1)
+			return 0;
+		int m = obstacleGrid.size();
+		int n = obstacleGrid[0].size();
+		vector<vector<int>> dp(m, vector<int>(n, 1));
+		for (int i = 1;i < m;i++)
+		{
+			dp[i][0] = dp[i - 1][0] * (1 - obstacleGrid[i][0]);
+		}
+		for (int j = 1;j < n;j++)
+		{
+			dp[0][j] = dp[0][j - 1] * (1 - obstacleGrid[0][j]);
+		}
+		for (int i = 1;i < m;i++)
+		{
+			for (int j = 1;j < n;j++)
+			{
+				dp[i][j] = (dp[i - 1][j] * (1 - obstacleGrid[i - 1][j]) + dp[i][j - 1] * (1 - obstacleGrid[i][j - 1]))*(1 - obstacleGrid[i][j]);
+			}
+		}
+		printMatrix(dp);
+		return dp[m - 1][n - 1];
+	}
 	int climbStairs(int n) {
 		/*  Accepted
 		70. Climbing Stairs Add to List
