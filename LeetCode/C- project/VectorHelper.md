@@ -1796,6 +1796,57 @@ namespace VectorHelper
 		}
 		return false;
 	}
+	void sortColors(vector<int>& nums) {
+		/*  Accepted
+		75. Sort Colors Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 153340
+		Total Submissions: 410633
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+
+		Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
+
+		Note:
+		You are not suppose to use the library's sort function for this problem.
+
+		click to show follow up.
+
+		Follow up:
+		A rather straight forward solution is a two-pass algorithm using counting sort.
+		First, iterate the array counting number of 0's, 1's, and 2's, then overwrite array with total number of 0's, then 1's and followed by 2's.
+
+		Could you come up with an one-pass algorithm using only constant space?
+		*/
+		//0,1,2三类混杂在nums数组中，类似三路快排的思路，将0看做是小于patition的数字，1看做是等于，2看做是大于
+		//三路快排patition操作一遍，即可将所有的0,1,2三类分开。
+		//nums[0,...,n - 1]分为前后中三组
+		int n = nums.size();
+		int lt = -1;//  nums[0,..,lt] == 0...一开始为空集
+		int rt = n;// nums[rt,n-1] == 2,...一开始也为空集
+		int i = 0;//nums[lt + 1,i) == 1，...一开始为空集
+		while (i < rt)
+		{
+			if (nums[i] == 0)
+			{//等于0，加入到nums[0,lt]尾部
+				swap(nums[i], nums[lt + 1]);
+				lt++;
+				i++;
+			}
+			else if (nums[i] == 1)
+			{//等于1，加入到nums[lt+1,i)尾部,即无需移动
+				i++;
+			}
+			else if (nums[i] == 2)
+			{//等于2，加入到nums[rt,n-1]头部
+				swap(nums[i], nums[rt - 1]);
+				rt--;
+			}
+		}
+		printVector(nums);
+		return;
+	}
 }
 
 
