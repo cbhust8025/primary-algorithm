@@ -43,9 +43,27 @@
 * 62). Unique Paths Add to List
 * 63). Unique Paths II Add to List
 * 64). Minimum Path Sum Add to List
+* 65). Valid Number
 * 66). Plus One Add to List
+* 67). Add Binary
+* 69). Sqrt(x)	
+* 70). Climbing Stairs
+* 71). Simplify Path
+* 72). Edit Distance
+* 73). Set Matrix Zeroes
+* 74). Search a 2D Matrix
+* 75). Sort Colors
+* 77). Combinations
+* 78). Subsets
+* 79). Word Search
+* 80). Remove Duplicates from Sorted Array II
+* 81). Search in Rotated Sorted Array II
+* 82). Remove Duplicates from Sorted List II
+* 83). Remove Duplicates from Sorted List
 * 216). Combination Sum III Add to List
+* 240). Search a 2D Matrix II
 * 268). Missing Number Add to List
 * 287). Find the Duplicate Number Add to List
+* 367). Valid Perfect Square   
 * 377). Combination Sum IV Add to List
-* 待续~2017/05/02
+* 待续~2017/05/06
