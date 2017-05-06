@@ -1847,6 +1847,235 @@ namespace VectorHelper
 		printVector(nums);
 		return;
 	}
+	
+	int removeDuplicatesII(vector<int>& nums) {
+		/*
+		80. Remove Duplicates from Sorted Array II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 112341
+		Total Submissions: 317053
+		Difficulty: Medium
+		Contributor: LeetCode
+		Follow up for "Remove Duplicates":
+		What if duplicates are allowed at most twice?
+
+		For example,
+		Given sorted array nums = [1,1,1,2,2,3],
+
+		Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3. It doesn't matter what you leave beyond the new length.
+		*/
+		if (nums.size() <= 1)
+		{
+			return nums.size();
+		}
+		int iN = nums[0];
+		int flag = 1;
+		int count = 1;
+		printVector(nums);
+		for (int i = 1;i < nums.size();i++)
+		{
+			if (nums[i] != iN)
+			{
+				nums[count++] = nums[i];
+				iN = nums[i];
+				if( flag >= 2)
+					flag = 1;
+			}
+			else
+			{
+				flag++;
+				if (flag <= 2)
+					nums[count++] = nums[i];
+			}
+		}
+		printVector(nums);
+		return count;
+	}
+
+	bool searchII(vector<int>& nums, int target) {
+		/*
+		81. Search in Rotated Sorted Array II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 90207
+		Total Submissions: 274690
+		Difficulty: Medium
+		Contributor: LeetCode
+		Follow up for "Search in Rotated Sorted Array":
+		What if duplicates are allowed?
+
+		Would this affect the run-time complexity? How and why?
+		Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+
+		(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+
+		Write a function to determine if a given target is in the array.
+
+		The array may contain duplicates.
+		*/
+		//有序序列，虽旋转了一次，但是基本上还是确定用二分查找的思想去进行search
+		if (nums.empty())
+		{//如果序列为空，则直接返回false
+			return false;
+		}
+		int im = 0;
+		while (im < nums.size() - 1 && nums[im] <= nums[im + 1])im++;//找到旋转点，由于是im 与im+1比较(可能存在重复值)，则找到的点是第一段序列的最后一个值。
+		//旋转点左右的值可能相等， 这可能造成开头的若干数与末尾的若干数相等。
+		if (target == nums[0])
+		{//如果第一个值相等，直接返回false
+			return true;
+		}
+		else if (target > nums[0])
+		{//[begin,end] serach
+			//如果第一个值都小于，target，加上[im+1,end)的所有值都小于等于nums[0]，综合，nums[im+1,end) < target
+			//只需要二分查找nums[1,im]
+			int begin = 1;
+			int end = im;
+			while (begin <= end)
+			{
+				int mid = begin + (end - begin) / 2;
+				if (nums[mid] < target)
+				{
+					begin = mid + 1;
+				}
+				else if (nums[mid] == target)
+				{
+					return true;
+				}
+				else if (nums[mid] > target)
+				{
+					end = mid - 1;
+				}
+			}
+		}
+		else if (target < nums[0])
+		{
+			//如果第一个值都大于，target，加上[1,im]的所有值都大于等于nums[0]，综合，nums[1,im] > target
+			//只需要二分查找nums[im+1,end)
+			int begin = im + 1;
+			int end = nums.size() - 1;
+			while (begin <= end)
+			{
+				int mid = begin + (end - begin) / 2;
+				if (nums[mid] < target)
+				{
+					begin = mid + 1;
+				}
+				else if (nums[mid] == target)
+				{
+					return true;
+				}
+				else if (nums[mid] > target)
+				{
+					end = mid - 1;
+				}
+			}
+		}
+		return false;
+	}
+	void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+		/*  Accepted
+		88. Merge Sorted Array Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 157565
+		Total Submissions: 496188
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.
+
+		Note:
+		You may assume that nums1 has enough space (size that is greater or equal to m + n) to hold additional elements from nums2. The number of elements initialized in nums1 and nums2 are m and n respectively.
+
+		Subscribe to see which companies asked this question.
+		*/
+		//链接两个有序数组，从后向前进行搜索
+		int iM = m + n - 1;//最后一个数的索引位置
+		while (m > 0 && n > 0)
+		{
+			if (nums1[m - 1] > nums2[n - 1])
+			{
+				nums1[iM--] = nums1[m - 1];
+				m--;
+			}
+			else
+			{
+				nums1[iM--] = nums2[n - 1];
+				n--;
+			}
+		}
+		while (n > 0)
+		{
+			nums1[iM--] = nums2[n - 1];
+			n--;
+		}
+		return;
+	}
+	vector<vector<int>> GetGrayCode(int n)
+	{
+		//根据规律可得：n = 2的格雷码是在n = 1的格雷码上分别添加0,1，组合而成
+		// n = 3的格雷码是在n= 2的格雷码上分别添加0,1组合而成
+
+		//如果n >= 2,递归调用函数求解，并在返回的grayCode(n-1)结果的每一项前面分别添加0,1生成新的格雷码，并保存
+		if (n == 0)//n = 0的情况，直接返回结果
+			return vector<vector<int>>{ { 0 } };
+		if (n == 1)//n = 1的情况，直接返回结果
+			return vector<vector<int>>{ { 0 }, { 1 }};
+		vector<vector<int>> viORes = GetGrayCode(n - 1);
+		vector<vector<int>> viO = viORes;
+		for_each(viORes.begin(), viORes.end(), [](vector<int> &a) {a.insert(a.begin(), 0);});
+		reverse(viO.begin(), viO.end());
+		for_each(viO.begin(), viO.end(), [](vector<int> &a) {a.insert(a.begin(), 1);});
+		viORes.insert(viORes.end(), viO.begin(), viO.end());
+		return viORes;
+	}
+
+	int BinaryToInt(vector<int> code)
+	{
+		int iRes = 0;
+		int decimal = 1;
+		for (int i = code.size() - 1;i >= 0;i--)
+		{
+			iRes += code[i] * decimal;
+			decimal *= 2;
+		}
+		return iRes;
+	}
+	
+	vector<int> grayCode(int n) {
+		/* Accepted
+		89. Gray Code Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 85976
+		Total Submissions: 213216
+		Difficulty: Medium
+		Contributor: LeetCode
+		The gray code is a binary numeral system where two successive values differ in only one bit.
+
+		Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.
+
+		For example, given n = 2, return [0,1,3,2]. Its gray code sequence is:
+
+		00 - 0
+		01 - 1
+		11 - 3
+		10 - 2
+		Note:
+		For a given n, a gray code sequence is not uniquely defined.
+
+		For example, [0,2,3,1] is also a valid gray code sequence according to the above definition.
+
+		For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that.
+		*/
+		//格雷码，递归调用求解。
+		vector<vector<int>> vviRes = GetGrayCode(n);
+		printMatrix(vviRes);
+		vector<int> viRes;
+		for (int i = 0;i < vviRes.size();i++)
+		{
+			viRes.push_back(BinaryToInt(vviRes[i]));
+		}
+		printVector(viRes);
+		return viRes;
+	}
 }
 
 

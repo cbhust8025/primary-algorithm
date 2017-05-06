@@ -831,5 +831,58 @@ namespace BackTrackingHelper
 		}
 		return vsRes;
 	}
+	void SubSetWithDup(set<vector<int>>& output, vector<int>nums, int k, vector<int> ComplementarySet)
+	{
+		//回溯法求解核心要点，停止追溯的时机:k == nums.size() - 1
+		//由于是找到所有子集，所以每次追溯进来就保存一下当前结果
+		output.insert(ComplementarySet);
+		if (k == nums.size())
+		{//已经找完nums所有数字，进行回溯，并保存当前结果
+			return;
+		}
+		for (int i = k;i < nums.size();i++)
+		{
+			ComplementarySet.push_back(nums[i]);
+			SubSetWithDup(output, nums, i + 1, ComplementarySet);
+			ComplementarySet.pop_back();
+		}
+		return;
+	}
+
+	vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+		/*   Accepted
+		90. Subsets II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 105065
+		Total Submissions: 298901
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a collection of integers that might contain duplicates, nums, return all possible subsets.
+
+		Note: The solution set must not contain duplicate subsets.
+
+		For example,
+		If nums = [1,2,2], a solution is:
+
+		[
+		  [2],
+		  [1],
+		  [1,2,2],
+		  [2,2],
+		  [1,2],
+		  []
+		]
+		*/
+		//回溯法解之,利用set容器来剔除重复的
+		set<vector<int>> sviRes;
+		sort(nums.begin(), nums.end());//先将原始序列进行排序，为后面的去重做准备。
+		SubSetWithDup(sviRes, nums, 0, vector<int>());
+		vector<vector<int>> vviRes;
+		for (auto it = sviRes.begin();it != sviRes.end();it++)
+		{
+			vviRes.push_back(*it);
+		}
+		return vviRes;
+	}
 }
 ```
