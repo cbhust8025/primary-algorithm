@@ -299,5 +299,120 @@ namespace ListHelper
 		q->next = NULL;
 		return head;
 	}
+	ListNode* deleteDuplicates(ListNode* head) {
+		/*
+		82. Remove Duplicates from Sorted List II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 104108
+		Total Submissions: 357962
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
+
+		For example,
+		Given 1->2->3->3->4->4->5, return 1->2->5.
+		Given 1->1->1->2->3, return 2->3.
+		*/
+		//如果头结点为空，则直接返回
+		if (head == NULL)
+			return head;
+		ListNode* preHead = new ListNode(-1);//加一个辅助结点放在头结点前面，这样可以帮助进行删除重复了的头结点。
+		preHead->next = head;
+		ListNode* pHead = preHead;
+		while (pHead && pHead->next)
+		{//如果还有下一个结点，那就从下一个结点，依次找到不重复的下一个结点。
+			ListNode* p = pHead->next;
+			int flag = 0;
+			while (p->next && p->val == p->next->val)
+			{
+				p = p->next;
+				flag = 1;
+			}
+			if(flag == 1)
+				pHead->next = p->next;
+			else
+				pHead = pHead->next;
+		}
+		printList(preHead);
+		return preHead->next;//最后返回辅助结点的下一个结点，即新的头结点。
+	}
+	ListNode* deleteDuplicatesII(ListNode* head) {
+		/*
+		83. Remove Duplicates from Sorted List Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 175045
+		Total Submissions: 444012
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given a sorted linked list, delete all duplicates such that each element appear only once.
+
+		For example,
+		Given 1->1->2, return 1->2.
+		Given 1->1->2->3->3, return 1->2->3.
+		*/
+		//如果头结点为空，则直接返回
+		if (head == NULL)
+			return head;
+		ListNode* preHead = new ListNode(-1);//加一个辅助结点放在头结点前面，这样可以帮助进行删除重复了的头结点。
+		preHead->next = head;
+		ListNode* pHead = preHead;
+		while (pHead && pHead->next)
+		{//如果还有下一个结点，那就从下一个结点，依次找到不重复的下一个结点。
+			ListNode* p = pHead->next;
+			int flag = 0;
+			while (p->next && p->val == p->next->val)
+			{
+				p = p->next;
+				flag = 1;
+			}
+			if (flag == 1)
+				pHead->next = p;//每次只保存重复节点中的最后一个结点，并让上一个不重复结点指向之
+			else
+				pHead = pHead->next;
+		}
+		printList(preHead);
+		return preHead->next;//最后返回辅助结点的下一个结点，即新的头结点。
+	}
+
+	ListNode* partition(ListNode* head, int x) {
+		/*  Accepted
+		86. Partition List Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 94905
+		Total Submissions: 295611
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
+
+		You should preserve the original relative order of the nodes in each of the two partitions.
+
+		For example,
+		Given 1->4->3->2->5->2 and x = 3,
+		return 1->2->2->4->3->5.
+		*/
+		//一个新的链表，把小于3的按照之前的顺序依次存入并从原表中删去，最后链接两个表
+		if (head == NULL)
+			return head;
+		ListNode* pHead = new ListNode(-1);//新表辅助头结点
+		ListNode* preHead = new ListNode(-1);//原表辅助头结点
+		preHead->next = head;
+		ListNode* p = preHead;
+		ListNode* q = pHead;
+		while (p->next)
+		{
+			if (p->next->val < x)//当前节点值小于x
+			{//删去，并附在新表中
+				q->next = p->next;
+				p->next = p->next->next;
+				q = q->next;
+			}
+			//如果当前节点值大于等于x，直接跳过
+			//继续判断下一个结点
+			else
+				p = p->next;
+		}
+		q->next = preHead->next;
+		return pHead->next;
+	}
 }
 ```
