@@ -60,7 +60,18 @@
 * 81). Search in Rotated Sorted Array II
 * 82). Remove Duplicates from Sorted List II
 * 83). Remove Duplicates from Sorted List
+* 86). Partition List   
+* 88). Merge Sorted Array  
+* 89). Gray Code   
+* 90). Subsets II   
+* 91). Decode Ways 
+* 92). Reverse Linked List II   
+* 93). Restore IP Addresses   
+* 104). Maximum Depth of Binary Tree   
+* 111). Minimum Depth of Binary Tree   
+* 206). Reverse Linked List   
 * 216). Combination Sum III Add to List
+* 234). Palindrome Linked List   
 * 240). Search a 2D Matrix II
 * 268). Missing Number Add to List
 * 287). Find the Duplicate Number Add to List
