@@ -414,5 +414,117 @@ namespace ListHelper
 		q->next = preHead->next;
 		return pHead->next;
 	}
+	ListNode* reverseBetween(ListNode* head, int m, int n) {
+		/*  Accepted
+		92. Reverse Linked List II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 105075
+		Total Submissions: 347869
+		Difficulty: Medium
+		Contributor: LeetCode
+		Reverse a linked list from position m to n. Do it in-place and in one-pass.
+
+		For example:
+		Given 1->2->3->4->5->NULL, m = 2 and n = 4,
+
+		return 1->4->3->2->5->NULL.
+
+		Note:
+		Given m, n satisfy the following condition:
+		1 ≤ m ≤ n ≤ length of list.
+		*/
+		vector<int> vi = translateList(head);
+		reverse(vi.begin() + m - 1, vi.begin() + n);
+		return translateVector(vi);
+	}
+
+	ListNode* reverseList(ListNode* head) {
+		/*  Accepted
+		206. Reverse Linked List Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 216535
+		Total Submissions: 484606
+		Difficulty: Easy
+		Contributor: LeetCode
+		Reverse a singly linked list.
+
+		click to show more hints.
+
+		Hint:
+		A linked list can be reversed either iteratively or recursively. Could you implement both?
+		*/
+		/*  Accepted
+		vector<int> vi = translateList(head);
+		reverse(vi.begin(), vi.end());
+		return translateVector(vi);
+		*/
+		if (head == NULL)
+			return head;
+		ListNode* preNode = NULL;
+		ListNode* nowNode = head;
+		ListNode* nextNode = head->next;
+		while (nowNode)
+		{
+			nextNode = nowNode->next;
+			nowNode->next = preNode;
+			preNode = nowNode;
+			nowNode = nextNode;
+		}
+		return preNode;
+	}
+
+	bool isPalindrome(ListNode* head) {
+		/*   Accepted
+		234. Palindrome Linked List Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 98772
+		Total Submissions: 306733
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given a singly linked list, determine if it is a palindrome.
+
+		Follow up:
+		Could you do it in O(n) time and O(1) space?
+		*/
+		//回文串链表判断
+		if (head == NULL)
+			return true;
+		ListNode* p = head;
+		int length = 0;
+		while (p)
+		{
+			p = p->next;
+			length++;
+		}
+		p = head;
+		ListNode* q = head;
+		if (length == 1)
+			return false;
+		if (length % 2 == 0)
+		{//偶数个节点，可以平分所有节点，反转后面半部分节点
+			int temp = length / 2 + 1;
+			q = reverseBetween(head, temp, length);
+			while (q && temp-- > 1)
+				q = q->next;
+		}
+		else
+		{//奇数个节点，除去中间节点，反转后面部分的节点
+			int temp = length / 2 + 2;
+			q = reverseBetween(head, temp, length);
+			while (q && temp-- > 1)
+				q = q->next;
+		}
+		while (q && p)
+		{
+			if (p->val == q->val)
+			{
+				p = p->next;
+				q = q->next;
+			}
+			else
+				return false;
+		}
+		return true;
+	}
 }
 ```

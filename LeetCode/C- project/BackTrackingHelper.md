@@ -884,5 +884,84 @@ namespace BackTrackingHelper
 		}
 		return vviRes;
 	}
+	
+	int parseInt(string s)
+	{//将字符串转换成整型
+		int iR = 0;
+		for (int i = 0;i < s.size();i++)
+		{
+			iR = iR * 10 + s[i] - '0';
+		}
+		return iR;
+	}
+
+
+	void BTforIpAddresses(string s, int begin, vector<string>& vsRes, vector<string> sRes)
+	{
+		//回溯法核心两要素：
+		//1、确定追溯时机，找到一个合适的字段，放入sRes开始追溯
+		//2、结束追溯：如果sRes.size() == 4但是begin != s.size() - 1，意味着还有字符剩余，所以不正常，回溯
+		//如果sRes.size() == 4并且begin == s.size() - 1，全部寻找完，结果存入vsRes
+		//如果s.size() - begin > 13 - sRes.size() * 3, 直接return
+		if (s.size() - begin > 13 - sRes.size() * 3)
+			return;
+		if (sRes.size() == 4 && begin >= s.size())
+		{
+			string temp = "";
+			for (int i = 0;i < sRes.size() - 1;i++)
+			{
+				temp += sRes[i] + ".";
+			}
+			temp += sRes[3];
+			vsRes.push_back(temp);
+			return;
+		}
+		if (sRes.size() >= 4)
+			return;
+		for (int i = 1;i < 4;i++)
+		{//IP每一个地址的最大长度为3，所以从begin开始的i个字符作为地址进行尝试
+			string sR = s.substr(begin, i);
+			int iT = parseInt(sR);
+			if (iT == 0)//判断当前字符串是否符合要求
+			{
+				sRes.push_back(sR);//追溯
+				BTforIpAddresses(s, begin + i, vsRes, sRes);
+				sRes.pop_back();//回溯完后的重置操作
+				break;
+			}
+			else if (iT < 256 && iT > 0)//判断当前字符串是否符合要求
+			{
+				sRes.push_back(sR);//追溯
+				BTforIpAddresses(s, begin + i, vsRes, sRes);
+				sRes.pop_back();//回溯完后的重置操作
+			}
+			else//如果超出了范围，直接返回，不用继续尝试后续
+				return;
+		}
+		//尝试完后仍未结束，进行回溯；
+		return;
+	}
+
+	vector<string> restoreIpAddresses(string s) {
+		/*  Accepted
+		93. Restore IP Addresses Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 80756
+		Total Submissions: 303431
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a string containing only digits, restore it by returning all possible valid IP address combinations.
+
+		For example:
+		Given "25525511135",
+
+		return ["255.255.11.135", "255.255.111.35"]. (Order does not matter)
+		*/
+		//回溯法解之，对于IP地址，分四段，每一段8位，共32位，8位地址大小在0-255之间
+		vector<string> vsRes,sRes;
+		BTforIpAddresses(s, 0, vsRes, sRes);
+		//printVector(vsRes);
+		return vsRes;
+	}
 }
 ```
