@@ -28,6 +28,7 @@
 <p>2017/05/03 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>2017/05/04 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>2017/05/06 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/ValuableHP>困难题解</a>。</p>
+<p>2017/05/06 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。实现<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/C-%20project/TreeHelper.md>树的前中后序递归、非递归</a>。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
@@ -38,13 +39,13 @@
 <p>复杂数据结构
     <ul>
     <li>优先队列</li>
-    <li>树</li>
+    <li>树</li>
     <li>图</li>
     </ul>
 </p>
 <p>基础算法，列出想到的算法分类（持续更新--0419）
     <ul>
-        <li>查找</li>
+        <li>查找（补充<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/C-%20project/TreeHelper.md>树的前中后序递归、非递归</a>）</li>
         <li>排序(已更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/quick_sort>快排</a>)</li><li>回溯(已更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/Sudoku>数独</a>、<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/N-queen%20Problem>N皇后问题</a>等<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/C-%20project/BackTrackingHelper.md>LeetCode BT问题合集</a>)</li>
         <li>动态规划(已更新<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/C-%20project/DynamicProgrammingHelper.md>LeetCode DP问题合集</a>)</li>
         <li>递归</li>
