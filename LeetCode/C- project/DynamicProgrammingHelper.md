@@ -269,5 +269,63 @@ namespace DynamicProgrammingHelper
 		VectorHelper::printMatrix(dp);
 		return dp[m][n];
 	}
+	
+	bool judge(const char a, const char b)
+	{
+		if (a == '1') return true;
+		else if (a == '2' && b <= '6') return true;
+		return false;
+	}
+
+	int numDecodings(string s) {
+		/*  Accepted
+		91. Decode Ways Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 115053
+		Total Submissions: 595966
+		Difficulty: Medium
+		Contributor: LeetCode
+		A message containing letters from A-Z is being encoded to numbers using the following mapping:
+
+		'A' -> 1
+		'B' -> 2
+		...
+		'Z' -> 26
+		Given an encoded message containing digits, determine the total number of ways to decode it.
+
+		For example,
+		Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
+
+		The number of ways decoding "12" is 2.
+		*/
+		//动态规划可以解，显然，建立dp[0,1,...,s.size()]共s.size()+1长度的dp向量。
+		//dp[i]表示前i个字符可以解码的方式总数
+		//递推关系，因为最多解码两位数字为一个字母，考虑当前数字和前一个数字
+		//前一个数字为0时，dp[i] = dp[i - 2];
+		//当前数字不为0时，如果能和前面的一个数字合并能进行正常解码（1-26），则dp[i] += dp[i - 1];
+		if (s.empty())
+			return 0;
+		vector<int> dp(s.size() + 1, 0);
+		if (s[0] == '0')
+			return 0;
+		dp[0] = 1;//为了后面的便利，将此值设为1
+		dp[1] = 1;//至少有一种解法
+		for (int i = 2;i < dp.size();i++)
+		{
+			if (s[i - 1] == '0' && (s[i - 2] == '0' || s[i - 2] >= '3'))//对于出现‘00’，‘40’这样的情况，直接返回0
+				return 0;
+			if (s[i - 1] != '0')
+			{
+				dp[i] = dp[i - 1];//如果当前数字不为0，则总解法中至少有一部分是前i - 1所能得到的解法
+			}
+			cout << dp[i] << endl;
+			if(s[i - 2] != '0')//如果前一个数字仍然不为 0，且和当前数字可以正常解码，则视为一体，所以总解法另一部分则为前i - 2个字符所有的解法。
+			{
+				if (judge(s[i - 2], s[i - 1]))
+					dp[i] += dp[i - 2];
+			}
+		}
+		return dp[s.size()];
+	}
 }
 ```
