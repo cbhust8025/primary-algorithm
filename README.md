@@ -29,6 +29,7 @@
 <p>2017/05/04 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>2017/05/06 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/ValuableHP>困难题解</a>。</p>
 <p>2017/05/06 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。实现<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/C-%20project/TreeHelper.md>树的前中后序递归、非递归</a>。</p>
+<p>2017/05/06 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>

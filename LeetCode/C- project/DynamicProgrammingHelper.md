@@ -327,5 +327,104 @@ namespace DynamicProgrammingHelper
 		}
 		return dp[s.size()];
 	}
+	int numTrees(int n) {
+		/*
+		96. Unique Binary Search Trees Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 116432
+		Total Submissions: 288161
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
+
+		For example,
+		Given n = 3, there are a total of 5 unique BST's.
+
+		1         3     3      2      1
+		 \       /     /      / \      \
+		  3     2     1      1   3      2
+		 /     /       \                 \
+		2     1         2                 3
+		*/
+		//二叉搜索树：每个节点的左子树的节点均小于此节点，右子树的节点均大于此节点
+		//当k作为根节点时，小于k的只能在左子树，大于k的只能在右子树
+		//所以利用DP解决，可以充分利用之前求出的DP数组信息来解决后面需要求解的dp[k]
+		//总共n个节点，所以建立的dp数组长度为n + 1,包含初始状态和所需要求解的n个状态
+		//显然dp[0] = dp[1] = 1;
+		vector<int> dp(n + 1, 0);
+		dp[0] = dp[1] = 1;
+		VectorHelper::printVector(dp);
+		for (int i = 2;i <= n;i++)
+		{//依次求解从1-n的n种状态，dp方法的经典过程
+			if (i == 2)
+				dp[i] = i;
+			else
+			{
+				for (int j = 1;j <= i;j++)
+				{//以j作为根节点，i个点总共多少种二叉搜索树的排列方式
+					//j作为根节点，1,2,...,j-1肯定在左子树，共j-1个点，j+1,j+2,...,i总共i- j个点在右子树，分别统计两个子树的排列总数，乘积即为dp[i]
+					dp[i] += dp[j - 1] * dp[i - j];
+				}
+			}
+		}
+		return dp[n];
+	}
+
+	bool isInterleave(string s1, string s2, string s3) {
+		/*
+		97. Interleaving String Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 67593
+		Total Submissions: 278413
+		Difficulty: Hard
+		Contributor: LeetCode
+		Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.
+
+		For example,
+		Given:
+		s1 = "aabcc",
+		s2 = "dbbca",
+
+		When s3 = "aadbbcbcac", return true.
+		When s3 = "aadbbbaccc", return false.
+		*/
+		//判断字符串s3是否为字符串s1和s2的交错
+		//此处的交错是并集的关系，意味着s3 = s1 + s2,而不是s3 > s1 + s2
+		//由于此时字符串s3的前i+j个字符串与s1的i个，s2的j个匹配结果只和s3的前i+j-1个字符匹配结果相关，
+		//所以dp矩阵从m*n*h(m = s1.size() + 1,后面同理)退化成m*n(s1*s2)的维度
+		//同样可以理解从原点开始前进，匹配s2中一个字符则向右走，匹配一个s1的字符，则向下走，最后能走到最右下方，则表示能够匹配成功
+		if (s1.size() + s2.size() != s3.size())
+			return false;
+		int m = s1.size();
+		int n = s2.size();
+		vector<vector<bool>> dp(m + 1, vector<bool>(n + 1, false));//匹配成功返回true
+		//dp矩阵第一行和第一列分别代表s1为空串，s2为空串的两种初始情况。
+		//dp[0][0]代表两个空串去匹配空串，此时返回true
+		dp[0][0] = true;
+		//s1为空串---dp第一行 s2非空
+		for (int i = 1;i <= n;i++)
+		{
+			dp[0][i] = (s2[i - 1] == s3[i - 1]) & dp[0][i - 1];
+		}
+		//s2为空串---dp第一列 s1非空
+		for (int i = 1;i <= m;i++)
+		{
+			dp[i][0] = (s1[i - 1] == s3[i - 1]) & dp[i - 1][0];
+		}
+		for (int i = 1;i <= m;i++)
+		{
+			for (int j = 1;j <= n;j++)
+			{
+				int k = i + j;//匹配字符串3的第k-1个字符
+				if (s3[k - 1] == s1[i - 1])//若字符串的第k - 1个字符等于字符串1中的第i- 1个
+					//此时的匹配结果，与前k-2个字符的匹配结果有关（k - 1 = (i-1) + (j) ）
+					dp[i][j] = dp[i - 1][j] || dp[i][j]; //若某次匹配成功，后面根据自身的值将一直成功
+				if (s3[k - 1] == s2[j - 1])//匹配字符串的k-1个字符
+					dp[i][j] = dp[i][j - 1] || dp[i][j];
+			}
+		}
+		VectorHelper::printMatrix(dp);
+		return dp[m][n];
+	}
 }
 ```
