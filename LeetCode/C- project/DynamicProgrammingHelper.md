@@ -426,5 +426,209 @@ namespace DynamicProgrammingHelper
 		VectorHelper::printMatrix(dp);
 		return dp[m][n];
 	}
+	int numDistinct(string s, string t) {
+		/*
+		115. Distinct Subsequences Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 67956
+		Total Submissions: 218530
+		Difficulty: Hard
+		Contributor: LeetCode
+		Given a string S and a string T, count the number of distinct subsequences of T in S.
+
+		A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, "ACE" is a subsequence of "ABCDE" while "AEC" is not).
+
+		Here is an example:
+		S = "rabbbit", T = "rabbit"
+
+		Return 3.
+		*/
+		//由于在中间比较的时候，会大量重复之前已经比较过的前半部分的比较，所以采用动态规划的方法，存储之前已经比较的结果
+		//字符串t匹配字符串s中，所以以s的字符个数为列数，t的字符个数为行数，一行一行的填充dp数组，表示的也是一个一个增添t中的字符来进行匹配，
+		//所以DP数组的大小为m+1(t)* n+1(s)
+		//dp[i][j]的含义是t字符串中的前i-1个字符匹配s字符串中的j-1个字符的匹配结果
+		int m = t.size();
+		int n = s.size();
+		if (m > n)//如果当前的字符串长于s字符串，直接返回0,即不可能实现匹配。
+			return 0;
+		vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+		//由于空字符串去匹配任何s字符串，都至少有一种子串情况，所以将dp数组第一行置为1
+		dp[0] = vector<int>(n + 1, 1);
+		//开始求解dp数组
+		//递推关系，当前字符如果相等，则dp[i][j] = dp[i - 1][j - 1]（使用当前字符去匹配）+ dp[i][j - 1](不使用当前字符匹配)
+		//如果当前字符如果不相等，dp[i][j] = dp[i][j - 1](不使用当前字符去匹配)
+		for (int i = 1;i <= m;i++)
+		{
+			for (int j = 1;j <= n;j++)
+			{
+				if (t[i - 1] == s[j - 1])
+					dp[i][j] = dp[i - 1][j - 1] + dp[i][j - 1];
+				else
+					dp[i][j] = dp[i][j - 1];
+			}
+		}
+		VectorHelper::printMatrix(dp);
+		return dp[m][n];
+	}
+
+	int minimumTotal(vector<vector<int>>& triangle) {
+		/*
+		120. Triangle Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 100698
+		Total Submissions: 303735
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+
+		For example, given the following triangle
+		[
+		   [2],
+		  [3,4],
+		 [6,5,7],
+		[4,1,8,3]
+		]
+		The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
+
+		Note:
+		Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.
+
+		Subscribe to see which companies asked this question.
+		*/
+		//使用自底向上的动态规划，由于每一层的dp值只和下一层的值有关，所以可以压缩dp矩阵维度，使用一维dp矩阵，矩阵长度是最下面一行的长度
+		if (triangle.empty())
+			return 0;
+		vector<int> dp(triangle[triangle.size() - 1]);//直接使用最下面一行初始化dp矩阵，后面对于dp矩阵进行修正
+		for (int i = triangle.size() - 2;i >= 0;i--)
+		{//自底向上进行计算dp矩阵值
+			for (int j = 0;j < triangle[i].size();j++)//每一行修改的dp矩阵中元素个数等于当前行的元素总个数
+			{
+				dp[j] = min(dp[j], dp[j + 1]) + triangle[i][j];
+			} 
+		}
+		return dp[0];
+	}
+
+	int maxProfitI(vector<int>& prices) {
+		/*  Accepted
+		121. Best Time to Buy and Sell Stock Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 184364
+		Total Submissions: 456446
+		Difficulty: Easy
+		Contributor: LeetCode
+		Say you have an array for which the ith element is the price of a given stock on day i.
+
+		If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.
+
+		Example 1:
+		Input: [7, 1, 5, 3, 6, 4]
+		Output: 5
+
+		max. difference = 6-1 = 5 (not 7-1 = 6, as selling price needs to be larger than buying price)
+		Example 2:
+		Input: [7, 6, 4, 3, 1]
+		Output: 0
+
+		In this case, no transaction is done, i.e. max profit = 0.
+		*/
+		//由于需要找到最大利润， 则需在每一天都尝试卖出，并比较当前卖出之前所有天数买进所能获得的利润，取得最大的利润，放在这一天
+		//设置动态规划矩阵，保存每天所能获得的最大利润，转移方程dp[i] = max(0, dp[i-1]+prices[i]-prices[i-1])
+		vector<int> dp(prices.size(), 0);//第一天肯定是0，所以只需要找到prices.size() - 1种状态即可
+		int maxProfit = 0;//存储已经找到的最大利润
+		for (int i = 1;i < dp.size();i++)
+		{
+			dp[i] = max(0, dp[i - 1] + prices[i] - prices[i - 1]);
+			if (dp[i] > maxProfit)
+				maxProfit = dp[i];
+		}
+		return maxProfit;
+	}
+
+	int maxProfitII(vector<int>& prices) {
+		/*
+		122. Best Time to Buy and Sell Stock II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 137778
+		Total Submissions: 297218
+		Difficulty: Easy
+		Contributor: LeetCode
+		Say you have an array for which the ith element is the price of a given stock on day i.
+
+		Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times). 
+		However, you may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+		*/
+		int maxProfit = 0;
+		for (int i = 1;i < prices.size();i++)
+		{
+			maxProfit += max(0, prices[i] - prices[i - 1]);//只要当天股价高于前一天就当前一天买了股票，并且于当天卖光，
+		}
+		return maxProfit;
+	}
+
+	int maxProfitIII(vector<int>& prices) {
+		/*
+		123. Best Time to Buy and Sell Stock III Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 82713
+		Total Submissions: 286984
+		Difficulty: Hard
+		Contributor: LeetCode
+		Say you have an array for which the ith element is the price of a given stock on day i.
+
+		Design an algorithm to find the maximum profit. You may complete at most two transactions.
+
+		Note:
+		You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+
+		Subscribe to see which companies asked this question.
+		*/
+		//超时答案，最大case超时
+		////同理，只能进行两次交易，由于只能同时持有一只股票，所以两次交易不能重叠，可以将prices分为两部分，分别求两部分的最大收益和
+		//int maxProfit = 0;
+		//int leftProfit, rightProfit, nowProfit;
+		//for (int i = 0;i < prices.size();i++)
+		//{//从第i天进行划分，i = 1,2,3,...,prices.size() - 1
+		//	//第i天将prices分为两部分：[0,i),[i,end())
+		//	vector<int> left = vector<int>(prices.begin(), prices.begin() + i);//第一部分
+		//	vector<int> right = vector<int>(prices.begin() + i, prices.end());//第二部分
+		//	leftProfit = maxProfitI(left);
+		//	rightProfit = maxProfitI(right);
+		//	nowProfit = leftProfit + rightProfit;
+		//	if (maxProfit < nowProfit)
+		//		maxProfit = nowProfit;
+		//}
+		//return maxProfit;
+		if (prices.empty())
+			return 0;
+		//由于我们在循环调用maxProfitI(prices[0,3]),maxProfitI(prices[0,4])这样的过程中时，在其中计算会有大量重复计算I中的那个dp矩阵
+		//所以我们为了节省这个dp矩阵的计算，设置两个max矩阵保存每一天极其之前的最大收益，还有每一天极其以后的最大收益(我们可以在同一天先卖出再买入)
+		//每一天极其之前的最大收益
+		VectorHelper::printVector(prices);
+		vector<int> maxpostProfit(prices.size(), 0);
+		for (int i = 1;i < prices.size();i++)
+		{
+			maxpostProfit[i] = max(0, maxpostProfit[i - 1] + prices[i] - prices[i - 1]);
+		}
+		//每一天极其之后的最大收益
+		vector<int> maxpreProfit(prices.size(), 0);
+		int maxprePf = 0;
+		int maxPrice = prices[prices.size() - 1];
+		for (int i = prices.size() - 2;i >= 0;i--)
+		{
+			maxprePf = max(maxprePf, maxPrice - prices[i]);
+			maxPrice = max(maxPrice, prices[i]);
+			maxpreProfit[i] = maxprePf;
+		}
+		int maxProfit = 0;
+		VectorHelper::printVector(maxpostProfit);
+		VectorHelper::printVector(maxpreProfit);
+		for (int i = 0;i < prices.size();i++)
+		{
+			//将第i天极其以后的最大收益+第i天极其之前的最大收益加起来就是第i天的最大收益（只进行两次操作），找到其中的最大值
+			maxProfit = max(maxProfit, maxpostProfit[i] + maxpreProfit[i]);
+		}
+		return maxProfit;
+	}
 }
 ```
