@@ -555,5 +555,609 @@ namespace TreeHelper
 		root->left = rleft;
 		return root;
 	}
+	TreeNode* buildTree_ip(vector<int>& inorder, vector<int>& postorder) {
+		/* A
+		106. Construct Binary Tree from Inorder and Postorder Traversal Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 81572
+		Total Submissions: 258482
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given inorder and postorder traversal of a tree, construct the binary tree.
+
+		Note:
+		You may assume that duplicates do not exist in the tree.
+		*/
+		//根据树的后序遍历序列和中序遍历序列，重构出树的结构，并返回根节点。
+		//后根序序列中的最后一个元素在中序序列中将中序序列分为两部分，第一部分组成左子树，第二部分组成右子树，根据元素个数，将前根序序列也进行划分
+		//划分完后进行递归调用
+		if (postorder.empty())
+			return NULL;
+		TreeNode* root = new TreeNode(postorder[postorder.size() - 1]);//根节点必然是后根序列的最后一个元素
+		int index = 0;
+		while (index < inorder.size() && inorder[index] != root->val)index++;//根节点对应的元素必然能够在中序序列中找到
+																			   //找到的index 将中序序列分为两部分[0,index),[index + 1,inorder.size())
+		vector<int> inorder_left = vector<int>(inorder.begin(), inorder.begin() + index);
+		vector<int> inorder_right = vector<int>(inorder.begin() + index + 1, inorder.end());
+		//同样的index 将后序序列分为两部分[0,index),[index,end()-1)
+		vector<int> postorder_left = vector<int>(postorder.begin(), postorder.begin() + index);
+		vector<int> postorder_right = vector<int>(postorder.begin() + index, postorder.end() - 1);
+		//对于两部分序列递归调用，找到root的左右子树根节点
+		TreeNode* rleft = buildTree_ip(inorder_left,postorder_left);
+		TreeNode* rright = buildTree_ip(inorder_right,postorder_right);
+		root->right = rright;
+		root->left = rleft;
+		return root;
+	}
+
+	vector<vector<int>> levelOrderBottom(TreeNode* root) {
+		/* A
+		107. Binary Tree Level Order Traversal II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 123518
+		Total Submissions: 315474
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given a binary tree, return the bottom-up level order traversal of its nodes' values. (ie, from left to right, level by level from leaf to root).
+
+		For example:
+		Given binary tree [3,9,20,null,null,15,7],
+		   3
+		  / \
+		 9  20
+		   /  \
+	   	  15   7
+		return its bottom-up level order traversal as:
+		[
+		[15,7],
+		[9,20],
+		[3]
+		]
+		*/
+		vector<vector<int>> vviRes;
+		//层序遍历即可，利用stl库中的queue适配器，最后将层序结果进行逆序即可
+		if (root == NULL)
+			return vviRes;
+		queue<TreeNode*> qT1;
+		queue<TreeNode*> qT2;
+		qT1.push(root);//将根节点入队列1
+		while (!qT1.empty() || !qT2.empty())
+		{
+			vector<int> temp;
+			if (!qT1.empty())
+			{
+				while (!qT1.empty())
+				{
+					TreeNode* p = qT1.front();
+					temp.push_back(p->val);
+					if (p->left)qT2.push(p->left);
+					if (p->right)qT2.push(p->right);
+					qT1.pop();
+				}
+				vviRes.push_back(temp);
+			}
+			else if (!qT2.empty())
+			{
+				while (!qT2.empty())
+				{
+					TreeNode* p = qT2.front();
+					temp.push_back(p->val);
+					if (p->left)qT1.push(p->left);
+					if (p->right)qT1.push(p->right);
+					qT2.pop();
+				}
+				vviRes.push_back(temp);
+			}
+		}
+		reverse(vviRes.begin(), vviRes.end());
+		return vviRes;
+	}
+
+	TreeNode* sortedArrayToBST(vector<int>& nums) {
+		/* A
+		108. Convert Sorted Array to Binary Search Tree Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 119052
+		Total Submissions: 287331
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+		*/
+		//高度平衡的二叉搜索树，对于有序序列来说，每次都将序列划分为均等的两边并且放在左右子树，递归调用构建即可实现
+		if (nums.empty())//如果当前序列为空，则直接返回空子树
+			return NULL;
+		//根节点肯定属于序列的中间的那个元素
+		TreeNode* root = new TreeNode(nums[nums.size() / 2]);
+		//nums[nums.size()/2]将序列划分为左右两部分，第一部分[0,nums.size()/2), 第二部分[nums.size()/2 + 1,end())
+		vector<int> left = vector<int>(nums.begin(), nums.begin() + nums.size() / 2);
+		vector<int> right = vector<int>(nums.begin() + nums.size() / 2 + 1, nums.end());
+		//分别递归求解当前根节点的左右子树
+		TreeNode* tnLeft = sortedArrayToBST(left);
+		TreeNode* tnRight = sortedArrayToBST(right);
+		//链接根节点和其左右子树
+		root->left = tnLeft;
+		root->right = tnRight;
+		//返回所求的根节点
+		return root;
+	}
+
+	TreeNode* sortedListToBST(ListNode* head){
+		/* A
+		109. Convert Sorted List to Binary Search Tree Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 101863
+		Total Submissions: 304995
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
+		*/
+		//对于有序链表，采用链表转vector的方式来求解vector的高度平衡BST
+		//也可以使用vector求解方式，使用快慢指针找到list中的中间的那个元素，这个元素将原链表划分为两个部分，
+		//左边的一部分继续输入头结点，并将中间元素指针指向的节点置为NULL即可，
+		//右边的一部分输入中间元素的next节点即可
+		if (head == NULL)
+			return NULL;
+		if (head->next == NULL)
+			return new TreeNode(head->val);
+		printList(head);
+		//使用快慢指针找到链表的中间元素
+		ListNode* slow = head;
+		ListNode* pre_slow = head;
+		ListNode* fast = head;
+		do 
+		{
+			pre_slow = slow;
+			slow = slow->next;
+			fast = fast->next->next;
+		} while (fast != NULL && fast->next != NULL && slow != NULL);
+		//现在slow指向的指针是我们认为的中间元素
+		TreeNode* root = new TreeNode(slow->val);
+		//由于需要在求解左半部分的时候，将slow指向的节点置为NULL,所以需要先求解右子树
+		TreeNode* tnRight = sortedListToBST(slow->next);
+		pre_slow->next = NULL;
+		TreeNode* tnLeft = sortedListToBST(head);
+		//链接根节点和其左右子树
+		root->left = tnLeft;
+		root->right = tnRight;
+		//返回所求的根节点
+		return root;
+	}
+
+	int depthForBST(TreeNode* root) {//DFS找寻深度，找寻深度的同时进行BST的判定
+		if (root == NULL)
+			return 0;
+		else
+		{
+			int left_depth = depthForBST(root->left);//找到根节点的左子树深度
+			int right_depth = depthForBST(root->right);//找到根节点的右子树深度
+			if (left_depth == -1 || right_depth == -1 || abs(left_depth - right_depth) > 1)
+				return -1;//不满足BST要求，直接返回-1，传递至最初的根节点
+			else//满足BST，返回左右子树深度的较大值
+				return max(left_depth, right_depth) + 1;
+		}
+	}
+
+	bool isBalanced(TreeNode* root) {
+		/*
+		110. Balanced Binary Tree Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 167788
+		Total Submissions: 454410
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given a binary tree, determine if it is height-balanced.
+
+		For this problem, a height-balanced binary tree is defined as a binary tree
+		in which the depth of the two subtrees of every node never differ by more than 1.
+		*/
+		if (root == NULL)
+			return true;
+		else return(depthForBST(root) != -1);
+	}
+
+	bool hasPathSum(TreeNode* root, int sum) {
+		/* A
+		112. Path Sum Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 157148
+		Total Submissions: 468553
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
+
+		For example:
+		Given the below binary tree and sum = 22,
+		        5
+	           / \
+		      4   8
+		     /   / \
+	    	11  13  4
+		   /  \      \
+	      7    2      1
+		return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
+		*/
+		if (root == NULL)//如果根节点为NULL，则不管sum为多少，都返回false
+			return false;
+		if (root->left == NULL && root->right == NULL)//如果根节点为叶子节点，则判断sum是否为0，为0表示找到路径，返回true;
+			//不等于0则表示未找到路径，返回false
+		{
+			if (sum == root->val)
+				return true;
+			else return false;
+		}
+		//如果当前节点不是叶子节点，则继续找左右子节点，一旦有一边找到即返回true
+		if ((hasPathSum(root->left, sum - root->val) || hasPathSum(root->right, sum - root->val)))
+			return true;
+		return false;
+	}
+
+	void getPathSum(TreeNode* root, int sum, vector<vector<int>>& vviRes, vector<int> path)
+	{//还是使用DFS进行搜索路径，应用回溯的思想来解决递归的问题
+		if (root == NULL)//如果根节点为NULL，则不管sum为多少，都回溯
+			return;
+		if (root->left == NULL && root->right == NULL)//如果根节点为叶子节点，则判断sum是否为0，为0表示找到路径，保存当前的path到结果中;
+													  //不等于0则表示未找到路径，回溯
+		{
+			if (sum == root->val)
+			{
+				path.push_back(root->val);
+				vviRes.push_back(path);
+				path.pop_back();
+				return;
+			}
+			else return;
+		}
+		//如果当前节点不是叶子节点，则继续找左右子节点，一旦有一边找到即返回true
+		path.push_back(root->val);//压入当前节点到路径中
+		//找左子节点
+		getPathSum(root->left, sum - root->val, vviRes, path);
+		//找右子节点
+		getPathSum(root->right, sum - root->val, vviRes, path);
+		path.pop_back();
+		return;
+
+	}
+	vector<vector<int>> pathSum(TreeNode* root, int sum) {
+		/*
+		113. Path Sum II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 122148
+		Total Submissions: 373613
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+
+		For example:
+		Given the below binary tree and sum = 22,
+		      5
+		     / \
+		    4   8
+		   /   / \
+		  11  13  4
+		 /  \    / \
+		7    2  5   1
+		return
+		[
+		[5,4,11,2],
+		[5,8,4,5]
+		]
+		*/
+		vector<vector<int>> vviRes;
+		vector<int> path;
+		getPathSum(root, sum, vviRes, path);
+		return vviRes;
+	}
+
+	void flatten(TreeNode* root) {
+		/* A
+		114. Flatten Binary Tree to Linked List Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 121854
+		Total Submissions: 354383
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a binary tree, flatten it to a linked list in-place.
+
+		For example,
+		Given
+
+		    1
+		   / \
+		  2   5
+		 / \   \
+		3   4   6
+		The flattened tree should look like:
+		1
+		 \
+		  2
+		   \
+	    	3
+	       	 \
+		      4
+		       \
+		        5
+		         \
+		          6
+		click to show hints.
+
+		Hints:
+		If you notice carefully in the flattened tree, each node's right child points to the next node of a pre-order traversal.
+
+		Subscribe to see which companies asked this question.
+		*/
+		//对当前的根节点进行重构，由于是先序遍历的顺序重构，所以左子树应换到右子树，右子树的值应在左子树的值全都遍历完再去遍历
+		//所以当前的根节点的右子树应该放在左子树的先序遍历的最后一个结点
+		if (root == NULL)
+			return;
+		if (root->left == NULL && root->right == NULL)
+		{//如果找到叶子节点，表示已经重构完毕，直接返回
+			return;
+		}
+		TreeNode* left = root->left;
+		TreeNode* right = root->right;
+		if (left == NULL)
+		{//如果左子树为空，则直接重构右子树
+			flatten(root->right);
+			return;
+		}
+		//将左子树放在根节点的右子树位置,并清空左子树
+		root->right = left;
+		root->left = NULL;
+		//找到左子树的先序遍历的最后一个结点
+		TreeNode* p = root->right;
+		while (p->right != NULL)p = p->right;
+		//将右子树放在左子树最后一个结点的右子结点处
+		p->right = right;
+		//继续重构根节点的右子树
+		flatten(root->right);
+		return;
+	}
+
+	void connect(TreeLinkNode *root)
+	{ 
+		/*  Accepted
+		116. Populating Next Right Pointers in Each Node Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 127908
+		Total Submissions: 346321
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a binary tree
+
+		struct TreeLinkNode {
+		TreeLinkNode *left;
+		TreeLinkNode *right;
+		TreeLinkNode *next;
+		}
+		Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+
+		Initially, all next pointers are set to NULL.
+
+		Note:
+
+		You may only use constant extra space.
+		You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).
+		For example,
+		Given the following perfect binary tree,
+		     1
+		   /  \
+		  2    3
+		 / \  / \
+		4  5  6  7
+		After calling your function, the tree should look like:
+		    1 -> NULL
+		   /  \
+		  2 -> 3 -> NULL
+		 / \  / \
+		4->5->6->7 -> NULL
+
+		*/
+		//层序遍历即可，利用stl库中的queue适配器，每遍历一层，链接当前层的节点
+		if (root == NULL)
+			return;
+		queue<TreeLinkNode*> qT1;
+		queue<TreeLinkNode*> qT2;
+		qT1.push(root);//将根节点入队列1
+					   //每一层遍历启动flag,false表示刚开始启动，true表示已经启动
+		bool flag = false;
+		TreeLinkNode* p = NULL;
+		while (!qT1.empty() || !qT2.empty())
+		{
+			//每一层遍历完，将flag置为false，等待下一层的遍历启动
+			flag = false;
+			if (!qT1.empty())
+			{
+				while (!qT1.empty())
+				{
+					if (!flag)
+					{
+						p = qT1.front();
+						flag = true;
+					}
+					else
+					{//如果已经启动， 则进行链接
+						p->next = qT1.front();
+						p = qT1.front();//链接完指向下一个结点
+					}
+					if (p->left)qT2.push(p->left);
+					if (p->right)qT2.push(p->right);
+					qT1.pop();
+				}
+			}
+			else if (!qT2.empty())
+			{
+				while (!qT2.empty())
+				{
+					if (!flag)
+					{
+						p = qT2.front();
+						flag = true;
+					}
+					else
+					{//如果已经启动， 则进行链接
+						p->next = qT2.front();
+						p = qT2.front();//链接完指向下一个结点
+					}
+					if (p->left)qT1.push(p->left);
+					if (p->right)qT1.push(p->right);
+					qT2.pop();
+				}
+
+			}
+		}
+		return;
+	}
+
+	void connectII(TreeLinkNode *root) {
+		/*  Accepted
+		117. Populating Next Right Pointers in Each Node II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 92825
+		Total Submissions: 276070
+		Difficulty: Medium
+		Contributor: LeetCode
+		Follow up for problem "Populating Next Right Pointers in Each Node".
+
+		What if the given tree could be any binary tree? Would your previous solution still work?
+
+		Note:
+
+		You may only use constant extra space.
+		For example,
+		Given the following binary tree,
+		     1
+		   /  \
+		  2    3
+		 / \    \
+		4   5    7
+		After calling your function, the tree should look like:
+		     1 -> NULL
+		   /  \
+		  2 -> 3 -> NULL
+		 / \    \
+		4-> 5 -> 7 -> NULL
+		*/
+		//此题思路完全和T116 Populating Next Right Pointers in Each Node 相同
+		//层序遍历即可，利用stl库中的queue适配器，每遍历一层，链接当前层的节点
+		if (root == NULL)
+			return;
+		queue<TreeLinkNode*> qT1;
+		queue<TreeLinkNode*> qT2;
+		qT1.push(root);//将根节点入队列1
+					   //每一层遍历启动flag,false表示刚开始启动，true表示已经启动
+		bool flag = false;
+		TreeLinkNode* p = NULL;
+		while (!qT1.empty() || !qT2.empty())
+		{
+			//每一层遍历完，将flag置为false，等待下一层的遍历启动
+			flag = false;
+			if (!qT1.empty())
+			{
+				while (!qT1.empty())
+				{
+					if (!flag)
+					{
+						p = qT1.front();
+						flag = true;
+					}
+					else
+					{//如果已经启动， 则进行链接
+						p->next = qT1.front();
+						p = qT1.front();//链接完指向下一个结点
+					}
+					if (p->left)qT2.push(p->left);
+					if (p->right)qT2.push(p->right);
+					qT1.pop();
+				}
+			}
+			else if (!qT2.empty())
+			{
+				while (!qT2.empty())
+				{
+					if (!flag)
+					{
+						p = qT2.front();
+						flag = true;
+					}
+					else
+					{//如果已经启动， 则进行链接
+						p->next = qT2.front();
+						p = qT2.front();//链接完指向下一个结点
+					}
+					if (p->left)qT1.push(p->left);
+					if (p->right)qT1.push(p->right);
+					qT2.pop();
+				}
+
+			}
+		}
+		return;
+	}
+
+	void getRootMaxPathSum(TreeNode* root, int nowPathSum, int& maxPathSum)
+	{
+		if (root == NULL)//如果当前节点为NULL节点，直接返回，不修改
+			return;
+		nowPathSum += root->val;
+		maxPathSum = max(nowPathSum, maxPathSum);
+		getRootMaxPathSum(root->left, nowPathSum, maxPathSum);
+		getRootMaxPathSum(root->right, nowPathSum, maxPathSum);
+	}
+
+	int maxPathSum(TreeNode* root) {
+		/*
+		124. Binary Tree Maximum Path Sum Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 93119
+		Total Submissions: 364019
+		Difficulty: Hard
+		Contributor: LeetCode
+		Given a binary tree, find the maximum path sum.
+
+		For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root.
+
+		For example:
+		Given the below binary tree,
+
+		  1
+	 	 / \
+		2   3
+		Return 6.
+		*/
+		//由于可以经过父节点-子节点的这种方式，所以最大的路径和是肯定包含根节点，对于每个根节点都求一次最大路径和
+		//对根节点求解最大路径和方法：
+		//1、根节点与左右子节点相连，所以路径肯定是从左右子节点发散出去，分别找到从左子节点到叶子节点的最大路径和以及右子节点到叶子节电的最大路径和
+		//2、两个最大路径和加上根节点的值即为当前根节点的最大联通路径和，继续寻找当前根节点的左右子节点的最大联通路径和，直到叶子节点。
+		//注：叶子节点的最大路径和（当前节点到叶子节点）即为叶子节点的本身值
+		if (root == NULL)//空树直接返回0
+			return 0;
+		if (root->right == NULL && root->left == NULL)//叶子节点的最大联通路径和为其本身
+			return root->val;
+		int rootLeftMax = 0;
+		if (root->left)
+		{
+			rootLeftMax = root->left->val;
+			getRootMaxPathSum(root->left, 0, rootLeftMax);//当前根节点的左子节点最大路径和
+		}
+		int rootRightMax = 0;
+		if(root->right)
+		{ 
+			rootRightMax = root->right->val;
+			getRootMaxPathSum(root->right, 0, rootRightMax);//当前根节点的右子节点最大路径和
+		}
+		int rootMax = max(0, rootLeftMax) + max(0, rootRightMax) + root->val;
+		cout << rootLeftMax <<" " << rootRightMax<< " " << rootMax << endl;
+		if (root->left)
+		{
+			int leftMax = maxPathSum(root->left);//以左子节点为根节点的最大联通路径和
+			rootMax = max(rootMax, leftMax);
+		}
+		if(root->right)
+		{
+			int rightMax = maxPathSum(root->right);//以右子节点为根节点的最大联通路径和
+			rootMax = max(rootMax, rightMax);
+		}
+		return rootMax;//返回三者中的最大值
+	}
 }
 ```
