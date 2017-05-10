@@ -2076,6 +2076,90 @@ namespace VectorHelper
 		printVector(viRes);
 		return viRes;
 	}
+	vector<vector<int>> generate(int numRows) {
+		/*  Accepted
+		118. Pascal's Triangle Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 125956
+		Total Submissions: 333559
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given numRows, generate the first numRows of Pascal's triangle.
+
+		For example, given numRows = 5,
+		Return
+
+		[
+		[1],
+		[1,1],
+		[1,2,1],
+		[1,3,3,1],
+		[1,4,6,4,1]
+		]
+		*/
+		//帕斯卡三角形
+		//除了每一行的头尾，其余的数都等于上一行最近的两个数之和，体现在索引上为num[i][j] = num[i - 1][j - 1] + num[i - 1][j]
+		vector<vector<int>> vviPascal;
+		vector<int> post;//保存上一行
+		vector<int> now;//保存当前行
+		for (int i = 0;i < numRows;i++)
+		{//一行一行的生成帕斯卡三角形
+			now.clear();//清空当前行，重新生成
+			for (int j = 0;j <= i;j++)
+			{//每一个行的元素个数等于行数
+				if (j == 0 || j == i)
+					now.push_back(1);
+				else if(i != 0)
+				{//如果不是第一行
+					now.push_back(post[j] + post[j - 1]);
+				}
+			}
+			vviPascal.push_back(now);
+			post = now;
+		}
+		printMatrix(vviPascal);
+		return vviPascal;
+	}
+
+	vector<int> getRow(int rowIndex) {
+		/*
+		119. Pascal's Triangle II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 111093
+		Total Submissions: 308390
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given an index k, return the kth row of the Pascal's triangle.
+
+		For example, given k = 3,
+		Return [1,3,3,1].
+
+		Note:
+		Could you optimize your algorithm to use only O(k) extra space?
+
+		Subscribe to see which companies asked this question.
+		*/
+		//获取帕斯卡三角形的第k行
+		//除了每一行的头尾，其余的数都等于上一行最近的两个数之和，体现在索引上为num[i][j] = num[i - 1][j - 1] + num[i - 1][j]
+		vector<int> post;//保存上一行
+		vector<int> now;//保存当前行
+		for (int i = 0;i < rowIndex;i++)
+		{//一行一行的生成帕斯卡三角形
+			now.clear();//清空当前行，重新生成
+			for (int j = 0;j <= i;j++)
+			{//每一个行的元素个数等于行数
+				if (j == 0 || j == i)
+					now.push_back(1);
+				else if (i != 0)
+				{//如果不是第一行
+					now.push_back(post[j] + post[j - 1]);
+				}
+			}
+			post = now;
+		}
+		printVector(now);
+		return now;
+	}
 }
 
 
