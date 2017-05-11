@@ -121,4 +121,3 @@ int GetWordsDistance(string& a, string& b)
 ```C++
 
 ```
-### 参考自：[leetcode解题报告]（http://www.cnblogs.com/ShaneZhang/p/3748494.html）
