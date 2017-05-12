@@ -444,7 +444,46 @@ namespace StringHelper
 		}
 		return sRes;
 	}
+	bool isPalindrome(string s) {
+		/*
+		125. Valid Palindrome Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 155413
+		Total Submissions: 600120
+		Difficulty: Easy
+		Contributor: LeetCode
+		Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
 
+		For example,
+		"A man, a plan, a canal: Panama" is a palindrome.
+		"race a car" is not a palindrome.
+
+		Note:
+		Have you consider that the string might be empty? This is a good question to ask during an interview.
+
+		For the purpose of this problem, we define empty string as valid palindrome.
+		*/
+		if (s.empty())//如果是空串，我们认为是可用的回文串
+			return true;
+		int n = s.size();
+			//设置两个指向s头尾的指针
+		int head = 0;//指向第一个字母
+		int tail = s.size() - 1;//指向最后一个字母
+		while (true)
+		{
+			while (head < s.size() && !isalnum(s[head]))head++;
+			while (tail >= 0  && !isalnum(s[tail]))tail--;
+			if (tail <= head)
+				return true;
+			if (tolower(s[head]) == tolower(s[tail]))
+			{
+				head++;
+				tail--;
+			}
+			else
+				return false;
+		}
+	}
 }
 ```
 
