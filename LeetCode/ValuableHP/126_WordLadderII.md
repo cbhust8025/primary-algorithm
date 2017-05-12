@@ -1,4 +1,4 @@
-#  Valid Number
+#  WordLadderII
 ## 描述：
 Given two words (beginWord and endWord), and a dictionary's word list, find all shortest transformation sequence(s) from beginWord to endWord, such that:  
 Only one letter can be changed at a time  
@@ -285,9 +285,284 @@ int GetWordsDistance(string& a, string& b)
 		return vvsRes;
 	}
 ```
+### 3、解析：精简思路
+在上面邻接表+BFS+BT算法之后，得到的依然是超时的结果，仔细观察全过程，我们进行了大致上三个步骤：
+* 1、建立邻接表
+* 2、利用BFS算法找到目标单词，并建立子-父邻接表
+* 3、利用回溯算法在子-父邻接表中找到路径
+上面三个步骤，第二个步骤的目的实际是将图中的所有节点按照距离起始单词的长度进行分层，在分层完了之后砍去所有不必要的边，留下目的节点以上层数涉及到的边，即如下图所示：  
+![图1](https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/ValuableHP/JpgSave/126_2.jpg)  
+这个图将节点进行层次划分，实质上是生成了一颗树，对于最短路径，高层节点永远不可能出现在下一层极其以后层中，所以我们可以结合1、2两个步骤，直接利用BFS算法思想，在建立邻接表的时候就进行层次的划分，直接建立层次邻接表也即单词转移树。最后利用回溯算法在此邻接表中进行搜寻路径即可。
+我们可以看到，从上图生成的层次邻接表：
+```C++
+dot:dog
+hit:hot
+hog:cog dog
+hot:dot hog hop pot tot
+```
+生成正向层次邻接表的BFS算法：
+```C++
+void BFSforCreateTree(map<string, set<string>>& vviAdjList, string beginWord, string endWord, set<string>& wordList)
+	{//利用宽搜方法建立层次邻接表，高层节点不会出现在下层中，所以在每个高层节点入队列并保存邻接表后，将高层节点进行删除
+	 //宽度搜索的方法核心就是，先从起点开始，搜索距离起点为1的所有未遍历节点，然后再去搜索距离起点为2的所有未遍历节点，以此类推
+	 //所以使用两个队列来保存我们需要遍历的下一层节点，和当前正需要遍历的所有节点
+	 //接纳的参数有起始单词，目标单词，所有单词的邻接表，保存搜索到的最近路径
+	 //注意：当找到目标节点时，任需要将当前正需要遍历的所有节点遍历完，以免遗漏相同长度的路径
+	 //建立双队列，来保存两层需要遍历的节点
+		set<string> qsNow;//当前正需要遍历的所有节点
+		set<string> qsNext;//下一层需要遍历的所有节点
+		vector<string> temp;//暂时存当前层遍历的所有节点
+		qsNow.insert(beginWord);//将开始节点压入队列
+		int Found = 0;
+		while (!qsNow.empty()&& !wordList.empty())
+		{//如果当前行不为空，则仍有需要遍历的节点
+			if (Found == 1)
+				//如果已经找到目标单词，不需要再进行寻找
+				break;
+			//cout << qsNow.front() << " " ;
+			for(auto itq = qsNow.begin();itq!= qsNow.end();itq++)
+			{
+				if (*itq == endWord)
+					Found = 1;
+				//对于wordList中的单词，找到距离目前队列中所有单词为1的单词，并存入下一层队列中，其中找到一个距离为1的加入层次邻接表中
+				for (auto it = wordList.begin();it != wordList.end();it++)
+				{
+					if (GetWordsDistance( (*it), *itq) == 1)
+					{//找到一个距离为1的单词
+						temp.push_back(*it);
+						qsNext.insert(*it);
+						vviAdjList[*itq].insert(*it);
+					}
+				}
+			}
+			//找到所有的下一层的单词之后，将下一层的单词全都从wordList中删除，防止进入更下层
+			for (auto it = temp.begin();it != temp.end();it++)
+				wordList.erase(*it);
+			if (qsNext.empty())
+				break;
+			qsNow = qsNext;
+			qsNext.clear();
+			//cout << endl;
+			temp.clear();
+		}
+		return;
+	}
+```
+根据层次邻接表，我们进行搜索路径时，将会遍历很多到不了目标单词的中间节点，会浪费很多时间。
+如果根据自目标单词行向上生成的逆向邻接表：
+```C++
+pot:hot
+hot:hit
+cog:hog
+hop:hot
+tot:hot
+dot:hot
+hog:hot
+dog:dot hog
+```
+根据逆向邻接表，我们从目标单词开始寻找路径，到达起始单词，这样就可以避免中间的无效节点，从而在一定程度上节省时间。
+生成逆向邻接表：
+```C++
+void BFSforCreateTree(map<string, set<string>>& vviAdjList, string beginWord, string endWord, set<string>& wordList)
+	{//利用宽搜方法建立层次邻接表，高层节点不会出现在下层中，所以在每个高层节点入队列并保存邻接表后，将高层节点进行删除
+	 //宽度搜索的方法核心就是，先从起点开始，搜索距离起点为1的所有未遍历节点，然后再去搜索距离起点为2的所有未遍历节点，以此类推
+	 //所以使用两个队列来保存我们需要遍历的下一层节点，和当前正需要遍历的所有节点
+	 //接纳的参数有起始单词，目标单词，所有单词的邻接表，保存搜索到的最近路径
+	 //注意：当找到目标节点时，任需要将当前正需要遍历的所有节点遍历完，以免遗漏相同长度的路径
+	 //建立双队列，来保存两层需要遍历的节点
+		set<string> qsNow;//当前正需要遍历的所有节点
+		set<string> qsNext;//下一层需要遍历的所有节点
+		vector<string> temp;//暂时存当前层遍历的所有节点
+		qsNow.insert(beginWord);//将开始节点压入队列
+		int Found = 0;
+		while (!qsNow.empty()&& !wordList.empty())
+		{//如果当前行不为空，则仍有需要遍历的节点
+			if (Found == 1)
+				//如果已经找到目标单词，不需要再进行寻找
+				break;
+			//cout << qsNow.front() << " " ;
+			for(auto itq = qsNow.begin();itq!= qsNow.end();itq++)
+			{
+				if (*itq == endWord)
+					Found = 1;
+				//对于wordList中的单词，找到距离目前队列中所有单词为1的单词，并存入下一层队列中，其中找到一个距离为1的加入层次邻接表中
+				for (auto it = wordList.begin();it != wordList.end();it++)
+				{
+					if (GetWordsDistance( (*it), *itq) == 1)
+					{//找到一个距离为1的单词
+						temp.push_back(*it);
+						qsNext.insert(*it);
+						vviAdjList[*it].insert(*itq);
+					}
+				}
+			}
+			//找到所有的下一层的单词之后，将下一层的单词全都从wordList中删除，防止进入更下层
+			for (auto it = temp.begin();it != temp.end();it++)
+				wordList.erase(*it);
+			if (qsNext.empty())
+				break;
+			qsNow = qsNext;
+			qsNext.clear();
+			//cout << endl;
+			temp.clear();
+		}
+		return;
+	}
+```
+对于我们生成的逆向邻接表，我们从目标单词向起始单词进行路径的搜索，一般采用回溯算法进行搜索，算法实现如下：
+```C++
+void GetPathFromMsv(vector<vector<string>>& vvsRes, map<string, set<string>>& vviAdjList,
+		vector<string>& vsPath, string beginWord, string endWord)
+	{//寻找从beginWord到endWord的路径，邻接表为vviAdjList
+		//回溯法获得路径
+		if (beginWord == endWord)//如果找到目标单词，则找到一条路径
+		{
+			reverse(vsPath.begin(), vsPath.end());//回溯前修改
+			vvsRes.push_back(vsPath);
+			reverse(vsPath.begin(), vsPath.end());//回溯前的重置
+			return;
+		}
+		for (auto it = vviAdjList[beginWord].begin();it!= vviAdjList[beginWord].end();it++)
+		{//对于单词的
+			vsPath.push_back(*it);
+			GetPathFromMsv(vvsRes, vviAdjList, vsPath, *it, endWord);
+			vsPath.pop_back();
+		}
+		return;
+	}
+```
 ### 4、AC代码：
 ```C++
+class Solution {
+public:
+   int GetWordsDistance(string a, string b)
+	{
+		if (a.size() != b.size())
+			return false;
+		int count = 0;
+		for (int i = 0;i < a.size();i++)
+		{
+			if (a[i] != b[i])
+				count++;
+		}
+		return count;
+	}
+	void GetPathFromMsv(vector<vector<string>>& vvsRes, map<string, set<string>>& vviAdjList,
+		vector<string>& vsPath, string beginWord, string endWord)
+	{
+		//回溯法获得路径
+		if (beginWord == endWord)//如果找到目标单词，则找到一条路径
+		{
+			reverse(vsPath.begin(), vsPath.end());
+			vvsRes.push_back(vsPath);
+			reverse(vsPath.begin(), vsPath.end());
+			return;
+		}
+		for (auto it = vviAdjList[beginWord].begin();it!= vviAdjList[beginWord].end();it++)
+		{
+			vsPath.push_back(*it);
+			GetPathFromMsv(vvsRes, vviAdjList, vsPath, *it, endWord);
+			vsPath.pop_back();
+		}
+		return;
+	}
 
+	void BFSforCreateTree(map<string, set<string>>& vviAdjList, string beginWord, string endWord, set<string>& wordList)
+	{//利用宽搜方法建立层次邻接表，高层节点不会出现在下层中，所以在每个高层节点入队列并保存邻接表后，将高层节点进行删除
+	 //宽度搜索的方法核心就是，先从起点开始，搜索距离起点为1的所有未遍历节点，然后再去搜索距离起点为2的所有未遍历节点，以此类推
+	 //所以使用两个队列来保存我们需要遍历的下一层节点，和当前正需要遍历的所有节点
+	 //接纳的参数有起始单词，目标单词，所有单词的邻接表，保存搜索到的最近路径
+	 //注意：当找到目标节点时，任需要将当前正需要遍历的所有节点遍历完，以免遗漏相同长度的路径
+	 //建立双队列，来保存两层需要遍历的节点
+		set<string> qsNow;//当前正需要遍历的所有节点
+		set<string> qsNext;//下一层需要遍历的所有节点
+		vector<string> temp;//暂时存当前层遍历的所有节点
+		qsNow.insert(beginWord);//将开始节点压入队列
+		int Found = 0;
+		while (!qsNow.empty()&& !wordList.empty())
+		{//如果当前行不为空，则仍有需要遍历的节点
+			if (Found == 1)
+				//如果已经找到目标单词，不需要再进行寻找
+				break;
+			//cout << qsNow.front() << " " ;
+			for(auto itq = qsNow.begin();itq!= qsNow.end();itq++)
+			{
+				if (*itq == endWord)
+					Found = 1;
+				//对于wordList中的单词，找到距离目前队列中所有单词为1的单词，并存入下一层队列中，其中找到一个距离为1的加入层次邻接表中
+				for (auto it = wordList.begin();it != wordList.end();it++)
+				{
+					if (GetWordsDistance( (*it), *itq) == 1)
+					{//找到一个距离为1的单词
+						temp.push_back(*it);
+						qsNext.insert(*it);
+						vviAdjList[*it].insert(*itq);
+					}
+				}
+			}
+			//找到所有的下一层的单词之后，将下一层的单词全都从wordList中删除，防止进入更下层
+			for (auto it = temp.begin();it != temp.end();it++)
+				wordList.erase(*it);
+			if (qsNext.empty())
+				break;
+			qsNow = qsNext;
+			qsNext.clear();
+			//cout << endl;
+			temp.clear();
+		}
+		return;
+	}
+
+	vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+		/*
+		126. Word Ladder II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 64765
+		Total Submissions: 467025
+		Difficulty: Hard
+		Contributor: LeetCode
+		Given two words (beginWord and endWord), and a dictionary's word list,
+		find all shortest transformation sequence(s) from beginWord to endWord, such that:
+
+		Only one letter can be changed at a time
+		Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
+		For example,
+
+		Given:
+		beginWord = "hit"
+		endWord = "cog"
+		wordList = ["hot","dot","dog","lot","log","cog"]
+		Return
+		[
+		["hit","hot","dot","dog","cog"],
+		["hit","hot","lot","log","cog"]
+		]
+		Note:
+		Return an empty list if there is no such transformation sequence.
+		All words have the same length.
+		All words contain only lowercase alphabetic characters.
+		You may assume no duplicates in the word list.
+		You may assume beginWord and endWord are non-empty and are not the same.
+		UPDATE (2017/1/20):
+		The wordList parameter had been changed to a list of strings (instead of a set of strings).
+		Please reload the code definition to get the latest changes.
+		*/
+		vector<vector<string>> vvsRes;//保存所有的路径结果
+		vector<string> vsPath;//保存某一条路径
+		vsPath.push_back(endWord);//保存路径起点
+		//将距离为1的两个单词进行连接，建立无向图，使用邻接表来进行存储无向图
+		map<string, set<string>> vviAdjList;//存储图的层次邻接表(多叉树)，利用BFS思想将所有节点按照离起始节点的距离进行层次划分，相同距离的在同一层
+		set<string>wL;
+		for (int i = 0;i < wordList.size();i++)
+			if(wordList[i] != beginWord)
+				wL.insert(wordList[i]);
+		BFSforCreateTree(vviAdjList, beginWord, endWord, wL);//利用BFS思想进行建立层次邻接表(多叉树)
+		//TreeHelper::printAdjList(vviAdjList);
+		GetPathFromMsv(vvsRes, vviAdjList, vsPath, endWord, beginWord);
+		//VectorHelper::printMatrix(vvsRes);
+		return vvsRes;
+	}
+};
 ```
 ### 5、参考:
 [leetcode解题报告](http://www.cnblogs.com/ShaneZhang/p/3748494.html)
