@@ -17,6 +17,73 @@ namespace TreeHelper
 		TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 	};
 
+	//模板，打印Vector
+	template <typename T>
+	void printVector(const vector<T>& vi)
+	{
+		for (auto it = vi.begin();it != vi.end();it++)
+		{
+			cout << setw(3) << *it << " ";
+		}
+		cout << "NULL" << endl;
+		return;
+	}
+
+	template <typename T>
+	void printMatrix(const vector<vector<T>>& vi)
+	{
+		for (auto it = vi.begin();it != vi.end();it++)
+		{
+			for (auto it2 = (*it).begin();it2 != (*it).end();it2++)
+			{
+				cout << setw(3) << *it2 << " ";
+			}
+			cout << endl;
+		}
+		cout << "NULL" << endl;
+		return;
+	}
+
+	template<typename T1, typename T2>
+	void printAdjList(map<T1, vector<T2>>& mtv)
+	{
+		for (auto it = mtv.begin();it != mtv.end();it++)
+		{
+			cout << it->first << ":";
+			for (auto it2 = it->second.begin();it2 != it->second.end();it2++)
+			{
+				cout << *it2 << " ";
+			}
+			cout << endl;
+		}
+	}
+
+	template<typename T1, typename T2>
+	void printAdjList(map<T1, set<T2>>& mtv)
+	{
+		for (auto it = mtv.begin();it != mtv.end();it++)
+		{
+			cout << it->first << ":";
+			for (auto it2 = it->second.begin();it2 != it->second.end();it2++)
+			{
+				cout << *it2 << " ";
+			}
+			cout << endl;
+		}
+	}
+	template<typename T1, typename T2>
+	void printAdjList(unordered_map<T1, unordered_set<T2>>& mtv)
+	{
+		for (auto it = mtv.begin();it != mtv.end();it++)
+		{
+			cout << it->first << ":";
+			for (auto it2 = it->second.begin();it2 != it->second.end();it2++)
+			{
+				cout << *it2 << " ";
+			}
+			cout << endl;
+		}
+	}
 	void preOrder(TreeNode* root)
 	{//递归实现二叉树前根序遍历
 		//当前节点非空，则直接进行访问后，再去访问左右孩子节点
@@ -1094,14 +1161,20 @@ namespace TreeHelper
 		return;
 	}
 
-	void getRootMaxPathSum(TreeNode* root, int nowPathSum, int& maxPathSum)
-	{
-		if (root == NULL)//如果当前节点为NULL节点，直接返回，不修改
-			return;
-		nowPathSum += root->val;
-		maxPathSum = max(nowPathSum, maxPathSum);
-		getRootMaxPathSum(root->left, nowPathSum, maxPathSum);
-		getRootMaxPathSum(root->right, nowPathSum, maxPathSum);
+	int maxLinkSum(TreeNode* root, int& maxAll)
+	{//联通路径最大和,maxAll存储当前找到的所有路径和的最大值
+		//对于以root为根节点的最大路径和，可能出现在以下四种情况中:
+		//1、root 2、root+left 3、root+right 4、root+left + right
+		if (root == NULL)//根节点为空，直接返回0
+			return 0;
+		int leftSum = maxLinkSum(root->left, maxAll);//左子树的最大值，如果小于0，则置为0
+		int rightSum = maxLinkSum(root->right, maxAll);//右子树的最大值
+		int rootSum = root->val + max(0, leftSum) + max(0, rightSum);//找到1,2,3,4四种情况下的最大值
+		//因为此时的四种情况最大值是包含根节点，是联通路径和
+		if (rootSum > maxAll)
+			maxAll = rootSum;//更新最大值
+		//如果需要返回值，则证明是另外一个根节点来调用此函数，所以只能返回1,2,3三种情况下的最大和，即最大路径和
+		return max(root->val, max(root->val + leftSum, root->val + rightSum));
 	}
 
 	int maxPathSum(TreeNode* root) {
@@ -1124,40 +1197,338 @@ namespace TreeHelper
 		2   3
 		Return 6.
 		*/
-		//由于可以经过父节点-子节点的这种方式，所以最大的路径和是肯定包含根节点，对于每个根节点都求一次最大路径和
-		//对根节点求解最大路径和方法：
-		//1、根节点与左右子节点相连，所以路径肯定是从左右子节点发散出去，分别找到从左子节点到叶子节点的最大路径和以及右子节点到叶子节电的最大路径和
-		//2、两个最大路径和加上根节点的值即为当前根节点的最大联通路径和，继续寻找当前根节点的左右子节点的最大联通路径和，直到叶子节点。
-		//注：叶子节点的最大路径和（当前节点到叶子节点）即为叶子节点的本身值
 		if (root == NULL)//空树直接返回0
 			return 0;
-		if (root->right == NULL && root->left == NULL)//叶子节点的最大联通路径和为其本身
-			return root->val;
-		int rootLeftMax = 0;
-		if (root->left)
-		{
-			rootLeftMax = root->left->val;
-			getRootMaxPathSum(root->left, 0, rootLeftMax);//当前根节点的左子节点最大路径和
-		}
-		int rootRightMax = 0;
-		if(root->right)
-		{ 
-			rootRightMax = root->right->val;
-			getRootMaxPathSum(root->right, 0, rootRightMax);//当前根节点的右子节点最大路径和
-		}
-		int rootMax = max(0, rootLeftMax) + max(0, rootRightMax) + root->val;
-		cout << rootLeftMax <<" " << rootRightMax<< " " << rootMax << endl;
-		if (root->left)
-		{
-			int leftMax = maxPathSum(root->left);//以左子节点为根节点的最大联通路径和
-			rootMax = max(rootMax, leftMax);
-		}
-		if(root->right)
-		{
-			int rightMax = maxPathSum(root->right);//以右子节点为根节点的最大联通路径和
-			rootMax = max(rootMax, rightMax);
-		}
-		return rootMax;//返回三者中的最大值
+		int rootMax = INT_MIN;
+		maxLinkSum(root, rootMax);
+		return rootMax;
 	}
+
+
+	int GetWordsDistance(string a, string b)
+	{
+		if (a.size() != b.size())
+			return false;
+		int count = 0;
+		for (int i = 0;i < a.size();i++)
+		{
+			if (a[i] != b[i])
+				count++;
+		}
+		return count;
+	}
+	void GetPathFromMsv(vector<vector<string>>& vvsRes, map<string, set<string>>& vviAdjList,
+		vector<string>& vsPath, string beginWord, string endWord)
+	{
+		//回溯法获得路径
+		if (beginWord == endWord)//如果找到目标单词，则找到一条路径
+		{
+			reverse(vsPath.begin(), vsPath.end());//回溯前修改
+			vvsRes.push_back(vsPath);
+			reverse(vsPath.begin(), vsPath.end());//回溯前的重置
+			return;
+		}
+		for (auto it = vviAdjList[beginWord].begin();it != vviAdjList[beginWord].end();it++)
+		{
+			vsPath.push_back(*it);
+			GetPathFromMsv(vvsRes, vviAdjList, vsPath, *it, endWord);
+			vsPath.pop_back();
+		}
+		return;
+	}
+
+	void BFSforCreateTree(map<string, set<string>>& vviAdjList, string beginWord, string endWord, set<string>& wordList)
+	{//利用宽搜方法建立层次邻接表，高层节点不会出现在下层中，所以在每个高层节点入队列并保存邻接表后，将高层节点进行删除
+	 //宽度搜索的方法核心就是，先从起点开始，搜索距离起点为1的所有未遍历节点，然后再去搜索距离起点为2的所有未遍历节点，以此类推
+	 //所以使用两个队列来保存我们需要遍历的下一层节点，和当前正需要遍历的所有节点
+	 //接纳的参数有起始单词，目标单词，所有单词的邻接表，保存搜索到的最近路径
+	 //注意：当找到目标节点时，任需要将当前正需要遍历的所有节点遍历完，以免遗漏相同长度的路径
+	 //建立双队列，来保存两层需要遍历的节点
+		set<string> qsNow;//当前正需要遍历的所有节点
+		set<string> qsNext;//下一层需要遍历的所有节点
+		vector<string> temp;//暂时存当前层遍历的所有节点
+		qsNow.insert(beginWord);//将开始节点压入队列
+		int Found = 0;
+		while (!qsNow.empty() && !wordList.empty())
+		{//如果当前行不为空，则仍有需要遍历的节点
+			if (Found == 1)
+				//如果已经找到目标单词，不需要再进行寻找
+				break;
+			//cout << qsNow.front() << " " ;
+			for (auto itq = qsNow.begin();itq != qsNow.end();itq++)
+			{
+				if (*itq == endWord)
+					Found = 1;
+				//对于wordList中的单词，找到距离目前队列中所有单词为1的单词，并存入下一层队列中，其中找到一个距离为1的加入层次邻接表中
+				for (auto it = wordList.begin();it != wordList.end();it++)
+				{
+					if (GetWordsDistance((*it), *itq) == 1)
+					{//找到一个距离为1的单词
+						temp.push_back(*it);
+						qsNext.insert(*it);
+						vviAdjList[*it].insert(*itq);
+					}
+				}
+			}
+			//找到所有的下一层的单词之后，将下一层的单词全都从wordList中删除，防止进入更下层
+			for (auto it = temp.begin();it != temp.end();it++)
+				wordList.erase(*it);
+			if (qsNext.empty())
+				break;
+			qsNow = qsNext;
+			qsNext.clear();
+			//cout << endl;
+			temp.clear();
+		}
+		return;
+	}
+
+	vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+		/* A
+		126. Word Ladder II Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 64765
+		Total Submissions: 467025
+		Difficulty: Hard
+		Contributor: LeetCode
+		Given two words (beginWord and endWord), and a dictionary's word list,
+		find all shortest transformation sequence(s) from beginWord to endWord, such that:
+
+		Only one letter can be changed at a time
+		Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
+		For example,
+
+		Given:
+		beginWord = "hit"
+		endWord = "cog"
+		wordList = ["hot","dot","dog","lot","log","cog"]
+		Return
+		[
+		["hit","hot","dot","dog","cog"],
+		["hit","hot","lot","log","cog"]
+		]
+
+		//vector<string> vs{ "si","go","se","cm","so","ph","mt","db","mb","sb","kr","ln","tm","le","av","sm","ar","ci","ca","br","ti","ba","to","ra","fa","yo","ow","sn","ya","cr","po","fe","ho","ma","re","or","rn","au","ur","rh","sr","tc","lt","lo","as","fr","nb","yb","if","pb","ge","th","pm","rb","sh","co","ga","li","ha","hz","no","bi","di","hi","qa","pi","os","uh","wm","an","me","mo","na","la","st","er","sc","ne","mn","mi","am","ex","pt","io","be","fm","ta","tb","ni","mr","pa","he","lr","sq","ye"};
+		//string a = "qa";
+		//string b = "sq";
+		//unordered_set<string> vs1{ "hot","dot","tot","hog","dog","cog", "pot","hop"};
+		//vector<string>vs2{ "hot","dot","dog","lot","log","cog" };
+		//string a = "hit";
+		//string b = "cog";
+		Note:
+		Return an empty list if there is no such transformation sequence.
+		All words have the same length.
+		All words contain only lowercase alphabetic characters.
+		You may assume no duplicates in the word list.
+		You may assume beginWord and endWord are non-empty and are not the same.
+		UPDATE (2017/1/20):
+		The wordList parameter had been changed to a list of strings (instead of a set of strings).
+		Please reload the code definition to get the latest changes.
+		*/
+		vector<vector<string>> vvsRes;//保存所有的路径结果
+		vector<string> vsPath;//保存某一条路径
+		vsPath.push_back(endWord);//保存路径起点
+								  //将距离为1的两个单词进行连接，建立无向图，使用邻接表来进行存储无向图
+		map<string, set<string>> vviAdjList;//存储图的层次邻接表(多叉树)，利用BFS思想将所有节点按照离起始节点的距离进行层次划分，相同距离的在同一层
+		set<string>wL;
+		for (int i = 0;i < wordList.size();i++)
+			if (wordList[i] != beginWord)
+				wL.insert(wordList[i]);
+		BFSforCreateTree(vviAdjList, beginWord, endWord, wL);//利用BFS思想进行建立层次邻接表(多叉树)
+		TreeHelper::printAdjList(vviAdjList);
+		GetPathFromMsv(vvsRes, vviAdjList, vsPath, endWord, beginWord);
+		return vvsRes;
+	}
+
+	int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+		/* A
+		127. Word Ladder Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 118868
+		Total Submissions: 616399
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given two words (beginWord and endWord), and a dictionary's word list, find the length of shortest transformation sequence from beginWord to endWord, such that:
+
+		Only one letter can be changed at a time.
+		Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
+		For example,
+
+		Given:
+		beginWord = "hit"
+		endWord = "cog"
+		wordList = ["hot","dot","dog","lot","log","cog"]
+		As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
+		return its length 5.
+
+		Note:
+		Return 0 if there is no such transformation sequence.
+		All words have the same length.
+		All words contain only lowercase alphabetic characters.
+		You may assume no duplicates in the word list.
+		You may assume beginWord and endWord are non-empty and are not the same.
+		UPDATE (2017/1/20):
+		The wordList parameter had been changed to a list of strings (instead of a set of strings). Please reload the code definition to get the latest changes.
+
+		Subscribe to see which companies asked this question.
+		*/
+		//此题同T126，只不过需要找到到达目标单词的最短路径长度，同样的使用BFS生成逆向邻接表，第一次遇到目标单词则肯定是最短路径，记录层数即为所求
+		set<string>wL;
+		for (int i = 0;i < wordList.size();i++)
+			if (wordList[i] != beginWord)
+				wL.insert(wordList[i]);
+		//利用宽搜方法建立层次邻接表，高层节点不会出现在下层中，所以在每个高层节点入队列并保存邻接表后，将高层节点进行删除
+		//宽度搜索的方法核心就是，先从起点开始，搜索距离起点为1的所有未遍历节点，然后再去搜索距离起点为2的所有未遍历节点，以此类推
+		//所以使用两个队列来保存我们需要遍历的下一层节点，和当前正需要遍历的所有节点
+		//接纳的参数有起始单词，目标单词，所有单词的邻接表，保存搜索到的最近路径
+		//注意：当找到目标节点时，任需要将当前正需要遍历的所有节点遍历完，以免遗漏相同长度的路径
+		//建立双队列，来保存两层需要遍历的节点
+		set<string> qsNow;//当前正需要遍历的所有节点
+		set<string> qsNext;//下一层需要遍历的所有节点
+		vector<string> temp;//暂时存当前层遍历的所有节点
+		qsNow.insert(beginWord);//将开始节点压入队列
+		int Found = 0;
+		int count = 0;
+		while (!qsNow.empty() || !wL.empty())
+		{//如果当前行不为空，则仍有需要遍历的节点
+		 //找完一层就+1
+			if (Found == 1)
+				//如果已经找到目标单词，不需要再进行寻找
+				break;
+			else//如果没找到，层数+1，进入下一层搜索
+				count++;
+			//cout << qsNow.front() << " " ;
+			for (auto itq = qsNow.begin();itq != qsNow.end();itq++)
+			{
+				if (*itq == endWord)
+					Found = 1;
+				//对于wordList中的单词，找到距离目前队列中所有单词为1的单词，并存入下一层队列中，其中找到一个距离为1的加入层次邻接表中
+				for (auto it = wL.begin();it != wL.end();it++)
+				{
+					if (GetWordsDistance((*it), *itq) == 1)
+					{//找到一个距离为1的单词
+						temp.push_back(*it);
+						qsNext.insert(*it);
+					}
+				}
+			}
+			//找到所有的下一层的单词之后，将下一层的单词全都从wordList中删除，防止进入更下层
+			for (auto it = temp.begin();it != temp.end();it++)
+				wL.erase(*it);
+			if (qsNext.empty())
+				break;
+			qsNow = qsNext;
+			qsNext.clear();
+			//cout << endl;
+			temp.clear();
+		}
+		if (Found == 1)
+			return count;
+		else
+			return 0;
+	}
+
+	void DFSforSumPath(TreeNode* root, int pathNum, int& sum)
+	{
+		if (root == NULL)
+			return;//如果是空节点，直接返回
+		pathNum = pathNum * 10 + root->val;
+		if (root->left == NULL && root->right == NULL)
+		{//如果当前节点为叶子节点，则将路径数字加在sum上
+			sum += pathNum;
+			return;
+		}
+		//如果不为叶子节点，则继续向下找
+		DFSforSumPath(root->left, pathNum, sum);
+		DFSforSumPath(root->right, pathNum, sum);
+		return;
+	}
+
+	int sumNumbers(TreeNode* root) {
+		/*  A
+		129. Sum Root to  Leaf Numbers Add to List
+		DescriptionHintsSubmissionsSolutions
+		Total Accepted: 107241
+		Total Submissions: 298590
+		Difficulty: Medium
+		Contributor: LeetCode
+		Given a binary tree containing digits from 0-9 only, each root-to-leaf path could represent a number.
+
+		An example is the root-to-leaf path 1->2->3 which represents the number 123.
+
+		Find the total sum of all root-to-leaf numbers.
+
+		For example,
+
+		  1
+		 / \
+		2   3
+		The root-to-leaf path 1->2 represents the number 12.
+		The root-to-leaf path 1->3 represents the number 13.
+
+		Return the sum = 12 + 13 = 25.
+
+		Subscribe to see which companies asked this question.
+		*/
+		//利用深度搜索找到路径，在叶子节点将路径代表的数字加起来
+		int ipathSum = 0;//保存路径和
+		if (root == NULL)
+			return 0;
+		DFSforSumPath(root, 0, ipathSum);
+		return ipathSum;
+	}
+
+	bool SolveXXOO(vector<vector<char>>& board, vector<vector<bool>>& vvbFlag, int x, int y)
+		//对于较大的矩阵，会有栈过深，出现Run Time Error，舍弃
+	{//对于输入进来的‘O’符号，基于回溯思想对其联通的‘O’符号做出判断，是否应该修改，如果应该修改，则直接进行修改
+		//对于边界上的‘O’极其相连的‘O’不需要修改，直接返回false
+		if ((board[x][y] == 'O') && ((x == 0) || (y == 0) || (x == board.size() - 1) || (y == board[0].size() - 1)))
+			return false;
+		if (board[x][y] == 'X')//对于找到‘X’，表示是正确的边界，返回true，可以进行修改
+			return true;
+		//对于其他情况下的‘O’，我们对其进行四种方向扩展搜索，如果四个方向都返回true，则表示当前‘O’可以进行修改，
+		bool up, down, left, right;//四个方向的bool值
+		//向上
+		if (x > 0 && vvbFlag[x - 1][y])//如果不在第一行,且上面的元素未被探索，则进行探索
+		{
+			vvbFlag[x - 1][y] = false;//上面的元素已探索
+			up = SolveXXOO(board, vvbFlag, x - 1, y);//向上探索
+			if (up == false)//一旦出现false，表示不用修改，直接返回
+				return false;
+			vvbFlag[x - 1][y] = true;//重置已探索的元素、
+		}
+		//向下
+		if (x < board.size() - 1 && vvbFlag[x + 1][y])//如果不在第一行,且上面的元素未被探索，则进行探索
+		{
+			vvbFlag[x + 1][y] = false;//上面的元素已探索
+			down = SolveXXOO(board, vvbFlag, x + 1, y);//向上探索
+			if (down == false)//一旦出现false，表示不用修改，直接返回
+				return false;
+			vvbFlag[x + 1][y] = true;//重置已探索的元素、
+		}
+		//向左
+		if (y > 0 && vvbFlag[x][y - 1])//如果不在第一行,且上面的元素未被探索，则进行探索
+		{
+			vvbFlag[x][y - 1] = false;//上面的元素已探索
+			left = SolveXXOO(board, vvbFlag, x, y - 1);//向上探索
+			if (left == false)//一旦出现false，表示不用修改，直接返回
+				return false;
+			vvbFlag[x][y - 1] = true;//重置已探索的元素、
+		}
+		//向右
+		if (y < board[0].size() - 1 && vvbFlag[x][y + 1])//如果不在第一行,且上面的元素未被探索，则进行探索
+		{
+			vvbFlag[x][y + 1] = false;//上面的元素已探索
+			up = SolveXXOO(board, vvbFlag, x, y + 1);//向上探索
+			if (up == false)//一旦出现false，表示不用修改，直接返回
+				return false;
+			vvbFlag[x][y + 1] = true;//重置已探索的元素、
+		}
+		//四个方向都是true，或者是已被探索的元素，则表示当前的‘O’可以修改，修改之后返回true
+		board[x][y] = 'X';
+		return true;
+	}
+
+	
 }
 ```
