@@ -27,11 +27,11 @@
 <p>2017/05/02 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>2017/05/03 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>2017/05/04 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/05/06 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/ValuableHP/65_Valid%20Number.md>困难题解</a>。</p>
+<p>2017/05/06 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/ValuableHP/65_Valid%20Number.md>困难题vaild number解</a>。</p>
 <p>2017/05/08 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。实现<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/C-%20project/TreeHelper.md>树的前中后序递归、非递归</a>。</p>
 <p>2017/05/09 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>2017/05/10 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/05/11 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/ValuableHP/126_WordLadderII.md>困难题解</a></p>
+<p>2017/05/11 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/ValuableHP/126_WordLadderII.md>困难题word-ladder-ii解</a></p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
