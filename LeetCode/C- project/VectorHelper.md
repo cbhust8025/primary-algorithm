@@ -2160,6 +2160,215 @@ namespace VectorHelper
 		printVector(now);
 		return now;
 	}
+	int candy(vector<int>& ratings)
+    {
+        /* A
+         * 135. Candy Add to List
+            DescriptionHintsSubmissionsSolutions
+            Total Accepted: 67146
+            Total Submissions: 275639
+            Difficulty: Hard
+            Contributor: LeetCode
+            There are N children standing in a line. Each child is assigned a rating value.
+
+            You are giving candies to these children subjected to the following requirements:
+
+            Each child must have at least one candy.
+            Children with a higher rating get more candies than their neighbors.
+            What is the minimum candies you must give?
+         */
+        // 对于具有权值的每个孩子，至少给1颗糖，无上限，
+        // 所以想要找到最少的糖果总数，需要两次遍历，从头到尾确定每个孩子一个糖果数，从尾到头确定每个孩子一个糖果数
+        // 对于两次遍历的结果，对每个孩子的糖果数取较大值即可
+        vector<int> first(ratings.size(), 1);//第一遍，从头到尾
+        vector<int> second(ratings.size(), 1);//第二遍，从尾到头，两边循环极其相似，我们可以放在一个循环中进行
+        for (int i = 1; i < ratings.size(); i++) {//第一个孩子肯定是1，所以从第二个孩子开始
+            //从头到尾
+            if (ratings[i] > ratings[i - 1]) {
+                //如果当前的孩子大于他的左边孩子，则糖果数+1
+                first[i] = first[i - 1] + 1;
+            }
+            else
+                first[i] = 1;//如果不大于，则从1开始即可
+            //从尾到头，最后一个孩子肯定是1，所以从倒数第二个孩子开始，[ratings.size() - 2,0]
+            if(ratings[ratings.size() - 1 - i] > ratings[ratings.size() - i]){
+                //如果当前的孩子大于他的右边孩子，则糖果数+1
+                second[ratings.size() - 1 - i] = second[ratings.size() - i] + 1;
+            }
+            else
+                second[ratings.size() - 1 - i] = 1;//如果不大于，则从1开始即可
+        }
+        int sum = 0;//保存糖果总数
+        for(int i = 0;i<ratings.size();i++) {
+            sum+=max(first[i],second[i]);
+        }
+        return sum;
+    }
+
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        /* A
+         * 134. Gas Station Add to List
+            DescriptionHintsSubmissionsSolutions
+            Total Accepted: 83143
+            Total Submissions: 286751
+            Difficulty: Medium
+            Contributor: LeetCode
+            There are N gas stations along a circular route, where the amount of gas at station i is gas[i].
+
+            You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). You begin the journey with an empty tank at one of the gas stations.
+
+            Return the starting gas station's index if you can travel around the circuit once, otherwise return -1.
+
+            Note:
+            The solution is guaranteed to be unique.
+         */
+        //对于本题中的的循环站点，我们对于每个站点的补充油量和到达下一个站点所需的耗油量，可以设置一个变量，即从当前车站到达下个车站的剩余油量dif
+        //所有的剩油量之和大于等于0，就肯定是可以找到一个站点开始，能循环一圈；如果小于0，则肯定无解
+        //从第一个站点开始尝试，一直往后累加剩油量，一旦到达某个站点，剩油量为负，说明从起始站点开始到现在的站点之前的所有站点都无法循环
+        //如果有解，则总可以找到一个站点，一直到最后一个站点都能保持在中途的每个站点剩油量为正，即我们所求的解
+        if(gas.size() != cost.size() || gas.empty())
+            return -1;//返回-1表示无解
+        vector<int> dif(gas.size(), 0);
+        int totaldif = 0;//所有的剩油量之和
+        int start = 0;//起始站点，初始值从第一个站点出发
+        int sum = 0;//统计从某个起始站点开始的剩油量，一旦此剩油量为负，则重置起始节点
+        for(int i = 0;i < gas.size();i++){
+            dif[i] = gas[i] - cost[i];
+            totaldif += dif[i];
+//            cout << "sum:" << sum << " totaldif:" << totaldif << endl;
+            if(sum < 0){
+                start = i;
+                sum = dif[i];
+            }
+            else
+                sum += dif[i];
+
+        }
+//        printVector(dif);
+        return (totaldif >= 0)?start:-1;
+    }
+
+    int singleNumber(vector<int>& nums) {
+        /* A
+         * 136. Single Number Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 211216
+        Total Submissions: 392818
+        Difficulty: Easy
+        Contributor: LeetCode
+        Given an array of integers, every element appears twice except for one. Find that single one.
+
+        Note:
+        Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+         */
+        //线性复杂度，不使用其他额外的存储空间，所有的元素都出现两次，除了某一个元素只出现了一次
+        //我们考虑异或的运算，相同的数进行异或后的值为0，将数组中的所有元素都从头到尾异或一次，最后的结果即为那个不重复的数
+        if(nums.empty())
+            return 0;
+        for(int i = 1;i<nums.size();i++){
+            //我们将所有的元素都异或到num[0]上，最后得到的nums[0]即为我们所求
+            nums[0] ^= nums[i];
+        }
+        return nums[0];
+    }
+
+    int singleNumberII(vector<int>& nums) {
+        /*
+         * 137. Single Number II Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 113408
+        Total Submissions: 277544
+        Difficulty: Medium
+        Contributor: LeetCode
+        Given an array of integers, every element appears three times except for one,
+         which appears exactly once. Find that single one.
+
+        Note:
+        Your algorithm should have a linear runtime complexity.
+         Could you implement it without using extra memory?
+         */
+        //对于int型整数，我们把数组中的每个数字按照位进行相加，由于只有一个不重复三次，
+        // 所以个位相加的结果对3取余数肯定是那个不重复的数字的个位，同理，最后可得结果
+        vector<int> viRes(32,0);//把所有的数字位数相加，对3取余数
+        int iRes = 0;
+        for(int i = 0;i < 32;i++){
+            //从第一位开始到第31位，逐个计算
+            for(int j = 0;j < nums.size();j++){
+                //每个数都加起来保存到viRes[i]上
+                viRes[i] += nums[j]>>i & 1;
+            }
+            viRes[i] %= 3;
+            iRes += (viRes[i] << i);//把结果进行累加
+        }
+        return iRes;
+    }
+
+    int parseStringToInt(string s)
+    {//将字符串转换成整型
+        bool flag = true;
+        if(s[0] == '-')
+            flag = false;
+        s = flag ? s : string(s.begin() + 1,s.end());
+        int iR = 0;
+        for (int i = 0;i < s.size();i++)
+        {
+            iR = iR * 10 + s[i] - '0';
+        }
+        return flag ? iR : -iR;
+    }
+    int evalRPN(vector<string>& tokens) {
+        /*
+         * 150. Evaluate Reverse Polish Notation Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 90110
+        Total Submissions: 338324
+        Difficulty: Medium
+        Contributor: LeetCode
+        Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+
+        Valid operators are +, -, *, /. Each operand may be an integer or another expression.
+
+        Some examples:
+          ["2", "1", "+", "3", "*"] -> ((2 + 1) * 3) -> 9
+          ["4", "13", "5", "/", "+"] -> (4 + (13 / 5)) -> 6
+         */
+        //将符号比作根节点，显然的是后根序序列，使用栈存储计算的数，碰到运算符则弹出两个数来进行运算，将运算的结果压入栈中
+        if(tokens.empty())
+            return 0;
+        stack<int> si;
+        for(int i = 0;i<tokens.size();i++)
+        {
+            if(tokens[i] == "+")
+            {
+                int second = si.top();si.pop();
+                int first = si.top();si.pop();
+                si.push(first + second);
+            }
+            else if(tokens[i] == "-")
+            {
+                int second = si.top();si.pop();
+                int first = si.top();si.pop();
+                si.push(first - second);
+            }
+            else if(tokens[i] == "*")
+            {
+                int second = si.top();si.pop();
+                int first = si.top();si.pop();
+                si.push(first * second);
+            }
+            else if(tokens[i] == "/")
+            {
+                int second = si.top();si.pop();
+                int first = si.top();si.pop();
+                si.push(first/second);
+            }
+            else
+            {//如果不是四种运算符，我们将其当做数压入栈中
+                si.push(parseStringToInt(tokens[i]));
+            }
+        }
+        return si.top();
+    }
 }
 
 

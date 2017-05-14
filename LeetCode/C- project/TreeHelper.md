@@ -1530,5 +1530,47 @@ namespace TreeHelper
 	}
 
 	
+    vector<int> preorderTraversal(TreeNode* root) {
+        /*
+         * 144. Binary Tree Preorder Traversal Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 174855
+        Total Submissions: 395448
+        Difficulty: Medium
+        Contributor: LeetCode
+        Given a binary tree, return the preorder traversal of its nodes' values.
+
+        For example:
+        Given binary tree {1,#,2,3},
+           1
+            \
+             2
+            /
+           3
+        return [1,2,3].
+
+        Note: Recursive solution is trivial, could you do it iteratively?
+                 */
+        //使用迭代的方式来解决前根序遍历树，利用栈来模拟递归的过程
+        stack<TreeNode*> sTl;//存储已经遍历过的根节点
+        vector<int> preTr;//存储先序遍历序列
+        TreeNode* p = root;//从根节点开始遍历
+        while(!p || !sTl.empty())//如果当前节点不为空，或者栈中还有节点
+        {
+            while (p != NULL)//如果当前节点的不为空，则将当前节点进行访问，并将其压入到栈中，指向其左子节点
+            {
+                preTr.push_back(p->val);
+                sTl.push(p);
+                p = p->left;
+            }
+            if (!sTl.empty())//到这一步，肯定是上一步已经走到了一个左子节点为空的节点，并且之前节点已经遍历，栈顶节点就是最近的一个父节点
+            {
+                //将当前节点置为栈顶节点的右节点后弹出栈顶元素
+                p = sTl.top()->right;
+                sTl.pop();
+            }
+        }
+        return preTr;
+    }
 }
 ```

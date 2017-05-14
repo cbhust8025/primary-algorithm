@@ -33,6 +33,8 @@
 <p>2017/05/10 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>2017/05/11 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/ValuableHP/126_WordLadderII.md>困难题word-ladder-ii解</a></p>
 <p>2017/05/12 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
+<p>2017/05/13 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
+<p>2017/05/14 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
