@@ -526,5 +526,225 @@ namespace ListHelper
 		}
 		return true;
 	}
+	RandomListNode *copyRandomList(RandomListNode *head) {
+        /*
+         * 138. Copy List with Random Pointer Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 108256
+        Total Submissions: 408895
+        Difficulty: Medium
+        Contributor: LeetCode
+        A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+
+        Return a deep copy of the list.
+         */
+        //复制这样的一个表，我们从头开始，按照next的顺序进行复制，对于没有创建的节点，进行创建节点后放入map，建立原节点到现有节点的map
+        //对于当前的每个节点，我们需要建立两个对应关系，next节点和random节点，
+        if(head == NULL)//如果为空链表我们返回空链表
+            return NULL;
+        map<RandomListNode*, RandomListNode*> mRRmap;//建立旧节点到新节点的映射，mRR[旧节点] = 新节点
+        RandomListNode* newhead = new RandomListNode(head->label);//建立新的头结点
+        mRRmap[head] = newhead;
+        RandomListNode* p = head;
+        while(p != NULL)//头结点不为空
+        {
+            //如果在map中肯定能找到当前遍历的p节点（在上一遍循环中已经建立）
+            RandomListNode* newNowNode = mRRmap[p];
+            if(p->next!=NULL && mRRmap.find(p->next) == mRRmap.end())//如果在map中找不到当前遍历的p节点的下一个节点,建立对应关系，并放入map中
+            {
+                mRRmap[p->next] = new RandomListNode(p->next->label);
+                newNowNode->next = mRRmap[p->next];
+            }
+            else newNowNode->next = mRRmap[p->next];
+            if(p->random!= NULL && mRRmap.find(p->random) == mRRmap.end())//如果在map中找不到当前遍历的p节点的random节点
+            {
+                mRRmap[p->random] = new RandomListNode(p->random->label);
+                newNowNode->random = mRRmap[p->random];
+            }
+            else newNowNode->random = mRRmap[p->random];
+            //建立完了映射关系和新链表关系后，指向下一个节点继续建立
+            p = p->next;
+        }
+        return mRRmap[head];
+    }
+
+    bool hasCycle(ListNode *head) {
+        /*
+         * 141. Linked List Cycle Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 173763
+        Total Submissions: 489733
+        Difficulty: Easy
+        Contributor: LeetCode
+        Given a linked list, determine if it has a cycle in it.
+
+        Follow up:
+        Can you solve it without using extra space?
+         */
+        //快慢指针即可解决，若有环，则快慢指针肯定会相遇，若没有环，则不会相遇就会到达终点
+        if(head == NULL || head->next == NULL)
+            return false;
+        ListNode* slow = head;
+        ListNode* fast = head;//快慢指针都从头结点开始
+        do{
+            fast = fast->next->next;//快指针一次两步
+            slow = slow->next;//慢指针一次一步
+            if(slow == fast)
+                return true;
+        }while(fast != NULL && fast->next != NULL && slow != NULL);
+        return false;
+    }
+
+    ListNode *detectCycle(ListNode *head) {
+        /*
+         * 142. Linked List Cycle II Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 110537
+        Total Submissions: 356384
+        Difficulty: Medium
+        Contributor: LeetCode
+        Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+
+        Note: Do not modify the linked list.
+
+        Follow up:
+        Can you solve it without using extra space?
+         */
+        //同样使用快慢指针探测环，当快慢指针相遇时必定是在环起点处
+        if(head == NULL || head->next == NULL)
+            return NULL;
+        ListNode* slow = head;
+        ListNode* fast = head;//快慢指针都从头结点开始
+        bool flag = false;
+        do{
+            fast = fast->next->next;//快指针一次两步
+            slow = slow->next;//慢指针一次一步
+            if(slow == fast) {
+                flag = true;
+                break;
+            }
+        }while(fast != NULL && fast->next != NULL && slow != NULL);
+        if(flag)
+        {
+            ListNode* res = head;
+            while(slow != res)
+            {
+                slow = slow->next;
+                res = res->next;
+            }
+            return res;
+        }
+        else return NULL;
+    }
+
+    void reorderList(ListNode* head) {
+        /*
+         * 143. Reorder List Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 89399
+        Total Submissions: 355872
+        Difficulty: Medium
+        Contributor: LeetCode
+        Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+        reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+
+        You must do this in-place without altering the nodes' values.
+
+        For example,
+        Given {1,2,3,4}, reorder it to {1,4,2,3}.
+         */
+        if(head == NULL)
+            return;
+        vector<int> vi = translateList(head);
+        vector<int> viR;
+        int begin = 0;
+        int end = int(vi.size()) - 1;
+        while(begin < end)
+        {
+            viR.push_back(vi[begin++]);
+            viR.push_back(vi[end--]);
+        }
+        if(begin == end)viR.push_back(vi[begin]);
+        ListNode* pHead = head;
+        for(auto it:vector<int>(viR.begin() + 1,viR.end())) {
+            pHead->next = new ListNode(it);
+            pHead = pHead->next;
+        }
+        return;
+    }
+
+    ListNode* insertionSortList(ListNode* head) {
+        /*
+         * 147. Insertion Sort List Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 98129
+        Total Submissions: 301762
+        Difficulty: Medium
+        Contributor: LeetCode
+        Sort a linked list using insertion sort.
+         */
+        //指定了插入排序，使用插入排序的方法对链表进行排序，默认是升序
+        if(head == NULL)
+            return head;//如果是空链表，则直接返回
+        ListNode* lnHead = new ListNode(-1);//初始化一个新的链表，头结点的下一个节点值等于旧链表的头结点值（方便链表头插入）
+        lnHead->next = new ListNode(head->val);
+        ListNode* p = head->next;//从头结点后面第一个节点开始插入排序
+        ListNode* plnHead;
+        ListNode* temp;
+        while(p)
+        {//如果当前需要插入的节点不是NULL,则进行插入
+            plnHead = lnHead;//每次都新链表的表头插入
+            while(plnHead->next && plnHead->next->val < p->val)//当节点的下个节点值大于等于需要插入的节点值或者下一个节点为NULL时，进行插入
+                plnHead = plnHead->next;
+            //在此时的plnHead后面进行插入
+            temp = plnHead->next;
+            plnHead->next = new ListNode(p->val);
+            plnHead->next->next = temp;
+            p = p->next;
+        }
+        //当无插入节点时，返回新链表辅助节点的下一个节点即为新链表的头结点
+        return lnHead->next;
+    }
+
+    ListNode* getMidofList(ListNode* head)
+    {
+        if(head == NULL || head->next == NULL)//如果是空链表，或者是一个节点的链表，则直接返回此链表，不切
+            return head;
+        //获取链表的中间节点，并从中间节点开始切断
+        //使用快慢指针实现
+        ListNode* pre;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        //如果是奇数个节点，fast到了最后一个节点时，slow恰好到了最中间的那个节点
+        //如果是偶数个节点，fast到了倒数第二个节点时，slow到了前半部分的最后一个节点，此时slow还要再往后走一步
+        do{
+            pre = slow;//保存slow节点的之前一个节点，用来切割链表
+            slow = slow->next;
+            fast = fast->next->next;
+        }while(fast && fast->next);
+        pre->next = NULL;
+        return slow;
+    }
+
+    ListNode* sortList(ListNode* head) {
+        /*
+         * 148. Sort List Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 101187
+        Total Submissions: 360116
+        Difficulty: Medium
+        Contributor: LeetCode
+        Sort a linked list in O(n log n) time using constant space complexity.
+         */
+        //时间复杂度要求O(nlogn),要求常量的空间复杂度
+        //使用归并排序,先将链表切断为两段，对两段分别进行排序，然后merge排序后的两段链表
+        if(head == NULL || head->next == NULL)
+            return head;
+        ListNode* preList = head;//第一段链表的头结点为head
+        ListNode* behList = getMidofList(head);//第二段链表头结点为慢指针指向的节点
+        preList = sortList(preList);//排序后更新链表
+        behList = sortList(behList);
+        return mergeTwoLists(preList,behList);//merge两个已经排序后的链表
+    }
 }
 ```
