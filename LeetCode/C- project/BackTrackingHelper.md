@@ -963,5 +963,77 @@ namespace BackTrackingHelper
 		//printVector(vsRes);
 		return vsRes;
 	}
+	bool  isPalindrome(string s)
+    {//判断字符串是否是回文串
+        if(s.size() <= 1)
+            return true;
+        int begin = 0;
+        int end = s.size() - 1;
+        while(begin < end)
+        {
+            if(s[begin] == s[end])
+            {
+                begin++;
+                end--;
+            }
+            else
+                return false;
+        }
+        return true;
+    }
+
+    void partitionForpalindrome(vector<vector<string>>& vvsRes, vector<string> vsPath, string s, int begin, int end)
+    {
+        //对于字符串s进行partition操作，范围[begin, end)
+        //当begin == end，表示当前字符串为空，则统计当前partition操作，并将结果保存后进行回溯
+        //当begin < end，表示当前字符串不为空，则需进行追溯，从begin开始，依次尝试，若返现[begin,begin+i]字符串不为回文串，则进行回溯
+        if(begin == end)//当前字符串为空
+        {
+            vvsRes.push_back(vsPath);
+            return;
+        }
+        //从begin位置的字符开始寻找，至少找一个字符，所以i=1开始，找到所有的字符为止，所以i = end - begin最大
+        for(int i = 1;i<= end - begin;i++)
+        {
+            string temp = s.substr(begin, i);//从s[begin]开始的i个字符长度的字符串
+            if(isPalindrome(temp))//如果当前字符串是回文串，进行追溯
+            {
+                vsPath.push_back(temp);
+                partitionForpalindrome(vvsRes, vsPath, s, begin + i, end);//起点从begin变成了begin + i，中间相差了i个字符长度，符合要求
+                vsPath.pop_back();//追溯之后的重置操作
+            }
+            //当前字符串不是回文串，继续向后找
+        }
+        return;
+    }
+    vector<vector<string>> partition(string s) {
+        /*
+         * 131. Palindrome Partitioning Add to List
+            DescriptionHintsSubmissionsSolutions
+            Total Accepted: 92439
+            Total Submissions: 287375
+            Difficulty: Medium
+            Contributor: LeetCode
+            Given a string s, partition s such that every substring of the partition is a palindrome.
+
+            Return all possible palindrome partitioning of s.
+
+            For example, given s = "aab",
+            Return
+
+            [
+              ["aa","b"],
+              ["a","a","b"]
+            ]
+         */
+        //由于字符串中，至少都可以进行一次partition使得每个字符单独成为一个回文串
+        //加上字符串划分之后的所有部分必须都是回文串,则从头开始一一深度优先试探即可
+        //使用回溯的思想进行解决
+        vector<vector<string>> vvsRes;
+        vector<string> vsPath;
+        partitionForpalindrome(vvsRes,vsPath,s,0,s.size());
+        printMatrix(vvsRes);
+        return vvsRes;
+    }
 }
 ```
