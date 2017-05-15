@@ -35,6 +35,7 @@
 <p>2017/05/12 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>2017/05/13 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
 <p>2017/05/14 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
+<p>2017/05/15 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新容器中的<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/C-%20basic%20concept>splice</a>方法描述。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
