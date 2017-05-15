@@ -484,6 +484,79 @@ namespace StringHelper
 				return false;
 		}
 	}
+	void reverseWords(string &s) {
+        /*
+         * 151. Reverse Words in a String Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 152509
+        Total Submissions: 970712
+        Difficulty: Medium
+        Contributor: LeetCode
+        Given an input string, reverse the string word by word.
+
+        For example,
+        Given s = "the sky is blue",
+        return "blue is sky the".
+
+        Update (2015-02-12):
+        For C programmers: Try to solve it in-place in O(1) space.
+
+        click to show clarification.
+
+        Clarification:
+        What constitutes a word?
+        A sequence of non-space characters constitutes a word.
+        Could the input string contain leading or trailing spaces?
+        Yes. However, your reversed string should not contain leading or trailing spaces.
+        How about multiple spaces between two words?
+        Reduce them to a single space in the reversed string.
+         */
+        //题目说明：
+        //1.翻转后的字符串前后无空字符
+        //2.翻转后的字符串不存在连续的空字符
+        //3.对字符串每一段连续非空字符不进行操作，整个字符串进行翻转
+        //4.使用常量空间复杂度-（O(1)）
+        //初步思路，若要使用常量的空间复杂度，则只能在字符串内部进行调换元素，借助中间元素来实现调换，内置有swap，reverse方法
+        //第一步，首先对字符串实现滤除多余的空字符
+        //利用两个指针slow和fast，均从头开始，若都遇到空格，则都前进一步，直到从第一个字符开始，遇到字符，将fast指向的字符赋给slow
+        //遇到空格，slow只动一步，fast动到直到fast指向的不是空格
+//        if(s.size() == 1 && s != " ")
+//            return;
+        auto slow = s.begin();
+        auto fast = s.begin();
+        int length = 0;//有效字符串的长度
+        int start = 0;
+        while(*fast == ' '){
+            slow++;
+            fast++;
+            start++;
+        }
+        //从第一个有效字符开始
+        while(fast != s.end()){
+            if(*fast != ' '){
+                length++;
+                *slow++ = *fast++;
+            }
+            else{
+                length++;
+                *slow++ = *fast++;
+                while(*fast == ' ')fast++;
+            }
+        }
+        s = s.substr(start, length);
+        reverse(s.begin(), s.end());
+        auto it_1 = s.begin();
+        auto it_2 = s.begin();
+        while(it_1 != s.end()) {
+            while(it_2 != s.end() && *it_2 != ' ')it_2++;
+            reverse(it_1, it_2);
+            if(it_2 == s.end())
+                break;
+            it_2++;
+            it_1 = it_2;
+        }
+        if(s[0] == ' ')s.erase(s.begin());
+    }
 }
 ```
 
