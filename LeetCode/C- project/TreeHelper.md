@@ -1572,5 +1572,117 @@ namespace TreeHelper
         }
         return preTr;
     }
+    vector<int> postorderTraversal(TreeNode* root) {
+        /*
+         * 145. Binary Tree Postorder Traversal Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 138077
+        Total Submissions: 349938
+        Difficulty: Hard
+        Contributor: LeetCode
+        Given a binary tree, return the postorder traversal of its nodes' values.
+
+        For example:
+        Given binary tree {1,#,2,3},
+           1
+            \
+             2
+            /
+           3
+        return [3,2,1].
+
+        Note: Recursive solution is trivial, could you do it iteratively?
+
+        Subscribe to see which companies asked this question.
+         */
+
+        //AC1
+        //在这里使用迭代的方式来解决后序遍历,后序遍历的思想也是同前序、中序类似，使用栈来模拟递归调用的过程
+        //首先将根节点压入栈，每次遍历栈顶元素，
+        //若栈顶元素有左右孩子，则将左右孩子按照右、左的顺序依次入栈(保证左-右-根顺序)。
+        //如果栈顶元素没有左右孩子或者前一个已经访问的元素为其孩子节点，访问之，并弹出。
+//        stack<TreeNode*> stn;
+//        vector<int> viRes;
+//        TreeNode* pre;//保存前一个访问的节点
+//        if(root == NULL)
+//            return viRes;
+//        stn.push(root);//将根结点压入栈中准备开始遍历
+//        while(!stn.empty()) {
+//            TreeNode* p = stn.top();
+//            if((p->left == NULL && p->right == NULL) || ((pre != NULL) && (p->left == pre || p->right == pre))){
+//                viRes.push_back(p->val);
+//                pre = p;
+//                stn.pop();
+//            }
+//            else {
+//                if(p->right)stn.push(p->right);
+//                if(p->left)stn.push(p->left);
+//            }
+//        }
+//        return viRes;
+
+        //AC2
+        //使用双栈法进行后序遍历的迭代
+        stack<TreeNode*> st1;
+        stack<TreeNode*> st2;
+        vector<int> viRes;
+        if(root == NULL)
+            return viRes;
+        st1.push(root);
+        while(!st1.empty()){//将树的节点按照根节点，右子节点，左子节点的顺序压入栈st2中
+            TreeNode* p = st1.top();
+            st1.pop();
+            st2.push(p);
+            if(p->left)st1.push(p->left);
+            if(p->right)st1.push(p->right);
+        }
+        while(!st2.empty()){//将储存好的栈st2中的元素一一弹出遍历即为后序序列
+            viRes.push_back(st2.top()->val);
+            st2.pop();
+        }
+        return viRes;
+    }
+
+    class LRUCache {
+        map<int,list<pair<int,int>>::iterator> mliMap;
+        list<pair<int, int>> li;//存放删去key的优先级，[0]存放最高优先级
+        int MaxSize = 0;
+
+    public:
+        LRUCache(int capacity) {
+            MaxSize = capacity;
+        }
+
+        int get(int key) {
+            if(mliMap.find(key) == mliMap.end())
+                return -1;
+            else {
+                li.splice(li.begin(), li,  mliMap[key]);//将当前的key放在[0]，第一优先级上
+                return mliMap[key]->second;
+            }
+        }
+
+        void put(int key, int value) {
+            //当前LRUcache未满时，直接插入即可
+            auto it = mliMap.find(key);
+            if(it != mliMap.end())//如果在map中找到了key,则将value的值进行重置
+            {
+                it->second->second = value;
+                //重置了value之后，把li中对应的pair放到队列头部，第一优先级
+                li.splice(li.begin(), li, it->second);
+                return;
+            }
+            // 如果当前的cache已满或者map中未找到所要寻找的元素
+            // 我们使用list容器来记录应该删去的元素优先级,把新放入的key-value对放到list头部，同时放入map中
+            li.push_front(pair<int,int>(key,value));
+            mliMap[key] = li.begin();
+            //如果当前的li长度超过了最大长度要求，删除末尾的元素，也就是最低优先级的元素
+            if(li.size() > MaxSize){
+                mliMap.erase(li.back().first);
+                li.pop_back();
+            }
+            return;
+        }
+    };
 }
 ```
