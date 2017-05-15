@@ -152,3 +152,55 @@ void fun4()
     auto j = f();//j=1
 }
 ```
+### 6、splice函数
+#### splice函数用于在容器与容器之间，或者容器内部高效的移动元素。结合list这种在插入删除元素速度很快的容器使用尤佳。具有以下三种调用方式（以list这种容器为例）：  
+
+```C++
+// entire list (1)	:
+void splice (const_iterator position, list& x);
+void splice (const_iterator position, list&& x);
+// single element (2):	
+void splice (const_iterator position, list& x, const_iterator i);
+void splice (const_iterator position, list&& x, const_iterator i);
+// element range (3):
+void splice (const_iterator position, list& x,
+             const_iterator first, const_iterator last);
+void splice (const_iterator position, list&& x,
+             const_iterator first, const_iterator last);
+```
+* 第一种：移动整个容器（void splice(const_iterator position, list& x)）
+>参数说明：第一个参数 position,元素的新归宿（某个容器）的迭代器，将x这个list中的所有元素按照在x中的顺序放入带position这个迭代器之前。  
+position = y.begin() --->插入到y这个新容器的开头位置，第一个元素为x中的第一个元素 。 
+position = y.end() --->插入到y这个新容器的最后面，最后一个元素为x中的最后一个元素。  
+一旦进行操作，被移动元素的列表肯定是全部清空，变为空list
+```C++
+list<int> a{1,2,3,4,5,6};
+list<int> b{10};
+//将a这个list插入到b的起始位置
+b.splice(b.begin(), a);
+// b = {1,2,3,4,5,6,10};
+// a = {};
+```
+* 第二种：移动某个容器的单个元素到某个容器（可以在自身中移动）（void splice(const_iterator position, list& x, const_iterator i)）
+>参数说明：第一个参数position,元素的新归宿（某个容器）的迭代器，将x这个list中的某个迭代器i指向的元素移动到position之前，并删去x中的对应元素。  
+一旦进行操作，position之前多了一个元素，x中的那个对应元素被删除。
+```C++
+list<int> a{1,2,3,4,5,6};
+list<int> b{10,11};
+//将a中的第一个元素放在b的最后
+b.splice(b.end(), a, a.begin());
+// b = {10,11,1};
+// a = {2,3,4,5,6};
+```
+* 第三种：移动某个容器中的一连串元素到某个容器中（可以自身中移动）（void splice(const_iterator position, list& x, const_iterator first, const_iterator last)）
+> 参数first，last是x这个需要移动元素的容器的两个迭代器，元素的区间为：[first,last)，完成操作后，x容器中的从[first,last)的所有元素都将被删除
+```C++
+list<int> a{1,2,3,4,5,6};
+list<int> b{10,11};
+//将a中的前两个元素放在b的最后
+auto it = a.begin();
+it++;it++;
+b.splice(b.end(), a, a.begin(), it);
+// b = {10,11,1,2};
+// a = {3,4,5,6};
+```
