@@ -1,3 +1,4 @@
+```C++
 //
 // Created by cb on 17-5-16.
 //
@@ -192,3 +193,4 @@ public:
  * BSTIterator i = BSTIterator(root);
  * while (i.hasNext()) cout << i.next();
  */
+```
