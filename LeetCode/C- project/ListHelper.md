@@ -746,5 +746,209 @@ namespace ListHelper
         behList = sortList(behList);
         return mergeTwoLists(preList,behList);//merge两个已经排序后的链表
     }
+    
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        /*
+         * 160. Intersection of Two Linked Lists Add to List
+            DescriptionHintsSubmissionsSolutions
+            Total Accepted: 126071
+            Total Submissions: 415259
+            Difficulty: Easy
+            Contributor: LeetCode
+            Write a program to find the node at which the intersection of two singly linked lists begins.
+
+
+            For example, the following two linked lists:
+
+            A:          a1 → a2
+                               ↘
+                                 c1 → c2 → c3
+                               ↗
+            B:     b1 → b2 → b3
+            begin to intersect at node c1.
+
+
+            Notes:
+
+            If the two linked lists have no intersection at all, return null.
+            The linked lists must retain their original structure after the function returns.
+            You may assume there are no cycles anywhere in the entire linked structure.
+            Your code should preferably run in O(n) time and use only O(1) memory.
+         */
+        // 找到链表的第一个公共节点，两个链表均不存在环，若不存在公共节点，则返回NULL
+        // 要求O(n)的时间复杂度，和常量空间复杂度
+        list<ListNode*> via;
+        list<ListNode*> vib;
+        while(headA) {
+            via.push_back(headA);
+            headA = headA->next;
+        }
+        while(headB) {
+            vib.push_back(headB);
+            headB = headB->next;
+        }
+        ListNode* p = NULL;
+        while(via.back() && vib.back() && via.back() == vib.back())
+        {
+            p = via.back();
+            via.pop_back();
+            vib.pop_back();
+        }
+        if(p != NULL)
+            return p;
+        return NULL;
+    }
+
+    ListNode* removeElements(ListNode* head, int val) {
+        /* A
+         * 203. Remove Linked List Elements Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 110003
+        Total Submissions: 345711
+        Difficulty: Easy
+        Contributor: LeetCode
+        Remove all elements from a linked list of integers that have value val.
+
+        Example
+        Given: 1 --> 2 --> 6 --> 3 --> 4 --> 5 --> 6, val = 6
+        Return: 1 --> 2 --> 3 --> 4 --> 5
+
+        Credits:
+        Special thanks to @mithmatt for adding this problem and creating all test cases.
+         */
+        //删除链表中的等于val的节点，设置辅助节点，令辅助节点放在head之前
+        ListNode* pHead = new ListNode(-1);
+        pHead->next = head;
+        ListNode* p = pHead;
+        while(p && p->next){
+            if(p->next->val == val){//如果下一个节点的值等于val,进行删除
+                p->next = p->next->next;
+            }
+            else
+                p = p->next;
+        }
+        return pHead->next;
+    }
+
+    void deleteNode(ListNode* node) {
+    /*
+     * 237. Delete Node in a Linked List Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 147757
+        Total Submissions: 321080
+        Difficulty: Easy
+        Contributor: LeetCode
+        Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
+
+        Supposed the linked list is 1 -> 2 -> 3 -> 4 and you are given the third node with value 3,
+        the linked list should become 1 -> 2 -> 4 after calling your function.
+     */
+        //只给出了需要删去的节点指针
+        //由于不会是最后一个节点，所以将当前指针的值修改为下一个节点的值，然后删去下一个节点即可
+        if(node && node->next) {
+            node->val = node->next->val;
+            node->next = node->next->next;
+        }
+        return;
+    }
+
+    ListNode* oddEvenList(ListNode* head) {
+        /*
+         * 328. Odd Even Linked List Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 64785
+        Total Submissions: 150788
+        Difficulty: Medium
+        Contributor: LeetCode
+        Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.
+
+        You should try to do it in place. The program should run in O(1) space complexity and O(nodes) time complexity.
+
+        Example:
+        Given 1->2->3->4->5->NULL,
+        return 1->3->5->2->4->NULL.
+
+        Note:
+        The relative order inside both the even and odd groups should remain as it was in the input.
+        The first node is considered odd, the second node even and so on ...
+
+        Credits:
+        Special thanks to @DjangoUnchained for adding this problem and creating all test cases.
+         */
+        //将所有奇数位置节点放在前面，偶数节点放在后面
+        //需要常量空间复杂度，O(n)时间复杂度
+        //奇数位置的可以利用node->next = node->next->next来实现，偶数位置的节点可以先找到最后一个奇数位置的节点，把所有偶数节点都丢到后面
+        if(head == NULL || head->next == NULL || head->next->next == NULL)
+            return head;
+        ListNode* oddLastNode = head;//找到最后一个奇数位置的节点，一次跳两格直到不能跳为止
+        while(oddLastNode && oddLastNode->next && oddLastNode->next->next){
+            oddLastNode = oddLastNode->next->next;
+        }
+        ListNode* pHead = head;
+        ListNode* q = oddLastNode;
+        ListNode* p = oddLastNode->next;
+        //从头结点开始，依次挑出偶数位置的节点，放到oddLastNode后面
+        while(pHead != oddLastNode){
+            q->next = pHead->next;
+            pHead->next = pHead->next->next;
+            q = q->next;
+            pHead = pHead->next;
+        }
+        q->next = p;
+        printList(head);
+        return head;
+    }
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        /*
+         * 445. Add Two Numbers II Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 19958
+        Total Submissions: 43306
+        Difficulty: Medium
+        Contributor: LeetCode
+        You are given two non-empty linked lists representing two non-negative integers.
+        The most significant digit comes first and each of their nodes contain a single digit.
+        Add the two numbers and return it as a linked list.
+
+        You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+        Follow up:
+        What if you cannot modify the input lists? In other words, reversing the lists is not allowed.
+
+        Example:
+
+        Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)
+        Output: 7 -> 8 -> 0 -> 7
+         */
+        ListNode* p1 = reverseList(l1);
+        ListNode* p2 = reverseList(l2);
+        ListNode* newHead = new ListNode(-1);
+        ListNode* q = newHead;
+        int temp,carry = 0;//进位
+        while(p1 && p2){
+            q->next = new ListNode((p1->val + p2->val + carry)%10);
+            carry = (p1->val + p2->val + carry) / 10;
+            q = q->next;
+            p1 = p1->next;
+            p2 = p2->next;
+        }
+        while(p1){
+            q->next = new ListNode((p1->val + carry)%10);
+            carry = (p1->val + carry) / 10;
+            q = q->next;
+            p1 = p1->next;
+        }
+        while(p2){
+            q->next = new ListNode((p2->val + carry)%10);
+            carry = (p2->val + carry) / 10;
+            q = q->next;
+            p2 = p2->next;
+        }
+        if(carry != 0){
+            q->next = new ListNode(carry);
+        }
+        newHead->next = reverseList(newHead->next);
+        return newHead;
+    }
 }
 ```
