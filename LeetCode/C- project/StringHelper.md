@@ -557,6 +557,77 @@ namespace StringHelper
         }
         if(s[0] == ' ')s.erase(s.begin());
     }
+    vector<int> versionParser(string& version){
+        vector<int> viVer;
+        string temp;
+        for(int i = 0;i < version.size();i++){
+            //对版本号1进行转换成数字
+            if(version[i] == '0') {
+                if(temp.empty())
+                    continue;
+                else
+                    temp.push_back('0');
+            }
+            else if(version[i] == '.'){
+                viVer.push_back(BackTrackingHelper::parseStringToInt(temp));
+                temp.clear();
+            }
+            else{
+                temp.push_back(version[i]);
+            }
+        }
+        viVer.push_back(BackTrackingHelper::parseStringToInt(temp));
+        return viVer;
+    }
+
+    int compareVersion(string version1, string version2) {
+        /* Accepted
+         * 165. Compare Version Numbers Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 81786
+        Total Submissions: 414855
+        Difficulty: Medium
+        Contributor: LeetCode
+        Compare two version numbers version1 and version2.
+        If version1 > version2 return 1, if version1 < version2 return -1, otherwise return 0.
+
+        You may assume that the version strings are non-empty and contain only digits and the . character.
+        The . character does not represent a decimal point and is used to separate number sequences.
+        For instance, 2.5 is not "two and a half" or "half way to version three", it is the fifth second-level revision of the second first-level revision.
+
+        Here is an example of version numbers ordering:
+
+        0.1 < 1.1 < 1.2 < 13.37
+        Credits:
+        Special thanks to @ts for adding this problem and creating all test cases.
+         */
+        //比较版本信息，点号进行分隔，将字符串变成版本信息号，前面带0的版本号一律按照去0处理（1.03 > 1.2）,注意单独的0版本号
+        //1.0.2 1.2     1.0 1
+        vector<int> viVer1;
+        vector<int> viVer2;
+        //比较字符串前面的公共部分，若相等再看哪个字符串比较长，若长度也相等，则返回0
+        viVer1 = versionParser(version1);
+        viVer2 = versionParser(version2);
+        reverse(viVer1.begin(), viVer1.end());
+        reverse(viVer2.begin(), viVer2.end());
+        while(!(viVer1.empty() || viVer2.empty())){
+            if(viVer1[viVer1.size() - 1] > viVer2[viVer2.size() - 1]){
+                return 1;
+            }
+            else if(viVer1[viVer1.size() - 1] < viVer2[viVer2.size() - 1]){
+                return -1;
+            }
+            else{
+                viVer1.pop_back();
+                viVer2.pop_back();
+            }
+        }
+        while(!viVer1.empty() && viVer1[viVer1.size() - 1] == 0)viVer1.pop_back();
+        while(!viVer2.empty() && viVer2[viVer2.size() - 1] == 0)viVer2.pop_back();
+        if(viVer1.size() == viVer2.size())return 0;
+        cout << "viVer1.size：" << viVer1.size() << " viVer2.size:" << viVer2.size() << endl;
+        return (viVer1.size() > viVer2.size())? 1 : -1;
+    }
 }
 ```
 

@@ -2369,6 +2369,205 @@ namespace VectorHelper
         }
         return si.top();
     }
+    int findMin(vector<int>& nums) {
+        /*
+         * 153. Find Minimum in Rotated Sorted Array Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 144594
+        Total Submissions: 367610
+        Difficulty: Medium
+        Contributor: LeetCode
+        Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+
+        (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+
+        Find the minimum element.
+
+        You may assume no duplicate exists in the array.
+         */
+        //对于一个翻转过一次的有序序列，我们使用二分查找来进行整个序列的查找，直到找完最后一个数，使用一个变量记录查找过程中出现的最后一个数
+        //每次查找nums[begin,...,stop]的中间一个数mid = begin + (stop - begin)/2
+        //if(mid < begin)那翻转点在mid的左边，令stop = mid - 1
+        //if(mid > begin)那反转点在mid的右边，令begin = mid + 1
+        //直到begin>stop
+        if(nums.empty())
+            return 0;
+        int begin = 0;
+        int stop = nums.size() - 1;
+        int mid,minN = nums[0];
+        //printVector(nums);
+        while(begin <= stop){
+            mid = begin + (stop - begin)/2;
+            // cout << "begin:" << nums[begin] << " " << "stop:" << nums[stop] << " " << "mid:" << nums[mid] << endl;
+            minN = min(minN, nums[mid]);
+            if(mid != nums.size() - 1 && nums[mid] > nums[mid + 1])
+                return nums[mid + 1];
+            else if(nums[mid] < nums[begin])
+                stop = mid;
+            else if(nums[mid] > nums[stop])
+                begin = mid;
+            else
+                return nums[begin];
+        }
+        return minN;
+    }
+
+    int findMinII(vector<int>& nums) {
+        /*  A
+         * 154. Find Minimum in Rotated Sorted Array II Add to List
+            DescriptionHintsSubmissionsSolutions
+            Total Accepted: 75741
+            Total Submissions: 206169
+            Difficulty: Hard
+            Contributor: LeetCode
+            Follow up for "Find Minimum in Rotated Sorted Array":
+            What if duplicates are allowed?
+
+            Would this affect the run-time complexity? How and why?
+            Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+
+            (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+
+            Find the minimum element.
+
+            The array may contain duplicates.
+
+            Subscribe to see which companies asked this question.
+         */
+        //对于一个翻转过一次的有序序列，我们使用二分查找来进行整个序列的查找，直到找完最后一个数，使用一个变量记录查找过程中出现的最后一个数
+        //每次查找nums[begin,...,stop]的中间一个数mid = begin + (stop - begin)/2
+        //if(mid < begin)那翻转点在mid的左边，令stop = mid - 1
+        //if(mid > begin)那反转点在mid的右边，令begin = mid + 1
+        //if(mid == begin)不能判断翻转点，将begin前移一格（意味这删除了一个相等的元素，不影响原数组），继续进行判断，直到能够判断出
+        //直到begin == stop - 1
+        if(nums.empty())
+            return 0;
+        int begin = 0;
+        int stop = nums.size() - 1;
+        int mid,minN = nums[0];
+        printVector(nums);
+        while(begin < stop - 1){
+            mid = begin + (stop - begin)/2;
+            cout << "begin:" << nums[begin] << " " << "stop:" << nums[stop] << " " << "mid:" << nums[mid] << endl;
+
+            if(nums[mid] < nums[begin]) {
+                minN = min(minN, nums[mid]);
+                stop = mid - 1;
+            }
+            else if(nums[mid] > nums[begin]) {
+                minN = min(minN, nums[begin]);
+                begin = mid + 1;
+            }
+            else
+                begin++;
+        }
+
+        minN = min(minN, min(nums[begin],nums[stop]));
+        return minN;
+    }
+
+    int arrayPairSum(vector<int>& nums) {
+        /*
+         * 561. Array Partition I Add to List
+            DescriptionHintsSubmissionsSolutions
+            Total Accepted: 11157
+            Total Submissions: 15953
+            Difficulty: Easy
+            Contributors:
+            Stomach_ache
+            Given an array of 2n integers, your task is to group these integers into n pairs of integer, say (a1, b1), (a2, b2), ..., (an, bn) which makes sum of min(ai, bi) for all i from 1 to n as large as possible.
+
+            Example 1:
+            Input: [1,4,3,2]
+
+            Output: 4
+            Explanation: n is 2, and the maximum sum of pairs is 4.
+            Note:
+            n is a positive integer, which is in the range of [1, 10000].
+            All the integers in the array will be in the range of [-10000, 10000].
+         */
+        if(nums.empty() || nums.size() < 2)
+            return 0;
+        sort(nums.begin(), nums.end());
+
+        int iMaxSum = 0;
+        for(int i = 0;i<nums.size();i+=2){
+            iMaxSum += nums[i];
+        }
+        return iMaxSum;
+    }
+
+    int findUnsortedSubarray(vector<int>& nums) {
+        /*
+         * 581. Shortest Unsorted Continuous Subarray My SubmissionsBack To Contest
+        User Accepted: 834
+        User Tried: 1041
+        Total Accepted: 848
+        Total Submissions: 3254
+        Difficulty: Easy
+        Given an integer array, you need to find one continuous subarray that if you only sort this subarray in ascending order, then the whole array will be sorted in ascending order, too.
+
+        You need to find the shortest such subarray and output its length.
+
+        Example 1:
+        Input: [2, 6, 4, 8, 10, 9, 15]
+        Output: 5
+        Explanation: You need to sort [6, 4, 8, 10, 9] in ascending order to make the whole array sorted in ascending order.
+        Note:
+        Then length of the input array is in range [1, 10,000].
+        The input array may contain duplicates, so ascending order here means <=.
+         */
+        if(nums.empty() || nums.size() < 2)
+            return 0;
+        vector<int> newNum(nums);
+        sort(newNum.begin(), newNum.end());
+        int iRes = nums.size();
+        int start = 0, stop = nums.size() - 1;
+        while(start <= stop){
+            if(newNum[start] == nums[start]){
+                start++;
+                iRes--;
+            }
+            else if(newNum[stop] == nums[stop]){
+                stop--;
+                iRes--;
+            }
+            else break;
+        }
+        return iRes;
+    }
+
+    int findPeakElement(vector<int>& nums) {
+        /*  A
+         * 162. Find Peak Element Add to List
+        DescriptionHintsSubmissionsSolutions
+        Total Accepted: 108452
+        Total Submissions: 295171
+        Difficulty: Medium
+        Contributor: LeetCode
+        A peak element is an element that is greater than its neighbors.
+
+        Given an input array where num[i] ≠ num[i+1], find a peak element and return its index.
+
+        The array may contain multiple peaks, in that case return the index to any one of the peaks is fine.
+
+        You may imagine that num[-1] = num[n] = -∞.
+
+        For example, in array [1, 2, 3, 1], 3 is a peak element and your function should return the index number 2.
+
+        click to show spoilers.
+
+        Credits:
+        Special thanks to @ts for adding this problem and creating all test cases.
+         */
+        if(nums.empty() || nums.size() == 1)
+            return 0;
+        for(int i = 0;i<nums.size() - 1;i++){
+            if(nums[i] > nums[i+1])
+                return i + 1;
+        }
+        return nums.size() - 1;
+    }
 }
 
 
