@@ -47,3 +47,5 @@
 #### 36、尽量用const&而非直接传值到函数，这样可以节省很多操作。
 #### 37、sizeof是用来计算栈大小，不涉及全局区，故类的静态成员大小sizeof不涉及。
 #### 38、C++中的priority_queue默认是最大堆。
+#### 39、list容器不能使用stl算法库中的sort(),必须使用自己的sort() member function.
+
