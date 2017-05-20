@@ -153,3 +153,72 @@ int main() {
 ```
 
 ## 03 神奇数
+```C++
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <map>
+#include <set>
+using namespace std;
+
+set<int> getPermution(int n) {
+//找到数字n的所有两位数非前导0组合
+	vector<int> vi;
+	while (n != 0) {
+		vi.push_back(n % 10);
+		n /= 10;
+	}
+	set<int> siRes;
+	for (int i = 0;i < vi.size();i++) {
+		for (int j = i + 1;j < vi.size();j++) {
+			//注意过滤前导0
+			if(vi[i] != 0)siRes.insert(vi[i] * 10 + vi[j]);
+			if (vi[j] != 0)siRes.insert(vi[j] * 10 + vi[i]);
+		}
+	}
+	return siRes;
+}
+
+bool IsPrimeNumber(int n) {
+	//判断n是否为质数，n 如果是合数，那么它的所有的因子不超过sqrt(n)--n的开方
+	for (int i = 2;i <= sqrt(n);i++) {
+		if (n%i == 0) return false;
+	}
+	return true;
+}
+bool IsMagicNumber(int n) {
+	//判断n是否为神奇数，当n <= 10,直接返回false
+	if (n <= 10)
+		return false;
+	//当n > 10时，找到所有不含前导0的组合数，由于组合数是两位数，所以我们可以先将所有的10-99的结果进行解析保存
+	map<int, bool> mibMap;
+	for (int i = 10;i < 100;i++) {
+		mibMap[i] = IsPrimeNumber(i);
+	}
+	//找到所有n的两位组合数
+	set<int> si = getPermution(n);
+	for (auto it : si) {
+		if (mibMap[it])
+			return true;
+	}
+	return false;
+}
+
+int main() {
+	int a,b;
+	cin >> a >> b;//输入正整数区间
+	int count = 0;//统计神奇数个数
+	//对于这一题，我们要找到区间内每一个神奇数，所以对每个数都需要进行一次判断，所以对于神奇数的判断我们需要封装成一个外置函数
+	//对于神奇数的判断，我们分为两步，首先找到当前的数可以有多少种非前导零的组合，需要对每一种组合起来的数分别判断是否是质数
+	//其中只有一个地方可以优化，即是对已经判断是否为质数的组合可以进行结果的保存，利用map查找便捷的特性进行保存，其他的操作必须执行，也就是常规意义的暴力破解
+	while (a <= b) {//a,b只有这里有一次用处，所以不用管修改了a是否有别的后果
+		if (IsMagicNumber(a)) {
+			count++;
+		}
+		a++;
+	}
+	cout << count << endl;
+	system("pause");
+	return 0;
+}
+```
