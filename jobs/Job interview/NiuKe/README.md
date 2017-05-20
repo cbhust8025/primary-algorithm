@@ -63,6 +63,28 @@
 6
 ```
 
+## 04 添加字符
+* 时间限制：1秒
+* 内存限制：32768K
+### 题目描述：
+牛牛手里有一个字符串A，羊羊的手里有一个字符串B，B的长度大于等于A，所以牛牛想把A串变得和B串一样长，这样羊羊就愿意和牛牛一起玩了。
+而且A的长度增加到和B串一样长的时候，对应的每一位相等的越多，羊羊就越喜欢。比如"abc"和"abd"对应相等的位数为2，为前两位。
+牛牛可以在A的开头或者结尾添加任意字符，使得长度和B一样。现在问牛牛对A串添加完字符之后，不相等的位数最少有多少位？  
+##### 输入  
+>第一行为字符串A，第二行为字符串B，A的场地小于等于B的长度，B的长度小于等于50.字符均为小写字母。
+##### 输出  
+>输出一个整数表示A串添加完字符之后，不相等的位数最少有多少位？
+
+#### 样例输入
+```
+abe
+cabc
+```
+#### 样例输出
+```
+1
+```
+
 # 牛客网模拟笔试 2017-0519 AC代码：
 ## 01 牛牛的数列
 ```C++
@@ -218,6 +240,50 @@ int main() {
 		a++;
 	}
 	cout << count << endl;
+	system("pause");
+	return 0;
+}
+```
+
+## 04 添加字符
+```C++
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <map>
+#include <set>
+#include <string>
+#include <iomanip>
+using namespace std;
+int main() {
+	//输入字符串a,b
+	string sa, sb;
+	cin >> sa >> sb;
+	if (sa.empty())
+	{
+		cout << sb.size() << endl;
+		return 0;
+	}
+	//要找到最少的不相等位数，则就需要用a串包含在b串中尽可能匹配相等的字符
+	//字符串在另一个字符串里面的匹配结果可以使用动态规划的方法来进行解决
+	//注意，不能超出了边界，所以要从sa的第一个字符和sb的第一个字符进行匹配开始修正dp数组，其他的值均为0
+	//dp矩阵的大小为(sa.size() + 1) * (sb.size() + 1)
+	vector<vector<int>> dp(sa.size() + 1, vector<int>(sb.size() + 1, 0));
+	pair<int, int> maxRes(0,0);//存放最大匹配结果，first存放sb的index，second存放从sb的index往前多少个字符进行了匹配
+	for (int i = 1;i < dp.size();i++) {
+		for (int j = i;j < dp[0].size() - (sa.size() - i);j++) {//j的范围确保让a串始终包含在b串中
+			if (sa[i - 1] == sb[j - 1])
+				dp[i][j] = dp[i - 1][j - 1] + 1;
+			else {
+				dp[i][j] = dp[i - 1][j - 1];
+			}
+			if (dp[i][j] > maxRes.second) {
+				maxRes.first = j - 1;//更新最大的结果
+				maxRes.second = dp[i][j];
+			}
+		}
+	}
+	cout << sa.size() - maxRes.second << endl;//实质上这里换成dp数组中的dp[sa.size()][sb.size()]也行
 	system("pause");
 	return 0;
 }
