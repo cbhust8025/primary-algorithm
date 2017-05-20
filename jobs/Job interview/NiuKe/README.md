@@ -21,7 +21,29 @@
 5
 ```
 
+## 02 变换次数
+* 时间限制：1秒
+* 内存限制：32768K
+### 题目描述：
+牛牛想对一个数做若干次变换，直到这个数只剩下一位数字。
+变换的规则是：将这个数变成 所有位数上的数字的乘积。比如285经过一次变换后转化成2*8*5=80.
+问题是，要做多少次变换，使得这个数变成个位数。 
+##### 输入  
+>输入一个整数。小于等于2,000,000,000。
+##### 输出  
+>输出一个整数，表示变换次数。
+
+#### 样例输入
+```
+285
+```
+#### 样例输出
+```
+2
+```
+
 # 牛客网模拟笔试 2017-0519 AC代码：
+## 01 牛牛的数列
 ```C++
 #include <iostream>
 #include <vector>
@@ -76,5 +98,35 @@ int main() {
 	system("pause");
 	return 0;
 
+}
+```
+
+## 02 变换次数
+```C++
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int process(int N) {
+	int res = 1;
+	while (N != 0) {
+		res *= (N % 10);
+		N /= 10;
+	}
+	return res;
+}
+int main() {
+	int N;
+	cin >> N;//输入正整数个数
+	//暴力计算即可，对于重复进行的操作我们将其封装成外置函数
+	int count = 0;
+	while (N > 9) {
+		N = process(N);
+		count++;
+	}
+	cout << count << endl;
+	//system("pause");
+	return 0;
 }
 ```
