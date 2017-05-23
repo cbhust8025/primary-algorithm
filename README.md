@@ -15,30 +15,30 @@
 <p>2017/04/16 完成<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/Job%20interview/Tencent>腾讯实习生HR面</a>，并进行了相应的记录，晚上进行美图考试并整理了<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/Job%20interview/meitu>试题</a>。</p>
 <p>2017/04/17 针对《深度探索C++对象模型》书籍进行学习，记录了若干tips。</p>
 <p>2017/04/18 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新了<a href= https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/N-queen%20Problem>N皇后</a>问题的详解</p>
-<p>2017/04/18 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/04/19 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新了携程最后一大题--<a href=https://github.com/cbhust8025/primary-algorithm/blob/newbranch/jobs/Job%20interview/xiecheng/README.md>股票</a> AC解</p>
-<p>2017/04/20 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。添加另一回溯经典案例--<a href=https://github.com/cbhust8025/primary-algorithm/tree/newbranch/Classical-Algorithm/Sudoku>数独</a>的详解。添加了多态中的<a href=https://github.com/cbhust8025/primary-algorithm/blob/newbranch/jobs/C-%20basic%20concept/polymorphic/README.md>重写、重载及隐藏</a>概念的辨析。</p>
-<p>2017/04/22 刷题leetcode一道，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新了滴滴出行的<a href=https://github.com/cbhust8025/primary-algorithm/tree/newbranch/jobs/Job%20interview/didi>笔试</a>以及部分题解。
-<p>2017/04/24 刷题leetcode若干道，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。
+<p>2017/04/18 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
+<p>2017/04/19 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。更新了携程最后一大题--<a href=https://github.com/cbhust8025/primary-algorithm/blob/newbranch/jobs/Job%20interview/xiecheng/README.md>股票</a> AC解</p>
+<p>2017/04/20 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。添加另一回溯经典案例--<a href=https://github.com/cbhust8025/primary-algorithm/tree/newbranch/Classical-Algorithm/Sudoku>数独</a>的详解。添加了多态中的<a href=https://github.com/cbhust8025/primary-algorithm/blob/newbranch/jobs/C-%20basic%20concept/polymorphic/README.md>重写、重载及隐藏</a>概念的辨析。</p>
+<p>2017/04/22 刷题leetcode一道，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。。更新了滴滴出行的<a href=https://github.com/cbhust8025/primary-algorithm/tree/newbranch/jobs/Job%20interview/didi>笔试</a>以及部分题解。
+<p>2017/04/24 刷题leetcode若干道，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。
 <p>2017/04/26 <a href=https://github.com/cbhust8025/primary-algorithm/blob/master/jobs/Job%20interview/didi/README.md>滴滴出行面试</a>。<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/Job%20interview/ALiBaBa>阿里笔试</a>相关。</p>
-<p>2017/04/27 刷题leetcode一道，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a></p>
-<p>2017/04/30 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/05/01 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/05/02 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/05/03 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/05/04 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/05/06 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/ValuableHP/65_Valid%20Number.md>困难题vaild number解</a>。</p>
-<p>2017/05/08 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。实现<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/C-%20project/TreeHelper.md>树的前中后序递归、非递归</a>。</p>
-<p>2017/05/09 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/05/10 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/05/11 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/ValuableHP/126_WordLadderII.md>困难题word-ladder-ii解</a></p>
-<p>2017/05/12 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/05/13 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/05/14 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/05/15 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。更新容器中的<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/C-%20basic%20concept>splice</a>方法描述。</p>
-<p>2017/05/16 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/05/17 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
-<p>2017/05/18 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/leetcode>AC解</a>。</p>
+<p>2017/04/27 刷题leetcode一道，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
+<p>2017/04/30 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
+<p>2017/05/01 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
+<p>2017/05/02 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
+<p>2017/05/03 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
+<p>2017/05/04 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
+<p>2017/05/06 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。更新<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/ValuableHP/65_Valid%20Number.md>困难题vaild number解</a>。</p>
+<p>2017/05/08 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。实现<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/C-%20project/TreeHelper.md>树的前中后序递归、非递归</a>。</p>
+<p>2017/05/09 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
+<p>2017/05/10 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
+<p>2017/05/11 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。更新<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/LeetCode/ValuableHP/126_WordLadderII.md>困难题word-ladder-ii解</a></p>
+<p>2017/05/12 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
+<p>2017/05/13 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
+<p>2017/05/14 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
+<p>2017/05/15 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。更新容器中的<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/C-%20basic%20concept>splice</a>方法描述。</p>
+<p>2017/05/16 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
+<p>2017/05/17 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
+<p>2017/05/18 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
 <p>2017/05/19 牛客网模拟笔试，<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/jobs/Job%20interview/NiuKe/README.md>编程题部分AC解</a>。</p>
 <p>2017/05/21 牛客网模拟笔试，<a href=https://github.com/cbhust8025/primary-algorithm/blob/master/jobs/Job%20interview/NiuKe/README.md>编程题全部AC解</a>。</p>
 <p>简单数据结构
