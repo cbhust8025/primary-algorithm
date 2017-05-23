@@ -126,8 +126,7 @@
 * 160). Intersection of Two Linked Lists   	
 * 162).	Find Peak Element   
 * 164). Maximum Gap   		
-* 165).	Compare Version Numbers   
-* 111). Minimum Depth of Binary Tree   
+* 165).	Compare Version Numbers    
 *	203).	Remove Linked List Elements   
 * 206). Reverse Linked List   
 * 216). Combination Sum III Add to List
