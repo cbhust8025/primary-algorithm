@@ -516,6 +516,8 @@ int main() {
 	{//判断攻击组是否有人，若有人，则输出攻击组中潜力+攻击的最大一个；若没有人，则输出潜力组中的攻击最大的一个
 		if (!attack.empty()) 
 		{
+			//如果攻击组不空，则将所有的潜力组潜力加到攻击组的第一个人身上
+			for (auto it : potential)attack[0].first += it.second - it.first;
 			cout << attack[0].first + attack[0].second << endl;
 			return 0;
 		}
