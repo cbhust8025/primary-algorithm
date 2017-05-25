@@ -48,4 +48,15 @@
 #### 37、sizeof是用来计算栈大小，不涉及全局区，故类的静态成员大小sizeof不涉及。
 #### 38、C++中的priority_queue默认是最大堆。
 #### 39、list容器不能使用stl算法库中的sort(),必须使用自己的sort() member function.
+#### 40、一般地，stl库中的容器等类的迭代器具有五个型别，大多继承自std::iterator,类型分别为：
+* value_type：值类型，容器包含的值类型，```vector<int>```对应迭代器的value_type为int
+* difference_type：用于表示两个迭代器之间的距离，也可以用来表示容器的最大容量，因为对于连续控件的容器而言，头尾之间的距离就是其最大容量。
+* reference type:引用类型,一般情况为内嵌类型T&
+* pointer type:指针类型，一般情况为内嵌类型T\*
+* iterator_category:划分该迭代器行为，根据移动特性和施行操作划分为以下五类：
+  - Input Iterator:这种迭代器所指的对象，不允许外界改变。只读（read only）。
+  - Output Iterator:唯写（write only）。
+  - Forward Iterator:允许“写入型”算法（如replace()）在此种迭代器所形成的区间上进行读写操作。
+  - Bidirectional Iterator:可双向移动，如需逆向移动，则可使用此种迭代器。
+  - Random Access Iterator：前四种迭代器都只提供一部分指针算数能力（前三种支持operator++,第四种支持operator--），第五种则涵盖所有指针算数能力（p+n,p-n,p[n],p1-p2,p1\<p2），也即随机读取迭代器。
 
