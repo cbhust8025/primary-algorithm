@@ -159,31 +159,25 @@ class BSTIterator {
     stack<TreeNode*> stn;
 public:
     BSTIterator(TreeNode *root) {
-        TreeNode* pRoot = root;
+        pRoot = root;
     }
 
     /** @return whether we have a next smallest number */
     bool hasNext() {//二叉搜索树的下一个元素，是他中序遍历顺序的下一个节点
-        return ((pRoot == NULL) || (stn.empty()));
+        return ((pRoot != NULL) || (!stn.empty()));
     }
 
     /** @return the next smallest number */
     int next() {
-        TreeNode* p;
-        if(pRoot == NULL){
-            p = stn.top();
-            stn.pop();
-            pRoot = p->right;
+        while(pRoot != NULL){
+            stn.push(pRoot);
+            pRoot = pRoot->left;
         }
-        else{
-            while(pRoot->left){
-                stn.push(pRoot);
-                pRoot = pRoot->left;
-            }
-            p = pRoot;
-            pRoot = pRoot->right;
-        }
-        return p->val;
+        pRoot = stn.top();
+        stn.pop();
+        int val = pRoot->val;
+        pRoot = pRoot->right;
+        return val;
     }
 };
 
