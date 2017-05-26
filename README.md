@@ -44,6 +44,7 @@
 <p>2017/05/23 刷题leetcode若干，并更新<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/LeetCode/C-%20project>AC解</a>。</p>
 <p>2017/05/24 学习python中的<a href=https://github.com/cbhust8025/PythonLearn/tree/master/Tkinter>Tkinter GUI</a>，熟悉其中三种布局管理器：grid/pack/place，熟悉基本控件之按钮以及文本框，基于此次学习内容书写一个<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Tkinter/BasicWidget/SomeTestForWidget/Tklearn1.5-txtread.py>文件阅览器</a>，包含打开文件以及修改文件并保存的功能。</p>
 <p>2017/05/25 学习python中的<a href=https://github.com/cbhust8025/PythonLearn/tree/master/Wxpython>Wxpython GUI</a>，熟悉里面强大的<a href=https://github.com/cbhust8025/PythonLearn/tree/master/Wxpython/BasicWidget>Sizer布局管理器</a>，熟悉基本控件之<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Wxpython/BasicWidget/Button.md>按钮</a>以及<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Wxpython/BasicWidget/Bitmap.md>基本位图</a>。</p>
+<p>2017/05/26 学习wxpython中的<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Wxpython/BasicWidget/Text.md>文本控件</a>。学习Tkinter中的<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Tkinter/BasicWidget/AdvanceButton.md>进阶按钮</a>。学习Tkinter中的<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Tkinter/BasicWidget/Misc.md>Misc类</a>。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
