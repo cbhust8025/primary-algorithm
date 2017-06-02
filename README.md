@@ -46,6 +46,8 @@
 <p>2017/05/25 学习python中的<a href=https://github.com/cbhust8025/PythonLearn/tree/master/Wxpython>Wxpython GUI</a>，熟悉里面强大的<a href=https://github.com/cbhust8025/PythonLearn/tree/master/Wxpython/BasicWidget>Sizer布局管理器</a>，熟悉基本控件之<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Wxpython/BasicWidget/Button.md>按钮</a>以及<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Wxpython/BasicWidget/Bitmap.md>基本位图</a>。</p>
 <p>2017/05/26 学习wxpython中的<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Wxpython/BasicWidget/Text.md>文本控件</a>。学习Tkinter中的<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Tkinter/BasicWidget/AdvanceButton.md>进阶按钮</a>。学习Tkinter中的<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Tkinter/BasicWidget/Misc.md>Misc类</a>。</p>
 <p>2017/05/31 学习wxpython中的<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Wxpython/AdvanceWidget/FontDialog.py>字体选择对话框</a>。并模拟实现了一个字体选择对话框小程序，方便以后对字体的控制。</p>
+<p>2017/06/01 上传了基于Python的<a href=https://github.com/cbhust8025/MySpider>小说爬虫</a>。</p>
+<p>2017/06/02 学习了bs4中<a href=https://github.com/cbhust8025/PythonLearn/tree/master/BeautifulSoup>BeautifulSoup</a>,以及上传了<a href=https://github.com/cbhust8025/PythonLearn/tree/master/RegularExpression>正则表达式语法相关</a>。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
