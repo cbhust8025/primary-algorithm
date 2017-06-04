@@ -48,6 +48,7 @@
 <p>2017/05/31 学习wxpython中的<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Wxpython/AdvanceWidget/FontDialog.py>字体选择对话框</a>。并模拟实现了一个字体选择对话框小程序，方便以后对字体的控制。</p>
 <p>2017/06/01 上传了基于Python的<a href=https://github.com/cbhust8025/MySpider>小说爬虫</a>。</p>
 <p>2017/06/02 学习了bs4中<a href=https://github.com/cbhust8025/PythonLearn/tree/master/BeautifulSoup>BeautifulSoup</a>,以及上传了<a href=https://github.com/cbhust8025/PythonLearn/tree/master/RegularExpression>正则表达式语法相关</a>。</p>
+<p>2017/06/04 学习了wxpython核心控件中<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Wxpython/BasicWidget/Choice.md>简单下拉框Choice</a>,以及<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Wxpython/BasicWidget/ComboBox.md>组合框ComboBox</a>。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
