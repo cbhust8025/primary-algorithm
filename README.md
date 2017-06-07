@@ -51,6 +51,7 @@
 <p>2017/06/04 学习了wxpython核心控件中<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Wxpython/BasicWidget/Choice.md>简单下拉框Choice</a>,以及<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Wxpython/BasicWidget/ComboBox.md>组合框ComboBox</a>。更新了基于Python的<a href=https://github.com/cbhust8025/MySpider>小说爬虫</a>。</p></p>
 <p>2017/06/05 学习了wxpython核心控件中<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Wxpython/BasicWidget/ListCtrl.md>列表框</a>,上传了一些学习控件的<a href=https://github.com/cbhust8025/PythonLearn/tree/master/Wxpython/BasicWidget/SomeTestPythonFile>Python文件</a>供参考。</p>
 <p>2017/06/05 完成了wxpython核心控件中<a href=https://github.com/cbhust8025/PythonLearn/blob/master/Wxpython/BasicWidget/ComboBox.md>组合框</a>的描述,更新了基于Python的<a href=https://github.com/cbhust8025/MySpider>小说爬虫</a>（待解决：刚打开无法输入的问题）。</p>
+<p>2017/06/06 增添了wxpython核心控件中<a href=https://github.com/cbhust8025/PythonLearn/tree/master/Wxpython/BasicWidget/SomeWidgetHelp>控件代码</a>,学习了<a href=https://github.com/cbhust8025/PythonLearn/blob/master/ToolsHelp/SublimeText3.md>Sublime Text 3</a>相关信息。（待解决：小说爬虫刚打开无法输入的问题）。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
