@@ -54,6 +54,7 @@
 <p>2017/06/06 增添了wxpython核心控件中<a href=https://github.com/cbhust8025/PythonLearn/tree/master/Wxpython/BasicWidget/SomeWidgetHelp>控件代码</a>,学习了<a href=https://github.com/cbhust8025/PythonLearn/blob/master/ToolsHelp/SublimeText3.md>Sublime Text 3</a>相关信息。（待解决：小说爬虫刚打开无法输入的问题）。</p>
 <p>2017/06/07 配置sublime：侧边框颜色字体、快捷键、PythonIDE搭建、括号匹配高亮、自动补全等功能。</p>
 <p>2017/06/08 更新了<a href=https://github.com/cbhust8025/My-Project_yidong/tree/master/Version>移动数据演示平台</a>。</p>
+<p>2017/06/09 更新了<a href=https://github.com/cbhust8025/My-Project_yidong/tree/master/Version>移动数据演示平台</a>。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
