@@ -56,6 +56,7 @@
 <p>2017/06/08 更新了<a href=https://github.com/cbhust8025/My-Project_yidong/tree/master/Version>移动数据演示平台</a>。</p>
 <p>2017/06/09 更新了<a href=https://github.com/cbhust8025/My-Project_yidong/tree/master/Version>移动数据演示平台</a>。</p>
 <p>2017/06/10 更新了<a href=https://github.com/cbhust8025/My-Project_yidong/tree/master/Version>移动数据演示平台</a>。</p>
+<p>2017/06/11 更新了<a href=https://github.com/cbhust8025/My-Project_yidong/tree/master/Version>移动数据演示平台</a>。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
