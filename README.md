@@ -57,6 +57,7 @@
 <p>2017/06/09 更新了<a href=https://github.com/cbhust8025/My-Project_yidong/tree/master/Version>移动数据演示平台</a>。</p>
 <p>2017/06/10 更新了<a href=https://github.com/cbhust8025/My-Project_yidong/tree/master/Version>移动数据演示平台</a>。</p>
 <p>2017/06/11 更新了<a href=https://github.com/cbhust8025/My-Project_yidong/tree/master/Version>移动数据演示平台</a>。</p>
+<p>2017/06/12 更新了<a href=https://github.com/cbhust8025/My-Project_yidong/tree/master/Version>移动数据演示平台</a>。修复了路径错误，图片显示错误，增添了保存问题诊断结果为CSV文件的功能。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
