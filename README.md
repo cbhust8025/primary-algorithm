@@ -59,6 +59,7 @@
 <p>2017/06/11 更新了<a href=https://github.com/cbhust8025/My-Project_yidong/tree/master/Version>移动数据演示平台</a>。</p>
 <p>2017/06/12 更新了<a href=https://github.com/cbhust8025/My-Project_yidong/tree/master/Version>移动数据演示平台</a>。修复了路径错误，图片显示错误，增添了保存问题诊断结果为CSV文件的功能。</p>
 <p>2017/06/13 学习了Tkinter里面的Combobox和Listbox，还有wxpython里面的wx._core.Control基本基类。</p>
+<p>2017/06/18 牛客网模拟笔试0616，<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/Job%20interview/NiuKe0616>编程题部分AC解</a>。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
