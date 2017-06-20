@@ -61,6 +61,7 @@
 <p>2017/06/13 学习了Tkinter里面的Combobox和Listbox，还有wxpython里面的wx._core.Control基本基类。</p>
 <p>2017/06/18 牛客网模拟笔试0616，<a href=https://github.com/cbhust8025/primary-algorithm/tree/master/jobs/Job%20interview/NiuKe0616>编程题部分AC解</a>。</p>
 <p>2017/06/19 腾讯实习第一天，<a href=https://github.com/cbhust8025/C-Learn/tree/master/TinyXml>TinyXml小结</a>。</p>
+<p>2017/06/20 腾讯实习第一天，<a href=https://github.com/cbhust8025/C-Learn/tree/master/Sqlite3>Sqlite3小结</a>。了解了《Windows核心编程》中的错误处理相关内容。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
