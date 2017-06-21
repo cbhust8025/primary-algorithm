@@ -60,3 +60,4 @@
   - Bidirectional Iterator:可双向移动，如需逆向移动，则可使用此种迭代器。
   - Random Access Iterator：前四种迭代器都只提供一部分指针算数能力（前三种支持operator++,第四种支持operator--），第五种则涵盖所有指针算数能力（p+n,p-n,p[n],p1-p2,p1\<p2），也即随机读取迭代器。
 
+#### 41、若使用```::class_name or ::func_name```则表示全局作用域的类，或函数。
