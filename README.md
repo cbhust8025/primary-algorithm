@@ -63,6 +63,7 @@
 <p>2017/06/19 腾讯实习第一天，<a href=https://github.com/cbhust8025/C-Learn/tree/master/TinyXml>TinyXml小结</a>。</p>
 <p>2017/06/20 腾讯实习第er天，<a href=https://github.com/cbhust8025/C-Learn/tree/master/Sqlite3>Sqlite3小结</a>。了解了《Windows核心编程》中的错误处理相关内容。</p>
 <p>2017/06/21 腾讯实习第3天，<a href=https://github.com/cbhust8025/C-Learn/tree/master/IDA>IDA的初次使用</a>。</p>
+<p>2017/06/22 腾讯实习第肆天，<a href=https://github.com/cbhust8025/C-Learn/tree/master/IDA>IDA+WinDbg</a>。第一个任务：<a href=https://github.com/cbhust8025/C-Learn/tree/master/TencentLearn/GroupResources>聚类资源文件(以gft/png文件为例)</a>。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
