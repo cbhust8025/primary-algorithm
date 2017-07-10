@@ -66,6 +66,7 @@
 <p>2017/06/22 腾讯实习第肆天，<a href=https://github.com/cbhust8025/C-Learn/tree/master/IDA>IDA+WinDbg</a>。第一个任务：<a href=https://github.com/cbhust8025/C-Learn/tree/master/TencentLearn/GroupResources>聚类资源文件(以gft/png文件为例)</a>。</p>
 <p>2017/06/26 腾讯实习第6天，<a href=https://github.com/cbhust8025/C-Learn/blob/master/TencentLearn/DLLLearn/README.md>封装dll文件并调用</a>。</p>
 <p>2017/06/27 腾讯实习第7天，学习QMAlphaBack.dll，了解如何分配运营位资源。</p>
+<p>2017/07/03-2017/07/07 腾讯实习第15-21天，完成<a href=https://github.com/cbhust8025/C-Learn/tree/master/TencentLearn/CrashTest>crash检测程序</a>。</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
