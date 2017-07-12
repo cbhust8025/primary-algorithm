@@ -4,7 +4,6 @@
 
 ### 1、基本冒泡排序算法
 > 思路：双层循环，将从第一个数开始逐渐进行冒泡（升序向后冒，降序向前冒），利用不断的交换来达到有序。时间复杂度：O(n^2)
-![冒泡算法]()
 ```C++
 void BubbleSort(vector<int>& vi)
 {
@@ -23,7 +22,7 @@ void BubbleSort(vector<int>& vi)
 
 ### 2、基本选择排序算法：
 >思路：双层循环，不断的从前往后推进，每次挑选出当前位置后面比当前位置上面小的最小的那一个换到当前位置来。比起冒泡算法会少一些交换次数，但是时间复杂度依然是所有数会两两比较一遍。时间复杂度：O(n^2)
-![选择排序](http://img.blog.csdn.net/20130630171527531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGlqaWFua2FuZw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
+![选择排序](https://github.com/cbhust8025/primary-algorithm/blob/master/Classical-Algorithm/BubbleSelectInsertSort/ss.jpg)
 ```C++
 void SelectSort(vector<int>& vi)
 {
@@ -47,7 +46,7 @@ void SelectSort(vector<int>& vi)
 
 ### 3、基本插入排序算法
 >思路：将第一个数视做有序序列，把后面第二个数开始的所有数依次插入到前面的有序序列中，是一种从局部有序逐渐递进到全局有序的算法。由于依然会需要进行大量的比较（最坏情况下所有数依然需要两两比较），所以时间复杂度：O(n^2)
-![插入排序](http://img.blog.csdn.net/20130630173342734?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaGlqaWFua2FuZw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
+![插入排序](https://github.com/cbhust8025/primary-algorithm/blob/master/Classical-Algorithm/BubbleSelectInsertSort/is.jpg)
 ```C++
 void InsertSort(vector<int>& vi)
 {
