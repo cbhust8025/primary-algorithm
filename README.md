@@ -69,6 +69,7 @@
 <p>2017/07/03-2017/07/07 腾讯实习第15-21天，完成<a href=https://github.com/cbhust8025/C-Learn/tree/master/TencentLearn/CrashTest>crash检测程序</a>。</p>
 <p>2017/07/11 更新了<a href= https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/HanoiTower>汉诺塔</a>问题的详解</p>
 <p>2017/07/12 更新了<a href= https://github.com/cbhust8025/primary-algorithm/tree/master/Classical-Algorithm/BubbleSelectInsertSort>冒选插基本排序</a>详解</p>
+<p>20170815</p>
 <p>简单数据结构
     <ul>
         <li>线性表(已实现)</li>
