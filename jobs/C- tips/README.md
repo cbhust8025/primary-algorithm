@@ -54,10 +54,11 @@
 * reference type:引用类型,一般情况为内嵌类型T&
 * pointer type:指针类型，一般情况为内嵌类型T\*
 * iterator_category:划分该迭代器行为，根据移动特性和施行操作划分为以下五类：
-  - Input Iterator:这种迭代器所指的对象，不允许外界改变。只读（read only）。
-  - Output Iterator:唯写（write only）。
-  - Forward Iterator:允许“写入型”算法（如replace()）在此种迭代器所形成的区间上进行读写操作。
-  - Bidirectional Iterator:可双向移动，如需逆向移动，则可使用此种迭代器。
-  - Random Access Iterator：前四种迭代器都只提供一部分指针算数能力（前三种支持operator++,第四种支持operator--），第五种则涵盖所有指针算数能力（p+n,p-n,p[n],p1-p2,p1\<p2），也即随机读取迭代器。
+
+>- Input Iterator:这种迭代器所指的对象，不允许外界改变。只读（read only）。
+>- Output Iterator:唯写（write only）。
+>- Forward Iterator:允许“写入型”算法（如replace()）在此种迭代器所形成的区间上进行读写操作。
+>- Bidirectional Iterator:可双向移动，如需逆向移动，则可使用此种迭代器。
+>- Random Access Iterator：前四种迭代器都只提供一部分指针算数能力（前三种支持operator++,第四种支持operator--），第五种则涵盖所有指针算数能力（p+n,p-n,p[n],p1-p2,p1\<p2），也即随机读取迭代器。
 
 #### 41、若使用```::class_name or ::func_name```则表示全局作用域的类，或函数。
